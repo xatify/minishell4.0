@@ -1,0 +1,18 @@
+
+!! steps 
+1: get input
+2: tokenizing the input
+3: parsing the tokens and build a 2D linked list of command
+4: shell expansions $! and $VAR on the nodes of linked list
+5 :perform redirections
+6 : EXcute the commands list
+7 : collect the exit status
+8 : go back to step 1
+
+
+
+!!! Notes
+* while building tokens don't forget the quoting rules 
+* buildins must be modified to access the arguments in the command list
+* export and unset commands can have multiples arguments 
+* the error handling is not perfect
