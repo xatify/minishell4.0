@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2020/12/21 18:59:32 by abbouzid         ###   ########.fr       */
+/*   Updated: 2020/12/22 13:30:58 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 #define STDOUT 1
 #define bool int
 
+int				ft_printf(const char *s, ...);
 /******************************************************************************/
 /*	structures prototypes													  */
 /******************************************************************************/
@@ -71,6 +72,7 @@ char    pop(t_stack **stack_head);
 void	push(t_stack **stack_head, char character);
 int     stack_len(t_stack **stack_head);
 char    top_stack(t_stack **stack_head);
+void    free_stack(t_stack **stack);
 char    *empty_stack(t_stack **stack_head);
 
 /******************************************************************************/
@@ -87,7 +89,9 @@ int					get_input(char	**input);
 t_token		*new_token(char **str);
 t_token		*last_token(t_token *tokens);
 void		add_token(t_token **tokens, t_token *new_token);
-
+t_token     *tokenizing(char *input_cmd);
+void     	free_tokens(t_token **head);
+int     	handle_single_quote(t_stack **stack, char **input_cmd);
 /******************************************************************************/
 /*	strings manipulation prototypes											  */
 /******************************************************************************/
@@ -96,10 +100,7 @@ int					ft_strlen(char *str);
 void				ft_strlcpy(char *dst, char *src, int len);
 int					ft_strcmp(char *str1, char *str2);
 void				*ft_memset(void	*b, int c, size_t len);
-bool				is_alpha(char c);
-bool				is_num(char c);
-bool				is_inderscore(char c);
-
+bool				is_white_character(char c);
 /******************************************************************************/
 /* environment variables linked list functions prototypes					  */
 /******************************************************************************/

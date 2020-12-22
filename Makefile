@@ -6,7 +6,7 @@
 #    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/08 22:48:36 by abbouzid          #+#    #+#              #
-#    Updated: 2020/12/21 18:23:29 by abbouzid         ###   ########.fr        #
+#    Updated: 2020/12/22 10:22:18 by abbouzid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,11 +15,13 @@ GCC				= gcc -Wall -Wextra -Werror
 
 SRCS			= minishell.c		\
 				  get_command.c		\
-				  strings.c
+				  strings.c			\
+				  tokens.c			\
+				  stack.c
 
 
 all:
-	$(GCC) -g -o $(NAME) $(SRCS)
+	$(GCC) -g -o $(NAME) $(SRCS) libftprintf.a
 	#$(GCC) -g test.c -o test
 	./minishell
 

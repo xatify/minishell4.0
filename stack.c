@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 17:02:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2020/12/21 18:34:09 by abbouzid         ###   ########.fr       */
+/*   Updated: 2020/12/22 13:31:29 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	   push(t_stack **stack_head, char 	character)
     element = new_element(character);
     if (!element)
         return;
-    if (!stack_head)
+    if (!(*stack_head))
         (*stack_head) = element;
     else
     {
@@ -66,9 +66,23 @@ char    top_stack(t_stack **head)
 
 int     stack_len(t_stack **head)
 {
-    if (!(*head))
-        return (0);
-    return (1 + stack_len(&((*head)->next)));   
+    t_stack *tmp;
+    int     i;
+
+    i = 0;
+    tmp = *head;
+    while(tmp)
+    {
+        i++;
+        tmp= tmp->next;
+    }
+    return (i);
+}
+
+void    free_stack(t_stack **stack)
+{
+    while (*stack)
+        pop(stack);   
 }
 
 char    *empty_stack(t_stack **head)

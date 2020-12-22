@@ -6,9 +6,11 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:01:06 by abbouzid          #+#    #+#             */
-/*   Updated: 2020/12/21 18:28:34 by abbouzid         ###   ########.fr       */
+/*   Updated: 2020/12/22 11:33:26 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "includes/minishell.h"
 
 int		ft_strlen(char *str)
 {
@@ -54,7 +56,7 @@ int			ft_strcmp(char *str1, char *str2)
 	return (str1[i] - str2[i]);
 }
 
-void		*ft_memset(void	*b, int c, int len)
+void		*ft_memset(void	*b, int c, size_t len)
 {
 	unsigned char *ptr;
 
@@ -62,4 +64,9 @@ void		*ft_memset(void	*b, int c, int len)
 	while (len--)
 		*ptr++ = (unsigned char)c;
 	return (b);
+}
+
+bool	is_white_character(char c)
+{
+	return ((c == ' ' || c == '\t') ? TRUE: FALSE);
 }
