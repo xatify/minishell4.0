@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:01:06 by abbouzid          #+#    #+#             */
-/*   Updated: 2020/12/22 11:33:26 by abbouzid         ###   ########.fr       */
+/*   Updated: 2020/12/23 11:07:45 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,3 +70,18 @@ bool	is_white_character(char c)
 {
 	return ((c == ' ' || c == '\t') ? TRUE: FALSE);
 }
+
+char 	*ft_strdup(char *str)
+{
+	int 	len;
+	char	*dup;
+	
+	len = ft_strlen(str);
+	if (!(dup = (char *)malloc(len + 1)))	
+		return (NULL);
+	ft_memset(dup, 0, len + 1);
+	if(str)
+		ft_strcpy(dup, str);
+	return (dup);
+}
+

@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2020/12/22 13:30:58 by abbouzid         ###   ########.fr       */
+/*   Updated: 2020/12/23 11:15:52 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,16 @@ int				ft_printf(const char *s, ...);
 /******************************************************************************/
 /*	structures prototypes													  */
 /******************************************************************************/
+typedef	struct s_arguments
+{
+	char 				*arg;
+	struct s_argument 	*next;
+}				t_arguments;
 
 typedef	struct s_simple_command
 {
 	char		*cmd_name;
-	char		**arguments;
+	t_arguments *arguments;
 	char		*infile;
 	char		*outfile;
 	char		*append_outfile;
@@ -78,9 +83,12 @@ char    *empty_stack(t_stack **stack_head);
 /******************************************************************************/
 /*	get_input and tokenizing 												  */
 /******************************************************************************/
+enum token {OUTPUT, INPUT, APPEND_OUT, PIPE, SEMICOLON, WORD, UNKNOWN};
+
 typedef  struct s_token
 {
 	char 	*tkn;
+	int		id;
 	struct 	s_token *next;
 }				t_token;
 
@@ -92,6 +100,7 @@ void		add_token(t_token **tokens, t_token *new_token);
 t_token     *tokenizing(char *input_cmd);
 void     	free_tokens(t_token **head);
 int     	handle_single_quote(t_stack **stack, char **input_cmd);
+void            identify_all_tokens(t_token *tokens);
 /******************************************************************************/
 /*	strings manipulation prototypes											  */
 /******************************************************************************/
@@ -101,6 +110,7 @@ void				ft_strlcpy(char *dst, char *src, int len);
 int					ft_strcmp(char *str1, char *str2);
 void				*ft_memset(void	*b, int c, size_t len);
 bool				is_white_character(char c);
+char				*ft_strdup(char *str);
 /******************************************************************************/
 /* environment variables linked list functions prototypes					  */
 /******************************************************************************/

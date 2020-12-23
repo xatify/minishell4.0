@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:50:20 by abbouzid          #+#    #+#             */
-/*   Updated: 2020/12/22 10:44:49 by abbouzid         ###   ########.fr       */
+/*   Updated: 2020/12/23 09:34:17 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		main()
 			tmp = tokens;
 			while(tmp)
 			{
-				ft_printf("<%s>\n", tmp->tkn);
+				printf("<\t%-20s> : %d\n", tmp->tkn, tmp->id);
 				tmp = tmp->next;
 			}
 		}

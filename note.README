@@ -1,7 +1,7 @@
 
 !! steps 
-1: get input
-2: tokenizing the input
++ 1: get input
++ 2: tokenizing the input
 3: parsing the tokens and build a 2D linked list of command
 4: shell expansions $! and $VAR on the nodes of linked list
 5 :perform redirections

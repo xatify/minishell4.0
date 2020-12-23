@@ -6,7 +6,7 @@
 #    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/08 22:48:36 by abbouzid          #+#    #+#              #
-#    Updated: 2020/12/22 10:22:18 by abbouzid         ###   ########.fr        #
+#    Updated: 2020/12/23 10:14:57 by abbouzid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,9 @@ GCC				= gcc -Wall -Wextra -Werror
 SRCS			= minishell.c		\
 				  get_command.c		\
 				  strings.c			\
-				  tokens.c			\
-				  stack.c
+				  lexer.c			\
+				  stack.c			
+				  #parser.c
 
 
 all:
