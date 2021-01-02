@@ -6,16 +6,12 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 18:40:06 by abbouzid          #+#    #+#             */
-/*   Updated: 2020/12/23 10:53:21 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/02 14:23:20 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-// int             is_word(char   *token)
-// {
-    
-// }
 int             token_id(char *token)
 {
     int     i;
