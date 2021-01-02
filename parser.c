@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:27:29 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/02 15:44:49 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/02 17:19:02 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,6 @@ t_arguments *new_arg(char   *arg)
 
 t_arguments *last_args(t_arguments *args)
 {
-    t_arguments *tmp;
-
     if (!(args))
         return (args);
     if (!(args->next))
@@ -95,16 +93,15 @@ int     add_arg(t_arguments **args, char *arg)
     if (!(tmp = new_arg(arg)))
         return (0);
     if (!(*args))
-        (*args) = new_arg;
+        (*args) = tmp;
     else
-        last_args((*args))->next = tmp;
+        (last_args((*args)))->next = tmp;
+    return (1);
 }
 
 int     handle_argument(t_token **tokens, t_simple_command *command)
 {
-    char    *arg;
-    
-    if (!add_arg(command, (*tokens)->tkn))
+    if (!add_arg((&command->arguments), (*tokens)->tkn))
         return (0);
     del_token_head(tokens);
     return (1);
@@ -136,13 +133,11 @@ void                free_command(t_simple_command *command)
         free(command->append_outfile);
     free_arguments(command->arguments);
     free(command);
-    return (0);
 }
 
 t_simple_command    *simple_command(t_token    **tokens)
 {
     t_simple_command    *command;
-    t_token             *tmp;
     int                 id;
     
     if (!(command = (t_simple_command *)malloc(sizeof(t_simple_command))))
@@ -167,7 +162,7 @@ t_simple_command    *simple_command(t_token    **tokens)
                 return (NULL);
             }
         }
-        else if(!handle_arguments(tokens, command))
+        else if(!handle_argument(tokens, command))
         {
             free_command(command);
             return (NULL);
@@ -176,27 +171,33 @@ t_simple_command    *simple_command(t_token    **tokens)
     return (command);
 }
 
-void            add_back_command(t_simple_command *cmd_head, t_simple_command *command)
+void            add_back_command(t_simple_command **cmd_head, t_simple_command *command)
 {
-    t_simple_command *tmp;
+    t_simple_command    *tmp;
 
-    if (!(cmd_head))
+    if (!(*cmd_head))
     {
-        cmd_head = command;
-        return;
+        *cmd_head = command;
+        return ;
     }
-    while (cmd_head->next)
-        cmd_head = cmd_head->next;
-    cmd_head->next = command;
-        
+    tmp = *cmd_head;
+    while (tmp->next)
+        tmp = tmp->next;
+    tmp->next = command;
 }
 
 void        free_pipeline(t_pipeline *pipeline)
 {
+    t_simple_command *tmp;
+    
     if (!(pipeline))
         return;
-    if (pipeline->simple_cmd)
-        free_command(pipeline->simple_cmd);
+    while (pipeline->simple_cmd)
+    {
+        tmp = pipeline->simple_cmd;
+        pipeline->simple_cmd = tmp->next;
+        free_command(tmp);
+    }
     free(pipeline);
 }
 
@@ -210,12 +211,12 @@ t_pipeline      *new_pipe_line(t_token **tokens)
     ft_memset(pipeline, 0, sizeof(t_pipeline));
     while (*tokens && (*tokens)->id != SEMICOLON)
     {
-        if (!(simple_command(tokens)))
+        if (!(command = simple_command(tokens)))
         {
             free_pipeline(pipeline);
             return (NULL);
         }
-        add_back_command(pipeline->simple_cmd, command);
+        add_back_command(&pipeline->simple_cmd, command);
         if ((*tokens) && (*tokens)->id == PIPE)
         {
             del_token_head(tokens);
@@ -223,6 +224,33 @@ t_pipeline      *new_pipe_line(t_token **tokens)
         }
     }
     return (pipeline);
+}
+
+void        free_pipeline_list(t_pipeline *pipeline_head)
+{
+    t_pipeline  *tmp;
+    
+    while (pipeline_head)
+    {
+        tmp = pipeline_head->next;
+        free_pipeline(pipeline_head);
+        pipeline_head = tmp;
+    }
+}
+
+void            add_back_pipeline(t_pipeline **pipe_head, t_pipeline *pipeline)
+{
+    t_pipeline *tmp;
+
+    if (!(*pipe_head))
+    {
+        (*pipe_head) = pipeline;
+        return ;
+    }
+    tmp = (*pipe_head);
+    while (tmp->next)
+        tmp = tmp->next;
+    tmp->next = pipeline;
 }
 
 t_pipeline      *parser(t_token     **tokens)
@@ -235,12 +263,47 @@ t_pipeline      *parser(t_token     **tokens)
     {
         if (!(tmp = new_pipe_line(tokens)))
         {
-            //free_all
+            free_pipeline_list(pipeline_head);
             return (NULL);
         }
-        add_back_pipeline(pipeline_head, tmp);
+        add_back_pipeline(&pipeline_head, tmp);
         if ((*tokens) && (*tokens)->id == SEMICOLON)
             continue;
     }
     return (pipeline_head);
+}
+
+void        show_parse_tree(t_pipeline *parse_tree)
+{
+    t_simple_command    *command;
+    
+    while (parse_tree)
+    {
+        command = parse_tree->simple_cmd;
+        while (command)
+        {
+            ft_printf("cmd_namd = %s\t", command->cmd_name);
+            if (command->infile)
+                ft_printf("< %s\t", command->infile);
+            if (command->outfile)
+                ft_printf("> %s\t", command->outfile);
+            if (command->append_outfile)
+                ft_printf(">> %s\t", command->append_outfile);
+            if (command->arguments)
+            {
+                ft_printf("args : \t");
+                while (command->arguments)
+                {
+                    ft_printf("%s\t", (command->arguments)->arg);
+                    command->arguments = (command->arguments)->next;
+                }
+            }
+            if (command->next)
+                ft_printf("|\t");
+            command = command->next;
+        }
+        if (parse_tree->next)
+            ft_printf(";\t");
+        parse_tree = parse_tree->next;
+    }
 }

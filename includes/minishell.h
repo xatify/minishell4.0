@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2020/12/23 11:15:52 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/02 17:18:51 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int				ft_printf(const char *s, ...);
 typedef	struct s_arguments
 {
 	char 				*arg;
-	struct s_argument 	*next;
+	struct s_arguments 	*next;
 }				t_arguments;
 
 typedef	struct s_simple_command
@@ -129,5 +129,11 @@ void				add_back_env(t_env_vars **vars, t_env_vars *new_var);
 t_env_vars			*build_env_vars(char *envp[]);
 t_env_vars			*search_var(t_env_vars **env_vars, char *var_name);
 int					change_env_var(t_env_vars **vars, char *var_name, char *new_value);
+
+/******************************************************************************/
+/* parser functions 														  */
+/******************************************************************************/
+t_pipeline      *parser(t_token     **tokens);
+void			show_parse_tree(t_pipeline *parse_tree);
 
 #endif
