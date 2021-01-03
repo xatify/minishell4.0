@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 17:02:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/03 11:09:01 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/03 14:29:36 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	   push(t_stack **stack_head, char 	character)
         (*stack_head) = element;
         (*stack_head)->next = tmp;
     }
-    is_metacharcter(stack_head);
+    is_metacharacter(stack_head);
 }
 
 char    pop(t_stack **stack_head)
@@ -108,6 +108,6 @@ void        is_metacharacter(t_stack **stack)
     char    top;
 
     top = top_stack(stack);
-    if ((top == '|' || top == '>' || top == '<' || top == ';') && special((*stack)))
+    if ((top == '|' || top == '>' || top == '<' || top == ';') && !special((*stack)))
         (*stack)->meta = 1;
 }

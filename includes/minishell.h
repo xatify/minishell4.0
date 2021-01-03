@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/03 11:08:39 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/03 15:57:09 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@
 #define STDOUT 1
 #define bool int
 
-int				ft_printf(const char *s, ...);
 /******************************************************************************/
 /*	structures prototypes													  */
 /******************************************************************************/
@@ -85,7 +84,7 @@ void	is_metacharacter(t_stack **stack);
 /******************************************************************************/
 /*	get_input and tokenizing 												  */
 /******************************************************************************/
-enum token {OUTPUT, INPUT, APPEND_OUT, PIPE, SEMICOLON, WORD, UNKNOWN};
+enum token {OUTPUT, INPUT, APPEND_OUT, PIPE, SEMICOLON, WORD};
 
 typedef  struct s_token
 {
@@ -102,7 +101,9 @@ void		add_token(t_token **tokens, t_token *new_token);
 t_token     *tokenizing(char *input_cmd);
 void     	free_tokens(t_token **head);
 int     	handle_single_quote(t_stack **stack, char **input_cmd);
-void            identify_all_tokens(t_token *tokens);
+int			identify_all_tokens(t_token *tokens);
+int			special(t_stack *stack);
+
 /******************************************************************************/
 /*	strings manipulation prototypes											  */
 /******************************************************************************/
@@ -113,6 +114,7 @@ int					ft_strcmp(char *str1, char *str2);
 void				*ft_memset(void	*b, int c, size_t len);
 bool				is_white_character(char c);
 char				*ft_strdup(char *str);
+
 /******************************************************************************/
 /* environment variables linked list functions prototypes					  */
 /******************************************************************************/
@@ -137,5 +139,5 @@ int					change_env_var(t_env_vars **vars, char *var_name, char *new_value);
 /******************************************************************************/
 t_pipeline      *parser(t_token     **tokens);
 void			show_parse_tree(t_pipeline *parse_tree);
-
+void			free_parse_tree(t_pipeline *parse_tree);
 #endif

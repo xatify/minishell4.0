@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:50:20 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/02 16:44:44 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/03 16:09:02 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,13 @@ int		main()
 					tmp = tmp->next;
 				}
 				parse_tree = parser(&tokens);
-				show_parse_tree(parse_tree);
+				//show_parse_tree(parse_tree);
+				free_tokens(&tokens);
+				free_parse_tree(parse_tree);
 			}
+			free(input_cmd);
 		}
+		
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 01:59:14 by abbouzid          #+#    #+#             */
-/*   Updated: 2020/12/21 18:35:12 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/03 15:43:06 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ int		get_input(char **buffer)
 			ptr = NULL;
 		}
 		else
+		{
+			if (!(*buffer))
+				(*buffer) = ft_strdup("");
 			return (1);
+		}
 	}
 	return (0);
 }

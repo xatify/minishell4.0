@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:27:29 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/03 09:42:15 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/03 16:10:53 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "includes/minishell.h"
 
@@ -283,35 +284,46 @@ t_pipeline      *parser(t_token     **tokens)
 void        show_parse_tree(t_pipeline *parse_tree)
 {
     t_simple_command    *command;
-    
-    while (parse_tree)
+    t_pipeline          *tmp;
+
+    tmp = parse_tree;
+    while (tmp)
     {
-        command = parse_tree->simple_cmd;
+        command = tmp->simple_cmd;
         while (command)
         {
-            ft_printf("cmd_namd = %s\t", command->cmd_name);
+            printf("cmd_namd = %s\t", command->cmd_name);
             if (command->infile)
-                ft_printf("< %s\t", command->infile);
+                printf("< %s\t", command->infile);
             if (command->outfile)
-                ft_printf("> %s\t", command->outfile);
+                printf("> %s\t", command->outfile);
             if (command->append_outfile)
-                ft_printf(">> %s\t", command->append_outfile);
+                printf(">> %s\t", command->append_outfile);
             if (command->arguments)
             {
-                ft_printf("args : \t");
+                printf("args : \t");
                 while (command->arguments)
                 {
-                    ft_printf("%s\t", (command->arguments)->arg);
+                    printf("%s\t", (command->arguments)->arg);
                     command->arguments = (command->arguments)->next;
                 }
             }
             if (command->next)
-                ft_printf("|\t");
+                printf("|\t");
             command = command->next;
         }
-        if (parse_tree->next)
-            ft_printf(";\t");
-        parse_tree = parse_tree->next;
+        if (tmp->next)
+            printf(";\t");
+        tmp = tmp->next;
     }
     printf("\n");
+}
+
+void    free_parse_tree(t_pipeline *parse_tree)
+{   
+    if (parse_tree)
+    {
+        free_pipeline_list(parse_tree->next);
+        free_pipeline_list(parse_tree);
+    }
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abbouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 18:40:06 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/03 11:41:40 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/03 15:33:32 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int             token_id(char *token)
     return (WORD);
 }
 
-void            identify_all_tokens(t_token *tokens)
+int            identify_all_tokens(t_token *tokens)
 {
     t_token     *token;
 
@@ -35,8 +35,14 @@ void            identify_all_tokens(t_token *tokens)
     while (token)
     {
         token->id = token_id(token->tkn);
+        if (token->id <= 2)
+        {
+            if (!token->next || token_id((token->next)->tkn) != WORD)
+                return (0);
+        }
         token = token->next;
     }
+    return (1);
 }
 
 t_token *new_token(char **str)
@@ -147,26 +153,32 @@ void     free_tokens(t_token **head)
 }
 
 
-int         handle_metacharacter(t_stack **stack, t_token **token, char **input_cmd)
+void         handle_metacharacter(t_stack **stack, t_token **tokens, char **input_cmd)
 {
-    t_token    *tmp_tkn;
     char       *tmp;
     char        top;
+    int         append;
     
+    append = 0;
     top = top_stack(stack);
-    if (top == '<')
+    pop(stack);
+    if ((*stack))
     {
-        if (**input_cmd == '<')
-        {
-            printf("<< not required yet\n");
-            return (0);
-        }
-        pop(stack);
         tmp = empty_stack(stack);
-        add_token(token, new_token(&tmp));
-        return (1); 
+        add_token(tokens, new_token(&tmp));
     }
-    else if (top == ';')
+    push(stack, top);
+    if (top == '>' && **input_cmd == '>')
+    {
+        push(stack, *(*input_cmd)++);
+        append = 1;
+    }
+    tmp = empty_stack(stack);
+    add_token(tokens, new_token(&tmp));
+    pop(stack);
+    if (append)
+        pop(stack);
+    
 }
 
 t_token     *tokenizing(char *input_cmd)
@@ -184,7 +196,7 @@ t_token     *tokenizing(char *input_cmd)
             {
                 if (!handle_single_quote(&stack, &input_cmd))
                 {
-                    ft_printf("error while tokenizing\n");
+                    printf("error while tokenizing\n");
                     free_tokens(&token);
                     free_stack(&stack);
                     break;
@@ -204,7 +216,7 @@ t_token     *tokenizing(char *input_cmd)
             {
                 if (!handle_double_quote(&stack, &input_cmd))
                 {
-                    ft_printf("error while tokenizing\n");
+                    printf("error while tokenizing\n");
                     free_tokens(&token);
                     free_stack(&stack);
                     break;
@@ -228,7 +240,7 @@ t_token     *tokenizing(char *input_cmd)
                 add_token(&token, new_token(&tkn));
             }
         }
-        if (stack->meta)
+        if (stack && stack->meta)
             handle_metacharacter(&stack, &token, &input_cmd);
         else if (top_stack(&stack) == '\0')
         {
@@ -244,6 +256,9 @@ t_token     *tokenizing(char *input_cmd)
             }
         }
     }
-    identify_all_tokens(token);
-    return (token);
+    if (identify_all_tokens(token))
+        return (token);
+    free_tokens(&token);
+    printf("error while parsing !\n");
+    return (NULL);
 }
