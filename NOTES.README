@@ -3,12 +3,13 @@
 + 1: get input
 - 2: tokenizing the input
     -- must handle tokens that have metacharcters inside them
-3: parsing the tokens and build a 2D linked list of command
++ 3: parsing the tokens and build a 3D linked list of command
+    - must handle redirection if the filename doesnt follow < or > or >> 
 4: shell expansions $! and $VAR on the nodes of linked list
-5 :perform redirections
-6 : EXcute the commands list
-7 : collect the exit status
-8 : go back to step 1
+5: perform redirections
+6: EXcute the commands list
+7: collect the exit status
+8: go back to step 1
 
 
 

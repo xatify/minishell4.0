@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 17:02:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2020/12/22 13:31:29 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/03 11:09:01 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_stack     *new_element(char character)
     if (!(new_element = (t_stack *)malloc(sizeof(t_stack))))
         return (NULL);
     new_element->character = character;
+    new_element->meta = 0;
     new_element->next = NULL;
     return (new_element);
 }
@@ -40,6 +41,7 @@ void	   push(t_stack **stack_head, char 	character)
         (*stack_head) = element;
         (*stack_head)->next = tmp;
     }
+    is_metacharcter(stack_head);
 }
 
 char    pop(t_stack **stack_head)
@@ -99,4 +101,13 @@ char    *empty_stack(t_stack **head)
     while (--len >= 0)
         str[len] = pop(head);
     return (str);   
+}
+
+void        is_metacharacter(t_stack **stack)
+{
+    char    top;
+
+    top = top_stack(stack);
+    if ((top == '|' || top == '>' || top == '<' || top == ';') && special((*stack)))
+        (*stack)->meta = 1;
 }

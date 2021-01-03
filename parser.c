@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:27:29 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/02 17:19:02 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/03 09:42:15 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,19 +171,21 @@ t_simple_command    *simple_command(t_token    **tokens)
     return (command);
 }
 
+t_simple_command  *last_command(t_simple_command *cmd)
+{
+    if (!cmd)
+        return (NULL);
+    if (!cmd->next)
+        return (cmd);
+    return (last_command(cmd->next));
+}
+
 void            add_back_command(t_simple_command **cmd_head, t_simple_command *command)
 {
-    t_simple_command    *tmp;
-
     if (!(*cmd_head))
-    {
         *cmd_head = command;
-        return ;
-    }
-    tmp = *cmd_head;
-    while (tmp->next)
-        tmp = tmp->next;
-    tmp->next = command;
+    else
+        last_command((*cmd_head))->next = command;
 }
 
 void        free_pipeline(t_pipeline *pipeline)
@@ -238,19 +240,21 @@ void        free_pipeline_list(t_pipeline *pipeline_head)
     }
 }
 
+t_pipeline      *last_pipeline(t_pipeline *pipeline)
+{
+    if (!pipeline)
+        return (NULL);       
+    if (!pipeline->next)
+        return (pipeline);
+    return (last_pipeline(pipeline->next));
+}
+
 void            add_back_pipeline(t_pipeline **pipe_head, t_pipeline *pipeline)
 {
-    t_pipeline *tmp;
-
     if (!(*pipe_head))
-    {
         (*pipe_head) = pipeline;
-        return ;
-    }
-    tmp = (*pipe_head);
-    while (tmp->next)
-        tmp = tmp->next;
-    tmp->next = pipeline;
+    else
+        last_pipeline((*pipe_head))->next = pipeline;
 }
 
 t_pipeline      *parser(t_token     **tokens)
@@ -268,7 +272,10 @@ t_pipeline      *parser(t_token     **tokens)
         }
         add_back_pipeline(&pipeline_head, tmp);
         if ((*tokens) && (*tokens)->id == SEMICOLON)
+        {
+            del_token_head(tokens);
             continue;
+        }
     }
     return (pipeline_head);
 }
@@ -306,4 +313,5 @@ void        show_parse_tree(t_pipeline *parse_tree)
             ft_printf(";\t");
         parse_tree = parse_tree->next;
     }
+    printf("\n");
 }

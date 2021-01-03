@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/02 17:18:51 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/03 11:08:39 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_pipeline
 typedef	struct	s_stack
 {
 	char				character;
+	int 				meta;
 	struct 		s_stack *next;
 	
 }				t_stack;
@@ -79,6 +80,7 @@ int     stack_len(t_stack **stack_head);
 char    top_stack(t_stack **stack_head);
 void    free_stack(t_stack **stack);
 char    *empty_stack(t_stack **stack_head);
+void	is_metacharacter(t_stack **stack);
 
 /******************************************************************************/
 /*	get_input and tokenizing 												  */

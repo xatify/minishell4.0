@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 18:40:06 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/02 14:23:20 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/03 11:41:40 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,29 @@ void     free_tokens(t_token **head)
     }  
 }
 
+
+int         handle_metacharacter(t_stack **stack, t_token **token, char **input_cmd)
+{
+    t_token    *tmp_tkn;
+    char       *tmp;
+    char        top;
+    
+    top = top_stack(stack);
+    if (top == '<')
+    {
+        if (**input_cmd == '<')
+        {
+            printf("<< not required yet\n");
+            return (0);
+        }
+        pop(stack);
+        tmp = empty_stack(stack);
+        add_token(token, new_token(&tmp));
+        return (1); 
+    }
+    else if (top == ';')
+}
+
 t_token     *tokenizing(char *input_cmd)
 {
     t_token     *token = NULL;
@@ -155,7 +178,7 @@ t_token     *tokenizing(char *input_cmd)
     while (TRUE)
     {
         push(&stack, *input_cmd++);
-        if (top_stack(&stack) == 0x27)
+        if (top_stack(&stack) == 0x27) // "'"
         {
             if (!special(stack))
             {
@@ -175,7 +198,7 @@ t_token     *tokenizing(char *input_cmd)
                 continue;
             }
         }
-        if (top_stack(&stack) == 0x22)
+        if (top_stack(&stack) == 0x22) // '"'
         {
             if (!special(stack))
             {
@@ -189,7 +212,7 @@ t_token     *tokenizing(char *input_cmd)
             }
             else
             {
-                 pop(&stack);
+                pop(&stack);
                 pop(&stack);
                 push(&stack, 0x22);
                 continue;
@@ -205,6 +228,8 @@ t_token     *tokenizing(char *input_cmd)
                 add_token(&token, new_token(&tkn));
             }
         }
+        if (stack->meta)
+            handle_metacharacter(&stack, &token, &input_cmd);
         else if (top_stack(&stack) == '\0')
         {
             if (stack != NULL)
