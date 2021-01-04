@@ -1,17 +1,39 @@
 
 !! steps 
+
 + 1: get input
     + must handle when the input is empty
+
 - 2: tokenizing the input
     -- must handle tokens that have metacharcters inside them
+    + search the tokens for special caracters and remove them
+
 + 3: parsing the tokens and build a 3D linked list of command
     + must handle redirection if the filename doesnt follow < or > or >>
-    - implementation of freeing the parse tree after finish
-4: shell expansions $! and $VAR on the nodes of linked list
-5: perform redirections
-6: EXcute the commands list
-7: collect the exit status
-8: go back to step 1
+    + implementation of freeing the parse tree after finish
+
+6: implement built-in
+    6-1: echo with option -n
+    6-2: cd with only a relative and absolute path
+    + 6-3: pwd
+    -6-4: export
+        -handle identifier
+        -case VAR or VAR=
+        
+    6-5: unset
+    + 6-7: env
+    6-8: exit
+
+5: shell expansions
+    -  $! and $VAR on the nodes of linked list
+
+6: perform redirections
+
+7: EXcute the commands list
+
+8: collect the exit status
+
+9: go back to step 1
 
 
 

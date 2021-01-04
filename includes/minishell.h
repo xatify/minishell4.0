@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/03 15:57:09 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/04 11:44:19 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,37 +61,27 @@ typedef struct s_pipeline
 	struct 	s_pipeline  *next;
 }				t_pipeline;
 
-/******************************************************************************/
-/*	stack to handle the double quote strings 								  */
-/******************************************************************************/
-
-typedef	struct	s_stack
-{
-	char				character;
-	int 				meta;
-	struct 		s_stack *next;
-	
-}				t_stack;
-
-char    pop(t_stack **stack_head);
-void	push(t_stack **stack_head, char character);
-int     stack_len(t_stack **stack_head);
-char    top_stack(t_stack **stack_head);
-void    free_stack(t_stack **stack);
-char    *empty_stack(t_stack **stack_head);
-void	is_metacharacter(t_stack **stack);
-
-/******************************************************************************/
-/*	get_input and tokenizing 												  */
-/******************************************************************************/
-enum token {OUTPUT, INPUT, APPEND_OUT, PIPE, SEMICOLON, WORD};
-
 typedef  struct s_token
 {
 	char 	*tkn;
 	int		id;
 	struct 	s_token *next;
 }				t_token;
+
+typedef	struct	s_stack
+{
+	char				character;
+	int 				meta;
+	int					special;
+	struct 		s_stack *next;
+	
+}				t_stack;
+
+/******************************************************************************/
+/*	get_input and tokenizing 												  */
+/******************************************************************************/
+enum token {OUTPUT, INPUT, APPEND_OUT, PIPE, SEMICOLON, WORD};
+
 
 int					get_input(char	**input);
 
@@ -103,6 +93,18 @@ void     	free_tokens(t_token **head);
 int     	handle_single_quote(t_stack **stack, char **input_cmd);
 int			identify_all_tokens(t_token *tokens);
 int			special(t_stack *stack);
+void		remove_escape_character(t_token **tokens);
+/******************************************************************************/
+/*	stack to handle the double quote strings 								  */
+/******************************************************************************/
+
+char    pop(t_stack **stack_head);
+void	push(t_stack **stack_head, char character);
+int     stack_len(t_stack **stack_head);
+char    top_stack(t_stack **stack_head);
+void    free_stack(t_stack **stack);
+int		empty_stack(t_stack **stack_head, t_token **tokens);
+void	is_metacharacter(t_stack **stack);
 
 /******************************************************************************/
 /*	strings manipulation prototypes											  */
@@ -114,6 +116,9 @@ int					ft_strcmp(char *str1, char *str2);
 void				*ft_memset(void	*b, int c, size_t len);
 bool				is_white_character(char c);
 char				*ft_strdup(char *str);
+bool				is_alpha(char c);
+bool				is_num(char c);
+bool				is_undercore(char c);
 
 /******************************************************************************/
 /* environment variables linked list functions prototypes					  */
@@ -140,4 +145,11 @@ int					change_env_var(t_env_vars **vars, char *var_name, char *new_value);
 t_pipeline      *parser(t_token     **tokens);
 void			show_parse_tree(t_pipeline *parse_tree);
 void			free_parse_tree(t_pipeline *parse_tree);
+
+/******************************************************************************/
+/* built-ins																  */
+/******************************************************************************/
+int 	pwd(void);
+int		env(t_env_vars *env_vars);
+
 #endif

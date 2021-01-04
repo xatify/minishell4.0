@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:27:29 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/03 16:10:53 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/04 08:34:50 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,7 +323,7 @@ void    free_parse_tree(t_pipeline *parse_tree)
 {   
     if (parse_tree)
     {
-        free_pipeline_list(parse_tree->next);
+        //free_pipeline_list(parse_tree->next);
         free_pipeline_list(parse_tree);
     }
 }

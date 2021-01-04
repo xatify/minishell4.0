@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 17:02:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/03 14:29:36 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/04 09:38:19 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_stack     *new_element(char character)
         return (NULL);
     new_element->character = character;
     new_element->meta = 0;
+    new_element->special = 1;
     new_element->next = NULL;
     return (new_element);
 }
@@ -87,20 +88,22 @@ void    free_stack(t_stack **stack)
         pop(stack);   
 }
 
-char    *empty_stack(t_stack **head)
+int    empty_stack(t_stack **head, t_token **tokens)
 {
     int     len;
     char    *str;
 
-    if (!(*head))
-        return (NULL);
     len = stack_len(head);
     if (!(str = (char *)malloc(len + 1)))
-        return (NULL);
+    {
+        free_tokens(tokens);
+        return (0);
+    }
     str[len] = '\0';
     while (--len >= 0)
         str[len] = pop(head);
-    return (str);   
+    add_token(tokens, new_token(&str));
+    return (1);
 }
 
 void        is_metacharacter(t_stack **stack)

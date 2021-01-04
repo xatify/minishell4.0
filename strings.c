@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:01:06 by abbouzid          #+#    #+#             */
-/*   Updated: 2020/12/23 11:07:45 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/04 11:43:30 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,3 +85,21 @@ char 	*ft_strdup(char *str)
 	return (dup);
 }
 
+bool	is_alpha(char c)
+{
+	if ((c >= 0x41 && c <= 0x5a) || (c >= 0x61 && c <= 0x7a))
+		return (TRUE);
+	return (FALSE);
+}
+
+bool	is_num(char c)
+{
+	if (c >= 0x30 && c <= 0x39)
+		return (TRUE);
+	return (FALSE);
+}
+
+bool is_inderscore(char c)
+{
+	return ((c == '_')? TRUE: FALSE);
+}
