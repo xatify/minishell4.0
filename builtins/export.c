@@ -5,40 +5,41 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/04 11:30:54 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/04 12:04:44 by abbouzid         ###   ########.fr       */
+/*   Created: 2021/01/04 15:57:13 by abbouzid          #+#    #+#             */
+/*   Updated: 2021/01/04 16:06:32 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-bool    is_identifier(char *str)
-{
-    int i;
 
-    i = -1;
-    while (str[++i])
-    {
-        if (i == 0)
-        {
-            if (!(is_alpha(str[i]) || is_undercore(str[i])))
-                break;
-        }
-        else
-        {
-            if (!(is_alpha(str[i]) || is_underscore(str[i]) || is_num(str[i])))
-                break;
-        }
-    }
-    return ((str[i] == '\0')? TRUE: FALSE);
-}
-
-int     export(t_arguments *args)
+int     export(t_arguments *args, t_env_vars **envs)
 {
-    char    *var;
+    char        *name;
+    char        *value;
+    int         ret;
+    t_arguments *tmp;
+    t_env_vars  *var_node;
 
     if (!args)
         return (1);
-    var = args->arg;
-    
+    tmp = args;
+    ret = 0;
+   while (tmp)
+   {
+        name = get_env_name(tmp->arg);
+        value = get_env_value(tmp->arg);
+        if(name)
+        {
+            if (is_identifier(name))
+                change_env_var(envs, name, value);
+            else
+            {
+                ret = 1;
+                printf("not a valid identifier '%s'\n", name);
+            }
+        }
+        tmp = tmp->next;
+    }
+    return(ret);
 }

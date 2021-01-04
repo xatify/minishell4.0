@@ -15,13 +15,15 @@
 6: implement built-in
     6-1: echo with option -n
     6-2: cd with only a relative and absolute path
-    + 6-3: pwd
+    - 6-3: pwd
+        -- needs testing
     -6-4: export
         -handle identifier
         -case VAR or VAR=
         
     6-5: unset
-    + 6-7: env
+    - 6-7: env
+        -- testing
     6-8: exit
 
 5: shell expansions
@@ -42,3 +44,4 @@
 * buildins must be modified to access the arguments in the command list
 * export and unset commands can have multiples arguments 
 * the error handling is not perfect
+* built-ins need testing 

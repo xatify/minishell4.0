@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:01:06 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/04 11:43:30 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/04 16:06:41 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,25 @@ bool	is_num(char c)
 bool is_inderscore(char c)
 {
 	return ((c == '_')? TRUE: FALSE);
+}
+
+bool    is_identifier(char *str)
+{
+    int i;
+
+    i = -1;
+    while (str[++i])
+    {
+        if (i == 0)
+        {
+            if (!(is_alpha(str[i]) || is_undercore(str[i])))
+                break;
+        }
+        else
+        {
+            if (!(is_alpha(str[i]) || is_underscore(str[i]) || is_num(str[i])))
+                break;
+        }
+    }
+    return ((str[i] == '\0')? TRUE: FALSE);
 }

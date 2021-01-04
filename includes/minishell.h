@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/04 11:44:19 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/04 16:18:00 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,12 @@ typedef	struct	s_stack
 	
 }				t_stack;
 
+typedef struct s_env_vars
+{
+	char		*name;
+	char		*value;
+	struct	s_env_vars *next;
+}				t_env_vars;
 /******************************************************************************/
 /*	get_input and tokenizing 												  */
 /******************************************************************************/
@@ -119,17 +125,11 @@ char				*ft_strdup(char *str);
 bool				is_alpha(char c);
 bool				is_num(char c);
 bool				is_undercore(char c);
+bool				is_identifier(char *str);
 
 /******************************************************************************/
 /* environment variables linked list functions prototypes					  */
 /******************************************************************************/
-typedef struct s_env_vars
-{
-	char		*name;
-	char		*value;
-	struct	s_env_vars *next;
-}				t_env_vars;
-
 t_env_vars			*create_env_var(char *name, char *value);
 t_env_vars			*last_env_var(t_env_vars *env_vars);
 char				*get_env_name(char *name_value);
@@ -138,7 +138,7 @@ void				add_back_env(t_env_vars **vars, t_env_vars *new_var);
 t_env_vars			*build_env_vars(char *envp[]);
 t_env_vars			*search_var(t_env_vars **env_vars, char *var_name);
 int					change_env_var(t_env_vars **vars, char *var_name, char *new_value);
-
+void				del_env_var(t_env_vars **envs, char *name);
 /******************************************************************************/
 /* parser functions 														  */
 /******************************************************************************/
@@ -151,5 +151,7 @@ void			free_parse_tree(t_pipeline *parse_tree);
 /******************************************************************************/
 int 	pwd(void);
 int		env(t_env_vars *env_vars);
+int     export(t_arguments *args, t_env_vars **envs);
+int		unset(t_arguments *arguments, t_env_vars **envs);
 
 #endif

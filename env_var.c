@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:28:41 by abbouzid          #+#    #+#             */
-/*   Updated: 2020/12/14 17:30:06 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/04 16:17:31 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ char    *get_env_name(char *name_value)
     i = 0;
     while (name_value[i] && name_value[i] != '=')
         i++;
+    if (!name_value[i])
+        return (NULL);
     if (!(name = (char *)malloc(i + 1)))
         return (NULL);
     ft_strlcpy(name, name_value, i);
@@ -134,7 +136,42 @@ int             change_env_var(t_env_vars **vars, char *var_name, char *new_valu
         if (!(var->value = (char *)malloc(ft_strlen(new_value) + 1)))
             return (0);
         ft_strcpy(var->value, new_value);
-        return (1);
     }
-    return (0);
+    else
+    {
+        var = create_env_var(var_name, new_value);
+        if (var)
+            add_back_env(vars, var);
+        else
+            return (0);
+    }
+    return (1);
+}
+
+void    del_env_var(t_env_vars **envs, char *name)
+{
+    t_env_vars *tmp;
+    t_env_vars *prev;
+
+    tmp = (*envs);
+    if (!ft_strcmp((*envs)->name, name))
+    {
+        tmp = (*envs)->next;
+        free_env_var((*envs));
+        (*envs) = tmp;
+        return;
+    }
+    prev = (*envs);
+    tmp = (*envs)->next;
+    while (tmp)
+    {
+        if (!ft_strcmp(tmp->name, name))
+        {
+            prev->next = tmp->next;
+            free_env_var(tmp);
+            return;
+        }
+        prev = tmp;
+        tmp = tmp->next;
+    }
 }
