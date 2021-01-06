@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 17:02:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/04 09:38:19 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/06 10:33:43 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,18 @@ int    empty_stack(t_stack **head, t_token **tokens)
     return (1);
 }
 
+bool    is_meta(char c)
+{
+    if (c == '|' || c == '>' || c == '<' || c == ';')
+        return(TRUE);
+    return (FALSE);
+}
+
 void        is_metacharacter(t_stack **stack)
 {
     char    top;
 
     top = top_stack(stack);
-    if ((top == '|' || top == '>' || top == '<' || top == ';') && !special((*stack)))
+    if (is_meta(top) && !special((*stack)))
         (*stack)->meta = 1;
 }

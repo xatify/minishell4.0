@@ -4,27 +4,32 @@
 + 1: get input
     + must handle when the input is empty
 
-- 2: tokenizing the input
-    -- must handle tokens that have metacharcters inside them
++ 2: tokenizing the input
+    + must handle tokens that have metacharcters inside them
     + search the tokens for special caracters and remove them
 
 + 3: parsing the tokens and build a 3D linked list of command
     + must handle redirection if the filename doesnt follow < or > or >>
     + implementation of freeing the parse tree after finish
 
-6: implement built-in
-    6-1: echo with option -n
-    6-2: cd with only a relative and absolute path
+-- 6: implement built-in
+    - 6-1: echo with option -n
+        -- testing
+    - 6-2: cd with only a relative and absolute path
+        -- testing
     - 6-3: pwd
         -- needs testing
-    -6-4: export
-        -handle identifier
-        -case VAR or VAR=
+    - 6-4: export
+        -- testing
+        --handle identifier
+        --case VAR or VAR=
         
-    6-5: unset
+    - 6-5: unset
+        -- testing
     - 6-7: env
         -- testing
-    6-8: exit
+    - 6-8: exit
+        -- testing
 
 5: shell expansions
     -  $! and $VAR on the nodes of linked list

@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 18:40:06 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/04 10:41:59 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/06 11:50:10 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int            identify_all_tokens(t_token *tokens)
     while (token)
     {
         token->id = token_id(token->tkn);
-        if (token->id <= 2)
+        if (token->id != WORD)
         {
             if (!token->next || token_id((token->next)->tkn) != WORD)
                 return (0);
@@ -75,15 +75,25 @@ void    add_token(t_token **tokens, t_token *new_token)
 
 int     handle_single_quote(t_stack **stack, char **input_cmd)
 {
-    while (**input_cmd && top_stack(stack) != 0x27)
-        push(stack, *(*input_cmd)++);
-    if (top_stack(stack) == 0x27 && (is_white_character(**input_cmd) || **input_cmd == '\0'))
+    char   c;
+    
+    while (**input_cmd)
     {
         push(stack, *(*input_cmd)++);
-        return (1);
+        if (top_stack(stack) != 0x27)
+            continue;
+        break;
     }
-    else
-        return (0);
+    if (top_stack(stack) == 0x27)
+    {
+        c = *(*input_cmd + 1);
+        if (is_white_character(c) || is_meta(c) || !c)
+        {
+            push(stack, *(*input_cmd)++);
+            return (1);
+        }
+    }
+    return (0);
 }
 
 int     special(t_stack *stack)
@@ -168,6 +178,12 @@ int     handle_metacharacter(t_stack **stack, t_token **tokens, char **input_cmd
         push(stack, *(*input_cmd)++);
         append = 1;
     }
+    else if (is_meta(**input_cmd))
+    {
+        free_stack(stack);
+        free_tokens(tokens);
+        return (0);
+    }
     if (!empty_stack(stack, tokens))
         return (0);
     pop(stack);
@@ -251,8 +267,10 @@ t_token     *tokenizing(char *input_cmd)
         }
     }
     if (!token)
+    {
+        printf("error while parsing !\n");
         return (NULL);
-    //remove_escape_character(token);
+    }
     if (identify_all_tokens(token))
         return (token);
     free_tokens(&token);

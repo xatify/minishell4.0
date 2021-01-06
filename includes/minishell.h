@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/04 16:18:00 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/06 10:32:47 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,9 @@ bool				is_white_character(char c);
 char				*ft_strdup(char *str);
 bool				is_alpha(char c);
 bool				is_num(char c);
-bool				is_undercore(char c);
+bool				is_underscore(char c);
 bool				is_identifier(char *str);
-
+bool				is_meta(char c);
 /******************************************************************************/
 /* environment variables linked list functions prototypes					  */
 /******************************************************************************/
