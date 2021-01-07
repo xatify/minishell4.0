@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/06 10:32:47 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/07 11:58:33 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,19 @@
 /******************************************************************************/
 /*	structures prototypes													  */
 /******************************************************************************/
-typedef	struct s_arguments
+typedef	struct s_strlist
 {
-	char 				*arg;
-	struct s_arguments 	*next;
-}				t_arguments;
+	char 				*str;
+	struct s_strlist 	*next;
+}				t_strlist;
 
 typedef	struct s_simple_command
 {
 	char		*cmd_name;
-	t_arguments *arguments;
-	char		*infile;
-	char		*outfile;
-	char		*append_outfile;
+	t_strlist 	*arguments;
+	t_strlist	*infiles;
+	t_strlist	*outfiles;
+	t_strlist	*append_outfiles;
 	struct s_simple_command		*next;
 }				t_simple_command;
 
@@ -84,22 +84,32 @@ typedef struct s_env_vars
 	struct	s_env_vars *next;
 }				t_env_vars;
 /******************************************************************************/
-/*	get_input and tokenizing 												  */
+/*	get_input																  */
 /******************************************************************************/
-enum token {OUTPUT, INPUT, APPEND_OUT, PIPE, SEMICOLON, WORD};
-
-
 int					get_input(char	**input);
 
-t_token		*new_token(char **str);
-t_token		*last_token(t_token *tokens);
-void		add_token(t_token **tokens, t_token *new_token);
-t_token     *tokenizing(char *input_cmd);
-void     	free_tokens(t_token **head);
-int     	handle_single_quote(t_stack **stack, char **input_cmd);
-int			identify_all_tokens(t_token *tokens);
-int			special(t_stack *stack);
-void		remove_escape_character(t_token **tokens);
+/******************************************************************************/
+/*	tokens linked list methodes												  */
+/******************************************************************************/
+enum token {OUTPUT, INPUT, APPEND_OUT, PIPE, SEMICOLON, WORD};
+void            del_token_head(t_token **tokens);
+int             token_id(char *token);
+t_token 		*new_token(char **str);
+int            identify_all_tokens(t_token *tokens);
+t_token 		*last_token(t_token *tokens);
+void			add_token(t_token **tokens, t_token *new_token);
+void			free_tokens(t_token **head);
+
+/******************************************************************************/
+/*	lexer functions															  */
+/******************************************************************************/
+int     handle_single_quote(t_stack **stack, char **input_cmd);
+int     special(t_stack *stack);
+int     handle_double_quote(t_stack **stack, char **input_cmd);
+int     handle_metacharacter(t_stack **stack, t_token **tokens, char **input_cmd);
+int      handle_quotes(t_stack **stack, char **input_cmd, t_token **tokens);
+t_token    *lexer(char *input_cmd);
+
 /******************************************************************************/
 /*	stack to handle the double quote strings 								  */
 /******************************************************************************/
@@ -127,6 +137,7 @@ bool				is_num(char c);
 bool				is_underscore(char c);
 bool				is_identifier(char *str);
 bool				is_meta(char c);
+int					ft_printf(const char *s, ...);
 /******************************************************************************/
 /* environment variables linked list functions prototypes					  */
 /******************************************************************************/
@@ -139,10 +150,16 @@ t_env_vars			*build_env_vars(char *envp[]);
 t_env_vars			*search_var(t_env_vars **env_vars, char *var_name);
 int					change_env_var(t_env_vars **vars, char *var_name, char *new_value);
 void				del_env_var(t_env_vars **envs, char *name);
+
 /******************************************************************************/
 /* parser functions 														  */
 /******************************************************************************/
 t_pipeline      *parser(t_token     **tokens);
+int            	parse_redirection(t_token **tokens, t_simple_command *command, int redirection);
+int     		parse_cmd_name(t_token **tokens, t_simple_command *command);
+int     		parse_arguments(t_token **tokens, t_simple_command *command);
+t_simple_command 	*parse_simple_command(t_token    **tokens);
+t_pipeline      	*parse_pipe_line(t_token **tokens);
 void			show_parse_tree(t_pipeline *parse_tree);
 void			free_parse_tree(t_pipeline *parse_tree);
 
@@ -151,7 +168,37 @@ void			free_parse_tree(t_pipeline *parse_tree);
 /******************************************************************************/
 int 	pwd(void);
 int		env(t_env_vars *env_vars);
-int     export(t_arguments *args, t_env_vars **envs);
-int		unset(t_arguments *arguments, t_env_vars **envs);
+int     export(t_strlist *args, t_env_vars **envs);
+int		unset(t_strlist *arguments, t_env_vars **envs);
 
+
+/******************************************************************************/
+/* str linked list methodes													  */
+/******************************************************************************/
+t_strlist 			*new_strlist(char   *str);
+t_strlist 			*last_strlist(t_strlist *strlist);
+int     			add_strlist(t_strlist **strlist, char *str);
+void                free_strlist(t_strlist *strlist);
+void        		show_strlist(t_strlist *strlist);
+
+
+/******************************************************************************/
+/* simple command linked list methodes										  */
+/******************************************************************************/
+void                initialize_cmd(t_simple_command *command);
+void                free_command(t_simple_command *command);
+t_simple_command  	*last_command(t_simple_command *cmd);
+void            	add_back_command(t_simple_command **cmd_head, t_simple_command *command);
+t_simple_command	*new_cmd(void);
+void				show_command(t_simple_command *cmd);
+
+/******************************************************************************/
+/* pipeline 	 linked list methodes										  */
+/******************************************************************************/
+t_pipeline	*new_pipe_line(void);
+void        free_pipeline(t_pipeline *pipeline);
+void        free_pipeline_list(t_pipeline *pipeline_head);
+t_pipeline	*last_pipeline(t_pipeline *pipeline);
+void        add_back_pipeline(t_pipeline **pipe_head, t_pipeline *pipeline);
+void		show_pipeline(t_pipeline *pipeline);
 #endif

@@ -8,9 +8,11 @@
     + must handle tokens that have metacharcters inside them
     + search the tokens for special caracters and remove them
 
-+ 3: parsing the tokens and build a 3D linked list of command
+- 3: parsing the tokens and build a 3D linked list of command
     + must handle redirection if the filename doesnt follow < or > or >>
     + implementation of freeing the parse tree after finish
+    - multiple redirections of the same type must creat the first ones  if they don't
+    exist and only redirect from or to the last one.
 
 -- 6: implement built-in
     - 6-1: echo with option -n
@@ -45,8 +47,5 @@
 
 
 !!! Notes
-* while building tokens don't forget the quoting rules 
-* buildins must be modified to access the arguments in the command list
-* export and unset commands can have multiples arguments 
-* the error handling is not perfect
-* built-ins need testing 
+* built-ins need testing
+* before production phase, linked list must be handled so there will be no double code

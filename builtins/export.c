@@ -6,19 +6,19 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:57:13 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/04 16:06:32 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/07 09:34:46 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 
-int     export(t_arguments *args, t_env_vars **envs)
+int     export(t_strlist *args, t_env_vars **envs)
 {
     char        *name;
     char        *value;
     int         ret;
-    t_arguments *tmp;
+    t_strlist *tmp;
     t_env_vars  *var_node;
 
     if (!args)

@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:50:20 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/06 11:53:00 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/07 11:54:57 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		main()
 {
 	t_token				*tokens;
 	char				*input_cmd;
-	t_token				*tmp;
+	//t_token				*tmp;
 	t_pipeline			*parse_tree;
 	
 	while (TRUE)
@@ -24,17 +24,17 @@ int		main()
 		write(1, &PROMPT, ft_strlen(PROMPT));
 		if (get_input(&input_cmd))
 		{
-			tokens = tokenizing(input_cmd);
+			tokens = lexer(input_cmd);
 			if (tokens)
 			{
-				tmp = tokens;
-				while(tmp)
-				{
-					printf("<\t%-20s> : %d\n", tmp->tkn, tmp->id);
-					tmp = tmp->next;
-				}
+				// tmp = tokens;
+				// while(tmp)
+				// {
+				// 	printf("<\t%-20s> : %d\n", tmp->tkn, tmp->id);
+				// 	tmp = tmp->next;
+				// }
 				parse_tree = parser(&tokens);
-				show_parse_tree(parse_tree);
+				show_pipeline(parse_tree);
 				//free_tokens(&tokens);
 				//free_pipeline_list(parse_tree);
 			}
