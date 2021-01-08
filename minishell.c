@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:50:20 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/07 14:17:05 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/08 09:00:54 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int		main()
 	char				*input_cmd;
 	t_token				*tmp;
 	//t_pipeline			*parse_tree;
-	
+	int ret;
 	while (TRUE)
 	{
 		write(1, &PROMPT, ft_strlen(PROMPT));
-		if (get_input(&input_cmd))
+		if ((ret = get_next_line(0, &input_cmd)))
 		{
 			tokens = lexer(input_cmd);
 			if (tokens)
@@ -40,7 +40,7 @@ int		main()
 			}
 			free(input_cmd);
 		}
-		
+
 	}
 	return (0);
 }

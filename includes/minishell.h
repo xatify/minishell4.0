@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/07 11:58:33 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/08 08:58:10 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 #include <stdio.h>
 
 #define SHELL "/bin/sh"
-#define PROMPT "minishell:>"
+#define PROMPT "\nminishell:>"
 
 /******************************************************************************/
 /*	macros 																	  */
@@ -74,7 +74,7 @@ typedef	struct	s_stack
 	int 				meta;
 	int					special;
 	struct 		s_stack *next;
-	
+
 }				t_stack;
 
 typedef struct s_env_vars
@@ -86,7 +86,8 @@ typedef struct s_env_vars
 /******************************************************************************/
 /*	get_input																  */
 /******************************************************************************/
-int					get_input(char	**input);
+// int					get_input( t);
+int				get_next_line(int fd, char **line);
 
 /******************************************************************************/
 /*	tokens linked list methodes												  */
