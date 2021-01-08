@@ -11,7 +11,7 @@
 - 3: parsing the tokens and build a 3D linked list of command
     + must handle redirection if the filename doesnt follow < or > or >>
     + implementation of freeing the parse tree after finish
-    - multiple redirections of the same type must creat the first ones  if they don't
+    + multiple redirections of the same type must creat the first ones  if they don't
     exist and only redirect from or to the last one.
 
 -- 6: implement built-in
