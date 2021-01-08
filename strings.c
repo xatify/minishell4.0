@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:01:06 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/06 10:10:34 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/08 11:46:27 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,3 +124,4 @@ bool    is_identifier(char *str)
     }
     return ((str[i] == '\0')? TRUE: FALSE);
 }
+

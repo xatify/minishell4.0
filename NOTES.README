@@ -33,8 +33,10 @@
     - 6-8: exit
         -- testing
 
-5: shell expansions
-    -  $! and $VAR on the nodes of linked list
+-- 5: shell expansions
+    -- $! and $VAR of the command before performing redirection
+        - needs to be tested
+    -- 5-1: environment variables needs to be tested
 
 6: perform redirections
 
@@ -49,3 +51,4 @@
 !!! Notes
 * built-ins need testing
 * before production phase, linked list must be handled so there will be no double code
+*itoa is used 

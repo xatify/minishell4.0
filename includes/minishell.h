@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/08 08:58:10 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/08 12:00:46 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ char    top_stack(t_stack **stack_head);
 void    free_stack(t_stack **stack);
 int		empty_stack(t_stack **stack_head, t_token **tokens);
 void	is_metacharacter(t_stack **stack);
+void	push_str_to_stack(t_stack **stack, char *str);
 
 /******************************************************************************/
 /*	strings manipulation prototypes											  */
@@ -139,6 +140,8 @@ bool				is_underscore(char c);
 bool				is_identifier(char *str);
 bool				is_meta(char c);
 int					ft_printf(const char *s, ...);
+char				*ft_itoa(int i);
+
 /******************************************************************************/
 /* environment variables linked list functions prototypes					  */
 /******************************************************************************/
@@ -151,7 +154,8 @@ t_env_vars			*build_env_vars(char *envp[]);
 t_env_vars			*search_var(t_env_vars **env_vars, char *var_name);
 int					change_env_var(t_env_vars **vars, char *var_name, char *new_value);
 void				del_env_var(t_env_vars **envs, char *name);
-
+void    			show_env_vars(t_env_vars *vars);
+void				free_env_var(t_env_vars *vars);
 /******************************************************************************/
 /* parser functions 														  */
 /******************************************************************************/
@@ -202,4 +206,18 @@ void        free_pipeline_list(t_pipeline *pipeline_head);
 t_pipeline	*last_pipeline(t_pipeline *pipeline);
 void        add_back_pipeline(t_pipeline **pipe_head, t_pipeline *pipeline);
 void		show_pipeline(t_pipeline *pipeline);
+
+/******************************************************************************/
+/* $? and $ENV_VAR expansion of single command								  */
+/******************************************************************************/
+bool    is_single_quote_token(char *token);
+bool    is_double_quote_token(char *token);
+int     expand_single_quote_token(char **token);
+void    expand_env_var(t_stack **primary_stack, t_stack **secondary_stack, t_env_vars **vars);
+void    expand_dollar_sign(char **token, t_env_vars *vars, int *exit_status, t_stack **primary_stack);
+int     expand_double_quote_token(char **token, t_env_vars * vars, int *exit_status);
+int     expand_unquoted_token(char **token, t_env_vars *vars, int *exit_status);
+int		expand_token(char **token, t_env_vars *vars, int *exit_status);
+int     expand_list(t_strlist *list, t_env_vars *vars, int *exit_status);
+int     expand(t_simple_command *cmd, t_env_vars *vars, int *exit_status);
 #endif
