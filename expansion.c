@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/08 11:49:51 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/11 12:26:23 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 
 bool    is_single_quote_token(char *token)
 {
-    if (token[0] == '\'' && token[ft_strlen(token) + 1] == '\0')
-        return (TRUE);
-    return (FALSE);
+    return ((token[0] == '\'')? TRUE: FALSE);
 }
 
 int     expand_single_quote_token(char **token)
 {
     char    *tmp;
+    
     
     (*token)[ft_strlen((*token)) + 1] = '\0';
     tmp = (*token);
@@ -35,9 +34,7 @@ int     expand_single_quote_token(char **token)
 
 bool    is_double_quote_token(char *token)
 {
-    if (token[0] == '"' && token[ft_strlen(token) + 1] == '\0')
-        return (TRUE);
-    return (FALSE);
+    return ((token[0] == '"')? TRUE: FALSE);
 }
 
 void    expand_env_var(t_stack **primary_stack, t_stack **secondary_stack, t_env_vars **vars)
@@ -76,7 +73,8 @@ void    expand_dollar_sign(char **token, t_env_vars *vars, int *exit_status, t_s
             push(&secondary_stack, **token);
             (*token)++;
         }
-        break;
+        else
+            break;
     }
     expand_env_var(primary_stack, &secondary_stack, &vars);
 }
@@ -102,7 +100,7 @@ int     expand_unquoted_token(char **token, t_env_vars *vars, int *exit_status)
     int         first_back_slash;
     char        *tmp;
     t_token     *tmp_token;
-
+   
     first_back_slash = 0;
     stack = NULL;
     tmp = (*token);
@@ -124,24 +122,32 @@ int     expand_unquoted_token(char **token, t_env_vars *vars, int *exit_status)
             stack->special = 0;
         else if (*tmp == '$')
         {
-            if (stack->special)
+            if (stack && stack->special)
             {
                 pop(&stack);
                 push(&stack, *tmp);
             }
             else
+            {
+                tmp++;
                 expand_dollar_sign(&tmp, vars, exit_status, &stack);
+            }
         }
         tmp++;
     }
     tmp_token = NULL;
-    empty_stack(&stack, &tmp_token);
-    tmp = (*token);
-    if (((*token) = ft_strdup(tmp_token->tkn)))
+    if (stack)
     {
-        free(tmp);
-        return (1);
+        empty_stack(&stack, &tmp_token);
+        (*token) = ft_strdup(tmp_token->tkn);
     }
+    else
+    {
+       token = NULL;
+       return (1);
+    }
+    if (*token)
+        return (1);
     return (0);
 }
 
@@ -167,7 +173,10 @@ int     expand_list(t_strlist *list, t_env_vars *vars, int *exit_status)
     if (!list)
         return (1);
     if (expand_token(&(list->str), vars, exit_status))
+    {
+        
         return (expand_list(list->next, vars, exit_status));
+    }
     else
         return (0);
 }
@@ -181,4 +190,27 @@ int     expand(t_simple_command *cmd, t_env_vars *vars, int *exit_status)
         expand_list(cmd->append_outfiles, vars, exit_status))
         return (1);
     return (0);
+}
+
+int    expand_pipeline(t_pipeline *parse_tree, t_env_vars *vars, int *exit_status)
+{
+    t_simple_command *cmd;
+
+    cmd = parse_tree->simple_cmd;
+    while (cmd)
+    {
+        if (!expand(cmd, vars, exit_status))
+            return (0);
+        cmd = cmd->next;
+    }
+    return (1);
+}
+
+void    perform_expansions(t_pipeline *parse_tree, t_env_vars *vars, int *exit_status)
+{
+    if (parse_tree)
+    {
+        if (expand_pipeline(parse_tree, vars, exit_status))
+            perform_expansions(parse_tree->next, vars, exit_status);
+    }
 }

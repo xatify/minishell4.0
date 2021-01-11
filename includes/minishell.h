@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/08 12:00:46 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/11 11:55:34 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include <sys/stat.h>
 #include <dirent.h>
 #include <stdio.h>
+#include <string.h>
 
 #define SHELL "/bin/sh"
 #define PROMPT "\nminishell:>"
@@ -220,4 +221,6 @@ int     expand_unquoted_token(char **token, t_env_vars *vars, int *exit_status);
 int		expand_token(char **token, t_env_vars *vars, int *exit_status);
 int     expand_list(t_strlist *list, t_env_vars *vars, int *exit_status);
 int     expand(t_simple_command *cmd, t_env_vars *vars, int *exit_status);
+int		expand_pipeline(t_pipeline *parse_tree, t_env_vars *vars, int *exit_status);
+void    perform_expansions(t_pipeline *parse_tree, t_env_vars *vars, int *exit_status);
 #endif

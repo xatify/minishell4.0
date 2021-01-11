@@ -7,6 +7,7 @@
 + 2: tokenizing the input
     + must handle tokens that have metacharcters inside them
     + search the tokens for special caracters and remove them
+    -- there still problems with single quotes tokens
 
 - 3: parsing the tokens and build a 3D linked list of command
     + must handle redirection if the filename doesnt follow < or > or >>

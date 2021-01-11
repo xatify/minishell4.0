@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 18:40:06 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/07 11:19:14 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/11 10:53:38 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int     handle_single_quote(t_stack **stack, char **input_cmd)
 {
-    char   c;
-    
     while (**input_cmd)
     {
         push(stack, *(*input_cmd)++);
@@ -25,10 +23,9 @@ int     handle_single_quote(t_stack **stack, char **input_cmd)
     }
     if (top_stack(stack) == 0x27)
     {
-        c = *(*input_cmd + 1);
-        if (is_white_character(c) || is_meta(c) || !c)
+        if (is_white_character((**input_cmd)) || is_meta(**input_cmd) || !(**input_cmd))
         {
-            push(stack, *(*input_cmd)++);
+            push(stack, *(*input_cmd));
             return (1);
         }
     }
@@ -153,14 +150,15 @@ t_token     *lexer(char *input_cmd)
     t_token     *token = NULL;
     t_stack     *stack = NULL;
 
+    if (*input_cmd == '\0')
+        return (0);
     while (TRUE)
     {
         push(&stack, *input_cmd++);
         if (top_stack(&stack) == 0x27 || top_stack(&stack) == 0x22)
         {
-            if (handle_quotes(&stack, &input_cmd, &token))
-                continue;
-            break;
+            if (!handle_quotes(&stack, &input_cmd, &token))
+                break;
         }
         if (top_stack(&stack) == ' ' || top_stack(&stack) == '\t')
         {

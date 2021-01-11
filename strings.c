@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:01:06 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/08 11:46:27 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/11 11:33:06 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ int		ft_strlen(char *str)
 	len = 0;
 	if (str == 0)
 		return (len);
-	while(*str++)
+	while(*str)
+	{
 		len++;
+		str++;
+	}
 	return (len);
 }
 

@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:43:36 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/08 11:26:26 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/11 11:36:45 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,3 @@ void     free_tokens(t_token **head)
         free_tokens(&tmp);
     }  
 }
-
-char    *exit_status_to_str(int exit_status)
-{
-    char  *str;
-
-    if ((str = ft_strdup("0")))
-        str[0] = exit_status & 0xFF;
-    return (str);
-}
-
