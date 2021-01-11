@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:04:18 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/11 12:20:59 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/11 16:15:14 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void        show_strlist(t_strlist *strlist)
 {
     if (strlist)
     {
-        if (strlist->str)
+        //if (strlist->str)
             ft_printf("%s\t", strlist->str);
         show_strlist(strlist->next);
     }

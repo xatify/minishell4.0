@@ -7,7 +7,8 @@
 + 2: tokenizing the input
     + must handle tokens that have metacharcters inside them
     + search the tokens for special caracters and remove them
-    -- there still problems with single quotes tokens
+    + problem with ; at the end of input fixed
+    + there still problems with single quotes tokens !fixed
 
 - 3: parsing the tokens and build a 3D linked list of command
     + must handle redirection if the filename doesnt follow < or > or >>
@@ -20,6 +21,7 @@
         -- testing
     - 6-2: cd with only a relative and absolute path
         -- testing
+        - OLDPWD must be changed 
     - 6-3: pwd
         -- needs testing
     - 6-4: export
@@ -37,7 +39,13 @@
 -- 5: shell expansions
     -- $! and $VAR of the command before performing redirection
         - needs to be tested
-    -- 5-1: environment variables needs to be tested
+    + 5-1: environment variables needs to be tested
+    + segfault !! don't know why (recoding the entire logic of expansions)
+    + multiple $VAR inside the same token
+    
+
+    
+?? signal ????????????
 
 6: perform redirections
 

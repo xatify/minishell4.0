@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:43:36 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/11 11:36:45 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/11 14:24:21 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int            identify_all_tokens(t_token *tokens)
         token->id = token_id(token->tkn);
         if (token->id != WORD)
         {
+            if (token->id == SEMICOLON && !token->next)
+                return (1);
             if (!token->next || token_id((token->next)->tkn) != WORD)
                 return (0);
         }
