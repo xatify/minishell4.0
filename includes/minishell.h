@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/11 16:05:34 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/12 10:52:37 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,15 @@ typedef struct s_env_vars
 	char		*value;
 	struct	s_env_vars *next;
 }				t_env_vars;
+
+typedef struct s_data
+{
+	t_env_vars 	*env_vars;
+	char		*input_cmd;
+	t_pipeline	*parse_tree;
+	int			*exit_status;
+}				t_data;
+
 /******************************************************************************/
 /*	get_input																  */
 /******************************************************************************/
@@ -160,7 +169,7 @@ void				free_env_var(t_env_vars *vars);
 /******************************************************************************/
 /* parser functions 														  */
 /******************************************************************************/
-t_pipeline      *parser(t_token     **tokens);
+t_pipeline      *parser(char *input_cmd);
 int            	parse_redirection(t_token **tokens, t_simple_command *command, int redirection);
 int     		parse_cmd_name(t_token **tokens, t_simple_command *command);
 int     		parse_arguments(t_token **tokens, t_simple_command *command);
@@ -177,6 +186,7 @@ int		env(t_env_vars *env_vars);
 int     export(t_strlist *args, t_env_vars **envs);
 int		unset(t_strlist *arguments, t_env_vars **envs);
 
+char	is_build_in(char *cmd_name);
 
 /******************************************************************************/
 /* str linked list methodes													  */
@@ -221,4 +231,17 @@ char   	*expand_unquoted_token(char *token, t_env_vars *vars, int *exit_status);
 int		expand_cmd(t_simple_command *cmd, t_env_vars *vars, int *exit_status);
 void	expand_list(t_strlist *list, t_env_vars *vars, int *exit_status);
 char	*expand(char **token, t_env_vars *vars, int *exit_status);
+
+/******************************************************************************/
+/* initialise the shell														  */
+/******************************************************************************/
+
+t_data	*start_shell(int argc, char **argv, char **envp);
+
+
+/******************************************************************************/
+/* execution																  */
+/******************************************************************************/
+
+
 #endif

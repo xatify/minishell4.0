@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   start_shell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/08 22:50:20 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/12 09:44:32 by abbouzid         ###   ########.fr       */
+/*   Created: 2021/01/12 09:28:43 by abbouzid          #+#    #+#             */
+/*   Updated: 2021/01/12 09:34:39 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int		main(int	argc, char **argv, char **envp)
+t_data  *start_shell(int argc, char **argv, char **envp)
 {
-	t_data 	*data;
-
-	data = start_shell(argc, argv, envp);
-	while (TRUE)
-	{
-		write(1, &PROMPT, ft_strlen(PROMPT));
-		if (get_next_line(0, &(data->input_cmd)))
-		{
-			data->parse_tree = parser(data->input_cmd);
-			show_pipeline(data->parse_tree);
-		}
-		free(data->input_cmd);
-	}
-	return (0);
+    t_data  *data;
+    
+    argc = 0;
+    argv = NULL;
+    if (!(data = (t_data *)malloc(sizeof(t_data))))
+        return (NULL);
+    data->exit_status = 0;
+    data->env_vars = build_env_vars(envp);
+    return (data);   
 }

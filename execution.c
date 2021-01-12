@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/08 22:50:20 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/12 09:44:32 by abbouzid         ###   ########.fr       */
+/*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
+/*   Updated: 2021/01/12 10:26:55 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int		main(int	argc, char **argv, char **envp)
+void    execute_built_in(char built_in, t_data *data, t_simple_command *cmd)
 {
-	t_data 	*data;
-
-	data = start_shell(argc, argv, envp);
-	while (TRUE)
-	{
-		write(1, &PROMPT, ft_strlen(PROMPT));
-		if (get_next_line(0, &(data->input_cmd)))
-		{
-			data->parse_tree = parser(data->input_cmd);
-			show_pipeline(data->parse_tree);
-		}
-		free(data->input_cmd);
-	}
-	return (0);
+    
 }
+
+void    execute_simple_cmd(t_data *data, t_simple_command *cmd)
+{
+    char    built_in;
+
+    built_in = is_build_in(cmd->cmd_name);
+    if (built_in != '\0')
+        execute_built_in(built_in, data, cmd);
+    else
+        execute_binary(data, cmd);
+}
+
+int     execute(t_data   *data)
+{
+        
+}
+

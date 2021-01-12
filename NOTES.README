@@ -50,6 +50,7 @@
 6: perform redirections
 
 7: Execute the commands list
+    -- build the args array from cmd->arguments !! needs testing 
 
 8: collect the exit status
 
