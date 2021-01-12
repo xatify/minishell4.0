@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/12 10:52:37 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/12 16:21:05 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,168 +25,179 @@
 #include <stdio.h>
 #include <string.h>
 
-#define SHELL "/bin/sh"
-#define PROMPT "\nminishell:>"
+#include "macros.h"
+#include "structs.h"
+#include "tokens.h"
+#include "lexer.h"
+#include "stack.h"
+#include "strmanip.h"
+#include "env_var.h"
+#include "parser.h"
+#include "builtins.h"
 
-/******************************************************************************/
-/*	macros 																	  */
-/******************************************************************************/
-#define TRUE 1
-#define FALSE 0
-#define STDIN 0
-#define STDOUT 1
-#define bool int
+// #define SHELL "/bin/sh"
+// #define PROMPT "\nminishell:>"
 
-/******************************************************************************/
-/*	structures prototypes													  */
-/******************************************************************************/
-typedef	struct s_strlist
-{
-	char 				*str;
-	struct s_strlist 	*next;
-}				t_strlist;
+// /******************************************************************************/
+// /*	macros 																	  */
+// /******************************************************************************/
+// #define TRUE 1
+// #define FALSE 0
+// #define STDIN 0
+// #define STDOUT 1
+// #define bool int
 
-typedef	struct s_simple_command
-{
-	char		*cmd_name;
-	t_strlist 	*arguments;
-	t_strlist	*infiles;
-	t_strlist	*outfiles;
-	t_strlist	*append_outfiles;
-	struct s_simple_command		*next;
-}				t_simple_command;
+// /******************************************************************************/
+// /*	structures prototypes													  */
+// /******************************************************************************/
+// typedef	struct s_strlist
+// {
+// 	char 				*str;
+// 	struct s_strlist 	*next;
+// }				t_strlist;
 
-typedef struct s_pipeline
-{
-	t_simple_command 	*simple_cmd;
-	struct 	s_pipeline  *next;
-}				t_pipeline;
+// typedef	struct s_simple_command
+// {
+// 	char		*cmd_name;
+// 	t_strlist 	*arguments;
+// 	t_strlist	*infiles;
+// 	t_strlist	*outfiles;
+// 	t_strlist	*append_outfiles;
+// 	struct s_simple_command		*next;
+// }				t_simple_command;
 
-typedef  struct s_token
-{
-	char 	*tkn;
-	int		id;
-	struct 	s_token *next;
-}				t_token;
+// typedef struct s_pipeline
+// {
+// 	t_simple_command 	*simple_cmd;
+// 	struct 	s_pipeline  *next;
+// }				t_pipeline;
 
-typedef	struct	s_stack
-{
-	char				character;
-	int 				meta;
-	int					special;
-	struct 		s_stack *next;
+// typedef  struct s_token
+// {
+// 	char 	*tkn;
+// 	int		id;
+// 	struct 	s_token *next;
+// }				t_token;
 
-}				t_stack;
+// typedef	struct	s_stack
+// {
+// 	char				character;
+// 	int 				meta;
+// 	int					special;
+// 	struct 		s_stack *next;
 
-typedef struct s_env_vars
-{
-	char		*name;
-	char		*value;
-	struct	s_env_vars *next;
-}				t_env_vars;
+// }				t_stack;
 
-typedef struct s_data
-{
-	t_env_vars 	*env_vars;
-	char		*input_cmd;
-	t_pipeline	*parse_tree;
-	int			*exit_status;
-}				t_data;
+// typedef struct s_env_vars
+// {
+// 	char		*name;
+// 	char		*value;
+// 	struct	s_env_vars *next;
+// }				t_env_vars;
 
-/******************************************************************************/
-/*	get_input																  */
-/******************************************************************************/
+// typedef struct s_data
+// {
+// 	t_env_vars 	*env_vars;
+// 	char		*input_cmd;
+// 	t_pipeline	*parse_tree;
+// 	int			*exit_status;
+// }				t_data;
+
+/*
+** get_input
+*/
+
 // int					get_input( t);
 int				get_next_line(int fd, char **line);
 
 /******************************************************************************/
 /*	tokens linked list methodes												  */
 /******************************************************************************/
-enum token {OUTPUT, INPUT, APPEND_OUT, PIPE, SEMICOLON, WORD};
-void            del_token_head(t_token **tokens);
-int             token_id(char *token);
-t_token 		*new_token(char **str);
-int            identify_all_tokens(t_token *tokens);
-t_token 		*last_token(t_token *tokens);
-void			add_token(t_token **tokens, t_token *new_token);
-void			free_tokens(t_token **head);
+// enum token {OUTPUT, INPUT, APPEND_OUT, PIPE, SEMICOLON, WORD};
+// void            del_token_head(t_token **tokens);
+// int             token_id(char *token);
+// t_token 		*new_token(char **str);
+// int            identify_all_tokens(t_token *tokens);
+// t_token 		*last_token(t_token *tokens);
+// void			add_token(t_token **tokens, t_token *new_token);
+// void			free_tokens(t_token **head);
 
 /******************************************************************************/
 /*	lexer functions															  */
 /******************************************************************************/
-int     handle_single_quote(t_stack **stack, char **input_cmd);
-int     special(t_stack *stack);
-int     handle_double_quote(t_stack **stack, char **input_cmd);
-int     handle_metacharacter(t_stack **stack, t_token **tokens, char **input_cmd);
-int      handle_quotes(t_stack **stack, char **input_cmd, t_token **tokens);
-t_token    *lexer(char *input_cmd);
+// int     handle_single_quote(t_stack **stack, char **input_cmd);
+// int     special(t_stack *stack);
+// int     handle_double_quote(t_stack **stack, char **input_cmd);
+// int     handle_metacharacter(t_stack **stack, t_token **tokens, char **input_cmd);
+// int      handle_quotes(t_stack **stack, char **input_cmd, t_token **tokens);
+// t_token    *lexer(char *input_cmd);
 
 /******************************************************************************/
 /*	stack to handle the double quote strings 								  */
 /******************************************************************************/
 
-char    pop(t_stack **stack_head);
-void	push(t_stack **stack_head, char character);
-int     stack_len(t_stack **stack_head);
-char    top_stack(t_stack **stack_head);
-void    free_stack(t_stack **stack);
-int		empty_stack(t_stack **stack_head, t_token **tokens);
-void	is_metacharacter(t_stack **stack);
-void	push_str_to_stack(t_stack **stack, char *str);
+// char    pop(t_stack **stack_head);
+// void	push(t_stack **stack_head, char character);
+// int     stack_len(t_stack **stack_head);
+// char    top_stack(t_stack **stack_head);
+// void    free_stack(t_stack **stack);
+// int		empty_stack(t_stack **stack_head, t_token **tokens);
+// void	is_metacharacter(t_stack **stack);
+// void	push_str_to_stack(t_stack **stack, char *str);
 
 /******************************************************************************/
 /*	strings manipulation prototypes											  */
 /******************************************************************************/
-char				*ft_strcpy(char *dst, char *src);
-int					ft_strlen(char *str);
-void				ft_strlcpy(char *dst, char *src, int len);
-int					ft_strcmp(char *str1, char *str2);
-void				*ft_memset(void	*b, int c, size_t len);
-bool				is_white_character(char c);
-char				*ft_strdup(char *str);
-bool				is_alpha(char c);
-bool				is_num(char c);
-bool				is_underscore(char c);
-bool				is_identifier(char *str);
-bool				is_meta(char c);
-int					ft_printf(const char *s, ...);
-char				*ft_itoa(int i);
+// char				*ft_strcpy(char *dst, char *src);
+// int					ft_strlen(char *str);
+// void				ft_strlcpy(char *dst, char *src, int len);
+// int					ft_strcmp(char *str1, char *str2);
+// void				*ft_memset(void	*b, int c, size_t len);
+// bool				is_white_character(char c);
+// char				*ft_strdup(char *str);
+// bool				is_alpha(char c);
+// bool				is_num(char c);
+// bool				is_underscore(char c);
+// bool				is_identifier(char *str);
+// bool				is_meta(char c);
+// int					ft_printf(const char *s, ...);
+// char				*ft_itoa(int i);
 
 /******************************************************************************/
 /* environment variables linked list functions prototypes					  */
 /******************************************************************************/
-t_env_vars			*create_env_var(char *name, char *value);
-t_env_vars			*last_env_var(t_env_vars *env_vars);
-char				*get_env_name(char *name_value);
-char				*get_env_value(char *name_value);
-void				add_back_env(t_env_vars **vars, t_env_vars *new_var);
-t_env_vars			*build_env_vars(char *envp[]);
-t_env_vars			*search_var(t_env_vars **env_vars, char *var_name);
-int					change_env_var(t_env_vars **vars, char *var_name, char *new_value);
-void				del_env_var(t_env_vars **envs, char *name);
-void    			show_env_vars(t_env_vars *vars);
-void				free_env_var(t_env_vars *vars);
+// t_env_vars			*create_env_var(char *name, char *value);
+// t_env_vars			*last_env_var(t_env_vars *env_vars);
+// char				*get_env_name(char *name_value);
+// char				*get_env_value(char *name_value);
+// void				add_back_env(t_env_vars **vars, t_env_vars *new_var);
+// t_env_vars			*build_env_vars(char *envp[]);
+// t_env_vars			*search_var(t_env_vars **env_vars, char *var_name);
+// int					change_env_var(t_env_vars **vars, char *var_name, char *new_value);
+// void				del_env_var(t_env_vars **envs, char *name);
+// void    			show_env_vars(t_env_vars *vars);
+// void				free_env_var(t_env_vars *vars);
 /******************************************************************************/
 /* parser functions 														  */
 /******************************************************************************/
-t_pipeline      *parser(char *input_cmd);
-int            	parse_redirection(t_token **tokens, t_simple_command *command, int redirection);
-int     		parse_cmd_name(t_token **tokens, t_simple_command *command);
-int     		parse_arguments(t_token **tokens, t_simple_command *command);
-t_simple_command 	*parse_simple_command(t_token    **tokens);
-t_pipeline      	*parse_pipe_line(t_token **tokens);
-void			show_parse_tree(t_pipeline *parse_tree);
-void			free_parse_tree(t_pipeline *parse_tree);
+// t_pipeline      *parser(char *input_cmd);
+// int            	parse_redirection(t_token **tokens, t_simple_command *command, int redirection);
+// int     		parse_cmd_name(t_token **tokens, t_simple_command *command);
+// int     		parse_arguments(t_token **tokens, t_simple_command *command);
+// t_simple_command 	*parse_simple_command(t_token    **tokens);
+// t_pipeline      	*parse_pipe_line(t_token **tokens);
+// void			show_parse_tree(t_pipeline *parse_tree);
+// void			free_parse_tree(t_pipeline *parse_tree);
 
 /******************************************************************************/
 /* built-ins																  */
 /******************************************************************************/
-int 	pwd(void);
-int		env(t_env_vars *env_vars);
-int     export(t_strlist *args, t_env_vars **envs);
-int		unset(t_strlist *arguments, t_env_vars **envs);
+// int 	pwd(void);
+// int		env(t_env_vars *env_vars);
+// int     export(t_strlist *args, t_env_vars **envs);
+// int		unset(t_strlist *arguments, t_env_vars **envs);
 
-char	is_build_in(char *cmd_name);
+// char	is_build_in(char *cmd_name);
 
 /******************************************************************************/
 /* str linked list methodes													  */
