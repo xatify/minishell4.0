@@ -21,7 +21,7 @@
         -- testing
     - 6-2: cd with only a relative and absolute path
         -- testing
-        - OLDPWD must be changed 
+        - OLDPWD must be changed
     - 6-3: pwd
         -- needs testing
     - 6-4: export
@@ -42,15 +42,15 @@
     + 5-1: environment variables needs to be tested
     + segfault !! don't know why (recoding the entire logic of expansions)
     + multiple $VAR inside the same token
-    
 
-    
+
+
 ?? signal ????????????
 
 6: perform redirections
 
 7: Execute the commands list
-    -- build the args array from cmd->arguments !! needs testing 
+    -- build the args array from cmd->arguments !! needs testing
 
 8: collect the exit status
 
@@ -61,4 +61,5 @@
 !!! Notes
 * built-ins need testing
 * before production phase, linked list must be handled so there will be no double code
-*itoa is used 
+*itoa is used
+* spliting the header is done and exuction header ready to go
