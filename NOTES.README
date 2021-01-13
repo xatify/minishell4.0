@@ -17,6 +17,7 @@
     exist and only redirect from or to the last one.
 
 -- 6: implement built-in
+    !! modification of builtins prototypes to accepts array of arguments not a linked list of arguments
     - 6-1: echo with option -n
         -- testing
     - 6-2: cd with only a relative and absolute path
@@ -25,6 +26,7 @@
     - 6-3: pwd
         -- needs testing
     - 6-4: export
+        -!! needs to redirecte the error to standard error
         -- testing
         --handle identifier
         --case VAR or VAR=
@@ -34,7 +36,8 @@
     - 6-7: env
         -- testing
     - 6-8: exit
-        -- testing
+        - !!!!!must free everything before exiting
+
 
 -- 5: shell expansions
     -- $! and $VAR of the command before performing redirection
@@ -49,10 +52,12 @@
 
 6: perform redirections
 
-7: Execute the commands list
-    -- build the args array from cmd->arguments !! needs testing
+- 7: Execute the commands list
+    -- build the args array from cmd->arguments !! needs testing 
 
 8: collect the exit status
+    - must check if any simple command change the exit_status inside the pipeline or just the \
+      command of the pipeline.
 
 9: go back to step 1
 
@@ -61,5 +66,5 @@
 !!! Notes
 * built-ins need testing
 * before production phase, linked list must be handled so there will be no double code
-*itoa is used
+* itoa is used
 * spliting the header is done and exuction header ready to go

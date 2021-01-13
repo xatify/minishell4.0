@@ -6,40 +6,40 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:57:13 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/07 09:34:46 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/13 10:07:44 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
-int     export(t_strlist *args, t_env_vars **envs)
+int     export(char   **args, t_env_vars **envs)
 {
-    char        *name;
-    char        *value;
-    int         ret;
-    t_strlist *tmp;
-    t_env_vars  *var_node;
+    char    *name;
+    char    *value;
+    int     index;
+    int     return_value;
 
-    if (!args)
-        return (1);
-    tmp = args;
-    ret = 0;
-   while (tmp)
-   {
-        name = get_env_name(tmp->arg);
-        value = get_env_value(tmp->arg);
-        if(name)
+    return_value = 1;
+    index = 1;
+    while (args[index])
+    {
+        name = get_env_name(args[index]);
+        value = get_env_value(args[index]);
+        if (name)
         {
             if (is_identifier(name))
                 change_env_var(envs, name, value);
             else
             {
-                ret = 1;
+                return_value = 0;
+                // redirect error to standard error
                 printf("not a valid identifier '%s'\n", name);
             }
+            free(name);
         }
-        tmp = tmp->next;
+        if (value)
+            free(value);
+        index++;
     }
-    return(ret);
+    return (return_value);    
 }

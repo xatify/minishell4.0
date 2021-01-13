@@ -6,25 +6,25 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:45:21 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/07 09:34:46 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/13 09:53:59 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int     echo(t_strlist *args)
+int     echo(char   **args)
 {
-    int new_line;
-
-    new_line = ft_strcmp(args->arg, "\n");
-    if (new_line)
-        args = args->next;
-    while(args)
+    bool    new_line;
+    int     i;
+    
+    new_line = ft_strcmp(args[1], "-n");
+    i = (new_line)? 2: 1;
+    while (args[i])
     {
-        printf("%s");
-        if(args->next)
+        printf("%s", args[i]);
+        if (args[i + 1])
             printf(" ");
-        args = args->next;
+        i++;
     }
     if (!new_line)
         printf("\n");
