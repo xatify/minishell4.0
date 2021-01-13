@@ -3,38 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/13 14:56:51 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/13 15:07:15 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-char    *find_binary_file(char *cmd_name)
-{
-    char    *bins_dirs;
 
-    bins_dirs = get_bins_path(data);
-    if (!bins_dirs)
-    {
-        printf("command not found\n");
-        return (0);
-    }
-    path = absolute_path(cmd->cmd_name, bins_dirs);
-    return (path);
-}
 
-char    *get_bins_path(t_data *data)
-{
-    t_env_vars      *bins_path;
-    
-    bins_path = search_var(data->env_vars, "PATH");
-    if (!bins_path)
-        return (NULL);
-    return (bins_path->name);
-}
+
 
 int     execute_built_in(char built_in, t_data *data, t_simple_command *cmd)
 {
@@ -102,6 +82,5 @@ void    execute_simple_cmd(t_data *data, t_simple_command *cmd)
 
 int     execute(t_data   *data)
 {
-        
-}
 
+}
