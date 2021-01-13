@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/13 10:00:38 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/13 14:52:56 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,20 @@
 #include "get_input.h"
 #include "init_shell.h"
 #include "execution.h"
+
+/*
+** building argv array from linked list
+*/
+
+char    **build_argv(t_simple_command *cmd);
+void    free_argv(char **argv);
+
+/*
+** search for binary file and programs
+*/
+
+char    *find_binary_file(char *cmd_name);
+char    *get_bins_path(t_data *data);
+char    *absolute_path(char *cmd, char *PATH);
 
 #endif

@@ -6,11 +6,25 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/13 12:19:54 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/13 14:56:51 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+
+char    *find_binary_file(char *cmd_name)
+{
+    char    *bins_dirs;
+
+    bins_dirs = get_bins_path(data);
+    if (!bins_dirs)
+    {
+        printf("command not found\n");
+        return (0);
+    }
+    path = absolute_path(cmd->cmd_name, bins_dirs);
+    return (path);
+}
 
 char    *get_bins_path(t_data *data)
 {
@@ -20,11 +34,6 @@ char    *get_bins_path(t_data *data)
     if (!bins_path)
         return (NULL);
     return (bins_path->name);
-}
-
-
-char    *absolute_path(char *cmd_name, char *PATH_ENV)
-{
 }
 
 int     execute_built_in(char built_in, t_data *data, t_simple_command *cmd)
@@ -51,23 +60,33 @@ int     execute_binary(t_data *data, t_simple_command *cmd)
 {
     char        *path;
     char        *bins_dirs;
-    pid_t       pid;
+    pid_t       child_pid;
+    int         status;
+    char        **argv;
 
-        
-    bins_dirs = get_bins_path(data);
-    if (!bins_dirs)
-    {
-        printf("command not found\n");
-        return (0);
-    }
-    path = absolute_path(cmd->cmd_name, bins_dirs);
+    path = find_binary_file(cmd->cmd_name);
     if (!path)
     {
         printf("no such file or directory\n");
-        return (0);
+        return (1);
     }
-    pid = fork();
-    
+    child_pid = fork();
+    argv = build_argv(cmd);
+    if (child_pid == 0)
+    {
+        execve(path, argv, NULL);
+        printf("execve error\n");
+        return (1);
+    }
+    else if (child_pid < 0)
+        return (1);
+    else
+    {
+        waitpid(child_pid, &status, 0); // must check status
+        free(path);
+        free_argv(argv);
+        return (status);
+    }
 }
 
 void    execute_simple_cmd(t_data *data, t_simple_command *cmd)
