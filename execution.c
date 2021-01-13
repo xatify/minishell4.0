@@ -6,15 +6,25 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/13 10:46:02 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/13 12:19:54 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-char    *path(char *cmd_name, char *PATH_ENV)
+char    *get_bins_path(t_data *data)
 {
+    t_env_vars      *bins_path;
     
+    bins_path = search_var(data->env_vars, "PATH");
+    if (!bins_path)
+        return (NULL);
+    return (bins_path->name);
+}
+
+
+char    *absolute_path(char *cmd_name, char *PATH_ENV)
+{
 }
 
 int     execute_built_in(char built_in, t_data *data, t_simple_command *cmd)
@@ -39,6 +49,24 @@ int     execute_built_in(char built_in, t_data *data, t_simple_command *cmd)
 
 int     execute_binary(t_data *data, t_simple_command *cmd)
 {
+    char        *path;
+    char        *bins_dirs;
+    pid_t       pid;
+
+        
+    bins_dirs = get_bins_path(data);
+    if (!bins_dirs)
+    {
+        printf("command not found\n");
+        return (0);
+    }
+    path = absolute_path(cmd->cmd_name, bins_dirs);
+    if (!path)
+    {
+        printf("no such file or directory\n");
+        return (0);
+    }
+    pid = fork();
     
 }
 
