@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:50:20 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/13 10:31:56 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/13 17:51:58 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ int		main(int	argc, char **argv, char **envp)
 		if (get_next_line(0, &(data->input_cmd)))
 		{
 			data->parse_tree = parser(data->input_cmd);
-			show_pipeline(data->parse_tree);
+			execute(data);
 		}
 		free(data->input_cmd);
+		free_pipeline_list(data->parse_tree);
 	}
 	return (0);
 }

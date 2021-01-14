@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_binary_path.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 14:59:19 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/13 15:08:56 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/13 16:53:18 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,18 @@ char    *absolute_path(char *cmd_name, char *PATH_ENV)
     return NULL;
 }
 
-char    *find_binary_file(char *cmd_name)
+char    *find_binary_file(t_data *data, char *cmd_name)
 {
     char    *bins_dirs;
-
+    char    *path;
+    
     bins_dirs = get_bins_path(data);
     if (!bins_dirs)
     {
         printf("command not found\n");
         return (0);
     }
-    path = absolute_path(cmd->cmd_name, bins_dirs);
+    path = absolute_path(cmd_name, bins_dirs);
     return (path);
 }
 
@@ -73,8 +74,8 @@ char    *get_bins_path(t_data *data)
 {
     t_env_vars      *bins_path;
 
-    bins_path = search_var(data->env_vars, "PATH");
+    bins_path = search_var(&(data->env_vars), "PATH");
     if (!bins_path)
         return (NULL);
-    return (bins_path->name);
+    return (bins_path->value);
 }

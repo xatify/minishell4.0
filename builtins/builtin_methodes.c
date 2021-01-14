@@ -6,13 +6,13 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 10:00:32 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/12 10:09:03 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/13 16:28:00 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
-char    *is_built_in(char *cmd_name)
+char    is_built_in(char *cmd_name)
 {
     if (!ft_strcmp("cd", cmd_name))
         return ('c');

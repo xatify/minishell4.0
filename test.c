@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/04 11:01:58 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/13 16:27:07 by abbouzid         ###   ########.fr       */
+/*   Created: 2021/01/13 17:19:15 by abbouzid          #+#    #+#             */
+/*   Updated: 2021/01/13 17:26:18 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
-int     pwd(void)
+int     main(void)
 {
-    char    *cwd;
-
-    cwd = NULL;
-    cwd = getcwd(cwd, 0);
-    if (cwd)
+    pid_t   pid;
+    int     status;
+    char    *argv[2] = {"ls", "."};
+    
+    pid = fork();
+    if (pid == 0)
     {
-        printf("%s", cwd);
-        free(cwd);
-        return (1);
+        execv("/bin/ls", NULL);
+    }
+    else if (pid > 0)
+    {
+        waitpid(pid, &status, 0);
+        printf("hiii\n");
+    }
+    else
+    {
+        printf("execv error\n");
     }
     return (0);
 }
-
