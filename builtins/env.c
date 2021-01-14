@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:14:24 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/04 11:32:13 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/14 09:31:46 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int     env(t_env_vars *env_vars)
 {
     if (env_vars)
     {
-        printf("%s=%s\n", env_vars->name, env_vars->value);
+        ft_putstr_fd(env_vars->name, 1);
+        ft_putstr_fd(env_vars->value, 1);
+        ft_putchar_fd('\n', 1);
         env(env_vars->next);
     }
     return (1);

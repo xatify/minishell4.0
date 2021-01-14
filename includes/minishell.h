@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/13 16:40:14 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/14 09:09:30 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,5 @@
 
 char    **built_argv(t_simple_command *cmd);
 void    free_argv(char **argv);
-
-char				**ft_split(char const *s, char c);
-char				*ft_strjoin(char const *s1, char const *s2);
 
 #endif

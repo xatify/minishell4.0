@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   strings.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:01:06 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/11 17:52:37 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/14 09:06:05 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
-
-int		ft_strlen(char *str)
-{
-	int 	len;
-
-	len = 0;
-	if (str == 0)
-		return (len);
-	while(*str)
-	{
-		len++;
-		str++;
-	}
-	return (len);
-}
+#include "../includes/minishell.h"
 
 char	*ft_strcpy(char *dst, char *src)
 {
@@ -69,62 +54,16 @@ void		*ft_memset(void	*b, int c, size_t len)
 	return (b);
 }
 
-bool	is_white_character(char c)
-{
-	return ((c == ' ' || c == '\t') ? TRUE: FALSE);
-}
-
 char 	*ft_strdup(char *str)
 {
 	int 	len;
 	char	*dup;
-	
+
 	len = ft_strlen(str);
-	if (!(dup = (char *)malloc(len + 1)))	
+	if (!(dup = (char *)malloc(len + 1)))
 		return (NULL);
 	ft_memset(dup, 0, len + 1);
 	if(str)
 		ft_strcpy(dup, str);
 	return (dup);
 }
-
-bool	is_alpha(char c)
-{
-	if ((c >= 0x41 && c <= 0x5a) || (c >= 0x61 && c <= 0x7a))
-		return (TRUE);
-	return (FALSE);
-}
-
-bool	is_num(char c)
-{
-	if (c >= 0x30 && c <= 0x39)
-		return (TRUE);
-	return (FALSE);
-}
-
-bool is_underscore(char c)
-{
-	return ((c == '_')? TRUE: FALSE);
-}
-
-bool    is_identifier(char *str)
-{
-    int i;
-
-    i = -1;
-    while (str[++i])
-    {
-        if (i == 0)
-        {
-            if (!(is_alpha(str[i]) || is_underscore(str[i])))
-                break;
-        }
-        else
-        {
-            if (!(is_alpha(str[i]) || is_underscore(str[i]) || is_num(str[i])))
-                break;
-        }
-    }
-    return ((str[i] == '\0')? TRUE: FALSE);
-}
-

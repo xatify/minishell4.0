@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmdslistmethodes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:17:15 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/12 09:42:07 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/14 09:32:41 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void            add_back_command(t_simple_command **cmd_head, t_simple_command *
 t_simple_command    *new_cmd(void)
 {
     t_simple_command    *cmd;
-    
+
     if (!(cmd = (t_simple_command *)malloc(sizeof(t_simple_command))))
         return (NULL);
     initialize_cmd(cmd);
@@ -61,29 +61,31 @@ void            show_command(t_simple_command *cmd)
 {
     if (cmd)
     {
-        ft_printf("cmd_name : %s\t", cmd->cmd_name);
+        ft_putstr_fd("cmd_name :", 1);
+        ft_putstr_fd(cmd->cmd_name, 1);
+        ft_putstr_fd(" \t\n", 1);
         if (cmd->arguments)
         {
-            ft_printf("args : ");
+            ft_putstr_fd("args : ", 1);
             show_strlist(cmd->arguments);
         }
         if (cmd->outfiles)
         {
-            ft_printf("> ");
+            ft_putstr_fd("> ", 1);
             show_strlist(cmd->outfiles);
         }
         if (cmd->infiles)
         {
-            ft_printf("< ");
+            ft_putstr_fd("< ", 1);
             show_strlist(cmd->infiles);
         }
         if (cmd->append_outfiles)
         {
-            ft_printf("<< ");
+            ft_putstr_fd("<< ", 1);
             show_strlist(cmd->append_outfiles);
         }
         if (cmd->next)
-            ft_printf(" | ");
+            ft_putstr_fd(" | ", 1);
         show_command(cmd->next);
     }
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_binary_path.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 14:59:19 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/13 16:53:18 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/14 09:23:27 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ char    *find_binary_file(t_data *data, char *cmd_name)
 {
     char    *bins_dirs;
     char    *path;
-    
+
     bins_dirs = get_bins_path(data);
     if (!bins_dirs)
     {
-        printf("command not found\n");
+        ft_putstr_fd("command not found\n", 1);
         return (0);
     }
     path = absolute_path(cmd_name, bins_dirs);

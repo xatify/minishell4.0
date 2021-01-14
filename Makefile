@@ -3,19 +3,25 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
+#    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/08 22:48:36 by abbouzid          #+#    #+#              #
-#    Updated: 2021/01/13 16:31:17 by abbouzid         ###   ########.fr        #
+#    Updated: 2021/01/14 09:36:00 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
 GCC				= gcc -Wall -Wextra -Werror
+STR				= strings
 BUILTINS		= builtins
 SRCS			= minishell.c						\
 				get_command.c						\
-				strings.c							\
+				$(STR)/strings.c					\
+				$(STR)/strings_2.c					\
+				$(STR)/ft_split.c					\
+				$(STR)/ft_strjoin.c					\
+				$(STR)/ft_putstr_fd.c				\
+				$(STR)/ft_itoa.c					\
 				lexer.c								\
 				stack.c								\
 				parser.c							\
@@ -39,7 +45,7 @@ SRCS			= minishell.c						\
 				$(BUILTINS)/unset.c
 # GNL				= get_next_line/get_next_line.c  get_next_line/get_next_line_utils.c
 all:
-	$(GCC) -g -o $(NAME) $(SRCS) libftprintf.a gnl.a libft.a
+	$(GCC) -g -o $(NAME) $(SRCS)  gnl.a
 	#$(GCC) -g test.c -o test
 	./minishell
 

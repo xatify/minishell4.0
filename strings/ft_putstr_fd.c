@@ -1,18 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/09 19:43:34 by abbouzid          #+#    #+#             */
-/*   Updated: 2019/10/11 14:43:40 by abbouzid         ###   ########.fr       */
+/*   Created: 2019/10/13 15:26:58 by abbouzid          #+#    #+#             */
+/*   Updated: 2021/01/14 09:02:44 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_toupper(int c)
+#include "../includes/minishell.h"
+
+void	ft_putchar_fd(char c, int fd)
 {
-	if (c >= 97 && c <= 122)
-		return (c - 32);
-	return (c);
+	write(fd, &c, 1);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int i;
+
+	i = 0;
+	if (s != NULL)
+	{
+		while (s[i] != '\0')
+			ft_putchar_fd(s[i++], fd);
+	}
 }

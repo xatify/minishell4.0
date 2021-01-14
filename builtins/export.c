@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:57:13 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/13 10:07:44 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/14 09:25:26 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ int     export(char   **args, t_env_vars **envs)
             {
                 return_value = 0;
                 // redirect error to standard error
-                printf("not a valid identifier '%s'\n", name);
+                ft_putstr_fd("not a valid identifier ", 1);
+                ft_putstr_fd(name, 1);
+                ft_putchar_fd('\n', 1);
             }
             free(name);
         }
@@ -41,5 +43,5 @@ int     export(char   **args, t_env_vars **envs)
             free(value);
         index++;
     }
-    return (return_value);    
+    return (return_value);
 }

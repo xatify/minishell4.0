@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:14:28 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/12 16:15:20 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/14 09:25:54 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ bool				is_identifier(char *str);
 bool				is_meta(char c);
 int					ft_printf(const char *s, ...);
 char				*ft_itoa(int i);
+char				**ft_split(char const *str, char c);
+char				*ft_strjoin(char const *s1, char const *s2);
+void				ft_putstr_fd(char *s, int fd);
+void				ft_putchar_fd(char c, int fd);
 
 
 #endif

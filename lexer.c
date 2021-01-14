@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 18:40:06 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/11 10:53:38 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/14 09:24:14 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int     special(t_stack *stack)
         else
             break;
     }
-    return (spcl % 2); 
+    return (spcl % 2);
 }
 
 
@@ -82,7 +82,7 @@ int     handle_metacharacter(t_stack **stack, t_token **tokens, char **input_cmd
 {
     char        top;
     int         append;
-    
+
     append = 0;
     top = top_stack(stack);
     pop(stack);
@@ -123,7 +123,7 @@ int       handle_quotes(t_stack **stack, char **input_cmd, t_token **tokens)
         if (quote == 0x27) // single_quote
         {
             if (!handle_single_quote(stack, input_cmd))
-                error = 1;  
+                error = 1;
         }
         else
         {
@@ -132,7 +132,7 @@ int       handle_quotes(t_stack **stack, char **input_cmd, t_token **tokens)
         }
         if (error)
         {
-            printf("error while tokenizing\n");
+            ft_putstr_fd("error while tokenizing\n", 1);
             free_tokens(tokens);
             free_stack(stack);
             return (0);
@@ -188,12 +188,12 @@ t_token     *lexer(char *input_cmd)
     }
     if (!token)
     {
-        printf("error while parsing !\n");
+        ft_putstr_fd("error while parsing !\n", 1);
         return (NULL);
     }
     if (identify_all_tokens(token))
         return (token);
     free_tokens(&token);
-    printf("error while parsing !\n");
+    ft_putstr_fd("error while parsing !\n", 1);
     return (NULL);
 }

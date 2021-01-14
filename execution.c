@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/13 17:46:12 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/14 09:32:16 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,23 +44,25 @@ int     execute_binary(t_data *data, t_simple_command *cmd)
     path = find_binary_file(data, cmd->cmd_name);
     if (!path)
     {
-        printf("no such file or directory\n");
+        ft_putstr_fd("no such file or directory\n", 1);
         return (1);
     }
     child_pid = fork();
     argv = built_argv(cmd);
     if (child_pid == 0)
     {
-        printf("path : %s\n", path);
+        ft_putstr_fd("path : ", 1);
+        ft_putstr_fd(path, 1);
+        ft_putchar_fd('\n', 1);
         int i = 0;
-        ft_printf("args :");
+        ft_putstr_fd("args :", 1);
         while (argv[i])
         {
-            ft_printf(" %s", argv[i]);
+            ft_putstr_fd(argv[i], 1);
             i++;
         }
         execv(path, argv);
-        printf("execve error\n");
+        ft_putstr_fd("execve error\n", 1);
         return (1);
     }
     else if (child_pid < 0)

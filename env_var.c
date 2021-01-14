@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:28:41 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/08 12:00:43 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/14 09:33:03 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_env_vars  *create_env_var(char *name, char *value)
 {
     t_env_vars  *env_var;
-    
+
     if (!(env_var = (t_env_vars *)malloc(sizeof(t_env_vars))))
         return (NULL);
     env_var->name = (char *)malloc(ft_strlen(name) + 1);
@@ -24,7 +24,7 @@ t_env_vars  *create_env_var(char *name, char *value)
         free(env_var);
         return (NULL);
     }
-    env_var->value = (char *)malloc(ft_strlen(value) + 1);  
+    env_var->value = (char *)malloc(ft_strlen(value) + 1);
     if (env_var->value == NULL)
     {
         free(env_var->name);
@@ -41,7 +41,7 @@ char    *get_env_name(char *name_value)
 {
     char    *name;
     int     i;
-    
+
     i = 0;
     while (name_value[i] && name_value[i] != '=')
         i++;
@@ -51,7 +51,7 @@ char    *get_env_name(char *name_value)
         return (NULL);
     ft_strlcpy(name, name_value, i);
     name[i] = '\0';
-    return (name); 
+    return (name);
 }
 
 char    *get_env_value(char *name_value)
@@ -73,7 +73,7 @@ char    *get_env_value(char *name_value)
 t_env_vars  *last_env_var(t_env_vars *env_vars)
 {
     t_env_vars  *tmp;
-    
+
     if (!env_vars)
         return (env_vars);
     tmp = env_vars;
@@ -187,7 +187,9 @@ void    show_env_vars(t_env_vars *vars)
 {
     if (vars)
     {
-        ft_printf("%s=%s\n", vars->name, vars->value);
+        ft_putstr_fd(vars->name, 1);
+        ft_putstr_fd(vars->value, 1);
+        ft_putchar_fd('\n', 1);
         show_env_vars(vars->next);
     }
 }

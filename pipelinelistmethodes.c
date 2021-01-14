@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipelinelistmethodes.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:28:31 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/07 11:59:33 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/14 09:26:50 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_pipeline *new_pipe_line(void)
 void        free_pipeline(t_pipeline *pipeline)
 {
     t_simple_command *tmp;
-    
+
     if (!(pipeline))
         return;
     while (pipeline->simple_cmd)
@@ -41,7 +41,7 @@ void        free_pipeline(t_pipeline *pipeline)
 void        free_pipeline_list(t_pipeline *pipeline_head)
 {
     t_pipeline  *tmp;
-    
+
     while (pipeline_head)
     {
         tmp = pipeline_head->next;
@@ -53,7 +53,7 @@ void        free_pipeline_list(t_pipeline *pipeline_head)
 t_pipeline      *last_pipeline(t_pipeline *pipeline)
 {
     if (!pipeline)
-        return (NULL);       
+        return (NULL);
     if (!pipeline->next)
         return (pipeline);
     return (last_pipeline(pipeline->next));
@@ -73,7 +73,7 @@ void        show_pipeline(t_pipeline *pipeline)
     {
         show_command(pipeline->simple_cmd);
         if (pipeline->next)
-            ft_printf(" ; ");
-        show_pipeline(pipeline->next);       
+            ft_putstr_fd(" ; ", 1);
+        show_pipeline(pipeline->next);
     }
 }
