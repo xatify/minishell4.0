@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 10:26:28 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/14 09:37:34 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/14 10:02:49 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void    free_argv(char **argv)
         free(argv[i]);
         i++;
     }
+    free(argv);
 }    
 
 void    fill_argv(char **argv, t_strlist *args)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:45:21 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/14 09:24:14 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/14 10:12:38 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int     echo(char   **args)
     int     i;
 
     new_line = ft_strcmp(args[1], "-n");
-    i = (new_line)? 2: 1;
+    i = (!new_line)? 2: 1;
     while (args[i])
     {
         ft_putstr_fd(args[i], 1);

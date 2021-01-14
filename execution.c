@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/14 09:53:02 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/14 12:26:05 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int     execute_built_in(char built_in, t_data *data, t_simple_command *cmd)
     else if (built_in == 'e')
         return (echo(argv));
     else if (built_in == 'n')
-        return (env(data->env_vars));
+        return (env(argv[1], data->env_vars));
     else if (built_in == 'u')
         return (unset(argv, &(data->env_vars)));
     else if (built_in == 'p')
@@ -44,7 +44,7 @@ int     execute_binary(t_data *data, t_simple_command *cmd)
     path = find_binary_file(data, cmd->cmd_name);
     if (!path)
     {
-        ft_putstr_fd("no such file or directory\n", 1);
+        ft_putstr_fd("no such file or directory\n", 2);
         return (1);
     }
     argv = built_argv(cmd);
@@ -52,8 +52,6 @@ int     execute_binary(t_data *data, t_simple_command *cmd)
     if (child_pid == 0)
     {
         execve(path, argv, envp);
-        
-        printf("errno : %d ==> %s.\n", errno, strerror(errno));
         return (1);
     }
     else if (child_pid < 0)
@@ -62,7 +60,7 @@ int     execute_binary(t_data *data, t_simple_command *cmd)
     {
         waitpid(child_pid, &status, 0); // must check status
         free(path);
-        free_argv(argv);
+        //free_argv(argv);
         return (status);
     }
 }
@@ -73,11 +71,12 @@ void    execute_simple_cmd(t_data *data, t_simple_command *cmd)
 
     if (cmd)
     {
+        expand_cmd(cmd, data->env_vars, &(data->exit_status));
         built_in = is_built_in(cmd->cmd_name);
         if (built_in != '\0')
-            *(data->exit_status) = execute_built_in(built_in, data, cmd);
+            data->exit_status = execute_built_in(built_in, data, cmd);
         else
-            execute_binary(data, cmd);
+            data->exit_status = execute_binary(data, cmd);
         execute_simple_cmd(data, cmd->next);
     }
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 18:40:06 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/14 09:24:14 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/14 10:51:28 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,9 +139,6 @@ int       handle_quotes(t_stack **stack, char **input_cmd, t_token **tokens)
         }
         return (1);
     }
-    pop(stack);
-    pop(stack);
-    push(stack, quote);
     return (1);
 }
 

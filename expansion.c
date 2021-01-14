@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/11 16:43:01 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/14 11:28:31 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,10 @@ void    expand_list(t_strlist *list, t_env_vars *vars, int *exit_status)
     if (list)
     {
       tmp = expand(&(list->str), vars, exit_status);
-      list->str = tmp;
+      if (!tmp)
+        list->str = ft_strdup("");
+      else
+        list->str = tmp;
       expand_list(list->next, vars, exit_status); 
     }
 }

@@ -17,14 +17,12 @@
     exist and only redirect from or to the last one.
 
 -- 6: implement built-in
-    !! modification of builtins prototypes to accepts array of arguments not a linked list of arguments
-    - 6-1: echo with option -n
-        -- testing
-    - 6-2: cd with only a relative and absolute path
-        -- testing
-        - OLDPWD must be changed
-    - 6-3: pwd
-        -- needs testing
+    + modification of builtins prototypes to accepts array of arguments not a linked list of arguments
+    + 6-1: echo with option -n
+    + 6-2: cd with only a relative and absolute path
+        + $PWD  must change
+        + $OLDPWD must change
+    + 6-3: pwd
     - 6-4: export
         -!! needs to redirecte the error to standard error
         -- testing
@@ -33,8 +31,7 @@
 
     - 6-5: unset
         -- testing
-    - 6-7: env
-        -- testing
+    + 6-7: env
     - 6-8: exit
         - !!!!!must free everything before exiting
 
@@ -53,18 +50,21 @@
 6: perform redirections
 
 - 7: Execute the commands list
-    -- build the args array from cmd->arguments !! needs testing 
-
+    + build the args array from cmd->arguments !! needs testing 
+    + non builtin simple command working ok
+    - built ins need testing ; 
 8: collect the exit status
     - must check if any simple command change the exit_status inside the pipeline or just the \
       command of the pipeline.
 
 9: go back to step 1
 
-
+10: check for leaks 
+    !!!
 
 !!! Notes
 * built-ins need testing
 * before production phase, linked list must be handled so there will be no double code
 * itoa is used
 * spliting the header is done and exuction header ready to go
+* must redirect the error to stderror 2

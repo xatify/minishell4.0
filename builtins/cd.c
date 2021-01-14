@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:29:16 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/06 09:42:35 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/14 12:18:35 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,18 @@
 int     cd(char *path, t_env_vars **vars)
 {
     char    *dir;
+    int     ret;
+    char    *pwd;
 
     dir = (path) ? path: search_var(vars, "HOME")->value;
-    return (!chdir(dir));
+    pwd = getcwd(NULL, 0);
+    ret = chdir(dir);
+    if (!ret && pwd)
+    {
+       change_env_var(vars, "OLDPWD", pwd);
+       free(pwd);
+        pwd = getcwd(NULL, 0);
+       change_env_var(vars, "PWD", pwd); 
+    }    
+    return (!ret);
 }
