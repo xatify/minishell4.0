@@ -6,8 +6,7 @@
 #    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/08 22:48:36 by abbouzid          #+#    #+#              #
-#    Updated: 2021/01/14 09:36:00 by keddib           ###   ########.fr        #
-#                                                                              #
+#    Updated: 2021/01/14 09:36:00 by keddib           ###   ########.fr        #                                                                            #
 # **************************************************************************** #
 
 NAME			= minishell
@@ -46,6 +45,7 @@ SRCS			= minishell.c						\
 # GNL				= get_next_line/get_next_line.c  get_next_line/get_next_line_utils.c
 all:
 	$(GCC) -g -o $(NAME) $(SRCS)  gnl.a
+
 	#$(GCC) -g test.c -o test
 	./minishell
 

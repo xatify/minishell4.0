@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/14 09:32:16 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/14 09:53:02 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int     execute_binary(t_data *data, t_simple_command *cmd)
     pid_t       child_pid;
     int         status;
     char        **argv;
-    //char        **envp;
+    char        *envp[1] = {0};
 
     path = find_binary_file(data, cmd->cmd_name);
     if (!path)
@@ -47,22 +47,13 @@ int     execute_binary(t_data *data, t_simple_command *cmd)
         ft_putstr_fd("no such file or directory\n", 1);
         return (1);
     }
-    child_pid = fork();
     argv = built_argv(cmd);
+    child_pid = fork();
     if (child_pid == 0)
     {
-        ft_putstr_fd("path : ", 1);
-        ft_putstr_fd(path, 1);
-        ft_putchar_fd('\n', 1);
-        int i = 0;
-        ft_putstr_fd("args :", 1);
-        while (argv[i])
-        {
-            ft_putstr_fd(argv[i], 1);
-            i++;
-        }
-        execv(path, argv);
-        ft_putstr_fd("execve error\n", 1);
+        execve(path, argv, envp);
+        
+        printf("errno : %d ==> %s.\n", errno, strerror(errno));
         return (1);
     }
     else if (child_pid < 0)
@@ -70,8 +61,8 @@ int     execute_binary(t_data *data, t_simple_command *cmd)
     else
     {
         waitpid(child_pid, &status, 0); // must check status
-        //free(path);
-        //free_argv(argv);
+        free(path);
+        free_argv(argv);
         return (status);
     }
 }
