@@ -24,6 +24,7 @@
         + $OLDPWD must change
     + 6-3: pwd
     - 6-4: export
+        -- delete the quotes of the value of a VAR="VALUE"
         -!! needs to redirecte the error to standard error
         -- testing
         --handle identifier
