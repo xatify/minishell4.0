@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/14 09:51:17 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/15 18:58:00 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 #include "tokens.h"
 #include "lexer.h"
 #include "stack.h"
-#include "strmanip.h"
+#include "str_manip.h"
 #include "env_var.h"
 #include "parser.h"
 #include "builtins.h"

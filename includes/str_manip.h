@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strmanip.h                                         :+:      :+:    :+:   */
+/*   str_manip.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:14:28 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/15 12:13:09 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/15 18:58:47 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRMANIP_H
-# define STRMANIP_H
+#ifndef STR_MANIP_H
+# define STR_MANIP_H
 
 /*
 ** strings manipulation prototypes
@@ -36,6 +36,7 @@ char				*ft_strjoin(char const *s1, char const *s2);
 void				ft_putstr_fd(char *s, int fd);
 void				ft_putchar_fd(char c, int fd);
 char				*ft_strrchr(const char *str, int c);
-char                *ft_strchr(const char *str, int c);
+char				*ft_strchr(const char *str, int c);
+char				*remove_quotes(char *value);
 
 #endif
