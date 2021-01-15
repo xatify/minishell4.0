@@ -21,6 +21,7 @@ SRCS			= minishell.c						\
 				$(STR)/ft_strjoin.c					\
 				$(STR)/ft_putstr_fd.c				\
 				$(STR)/ft_itoa.c					\
+				$(STR)/ft_strrchr.c					\
 				lexer.c								\
 				stack.c								\
 				parser.c							\
@@ -44,10 +45,10 @@ SRCS			= minishell.c						\
 				$(BUILTINS)/unset.c
 # GNL				= get_next_line/get_next_line.c  get_next_line/get_next_line_utils.c
 all:
-	$(GCC) -g -o $(NAME) $(SRCS)  gnl.a
+	@$(GCC) -g -o $(NAME) $(SRCS)  gnl.a
 
 	#$(GCC) -g test.c -o test
-	./minishell
+	@./minishell
 
 clean:
 	rm $(NAME)

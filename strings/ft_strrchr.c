@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_shell.h                                       :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/13 09:57:53 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/15 11:20:28 by keddib           ###   ########.fr       */
+/*   Created: 2019/10/10 09:14:27 by abbouzid          #+#    #+#             */
+/*   Updated: 2021/01/15 10:27:54 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INTI_SHELL_H
-# define INTI_SHELL_H
+#include "../includes/minishell.h"
 
-/*
-** initialise the shell
-*/
+char	*ft_strrchr(const char *str, int c)
+{
+	char	*ptr;
+	char	*pos;
 
-t_data	*start_shell(int argc, char **argv, char **envp);
-void 	show_prompt(t_data *data);
-
-#endif
+	ptr = (char *)str;
+	pos = 0;
+	while (*ptr != '\0')
+	{
+		if (*ptr == (char)c)
+			pos = ptr;
+		ptr++;
+	}
+	if (c == '\0')
+		return (ptr);
+	return (pos);
+}
