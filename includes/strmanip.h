@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strmanip.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:14:28 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/15 10:28:06 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/15 12:13:09 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ char				*ft_strjoin(char const *s1, char const *s2);
 void				ft_putstr_fd(char *s, int fd);
 void				ft_putchar_fd(char c, int fd);
 char				*ft_strrchr(const char *str, int c);
-
+char                *ft_strchr(const char *str, int c);
 
 #endif

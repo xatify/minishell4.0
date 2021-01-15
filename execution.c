@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/14 12:26:05 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/15 11:21:54 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int     execute_built_in(char built_in, t_data *data, t_simple_command *cmd)
     else if (built_in == 'u')
         return (unset(argv, &(data->env_vars)));
     else if (built_in == 'p')
-        return (export(argv, &(data->env_vars)));
+        return (export(argv, data));
     else if (built_in == 'w')
         return (pwd());
     exit_(data, 0);

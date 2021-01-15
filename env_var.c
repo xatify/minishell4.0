@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:28:41 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/14 09:33:03 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/15 10:57:15 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ char    *get_env_name(char *name_value)
     i = 0;
     while (name_value[i] && name_value[i] != '=')
         i++;
-    if (!name_value[i])
-        return (NULL);
     if (!(name = (char *)malloc(i + 1)))
         return (NULL);
     ft_strlcpy(name, name_value, i);

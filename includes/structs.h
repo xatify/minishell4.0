@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:13:03 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/14 10:09:34 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/15 11:18:43 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_env_vars
 typedef struct s_data
 {
 	t_env_vars 	*env_vars;
+	t_strlist	*unset_vars;
 	char		*input_cmd;
 	t_pipeline	*parse_tree;
 	int			exit_status;

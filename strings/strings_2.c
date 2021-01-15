@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strings_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 09:04:09 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/14 09:05:39 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/15 12:12:20 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,21 @@ bool    is_identifier(char *str)
 bool	is_white_character(char c)
 {
 	return ((c == ' ' || c == '\t') ? TRUE: FALSE);
+}
+
+char    *ft_strchr(const char *str, int c)
+{
+        char *ptr;
+
+        ptr = (char *)str;
+        while (*ptr != '\0')
+        {
+                if (*ptr == (char)c)
+                        return (ptr);
+                else
+                        ptr++;
+        }
+        if (c == '\0')
+                return (ptr);
+        return (0);
 }
