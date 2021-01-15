@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:16:16 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/14 12:30:38 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/15 09:47:41 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 */
 
 #define SHELL "/bin/sh"
-#define PROMPT "\nminishell:>"
+#define PROMPT "minishell:>"
 
 #define TRUE 1
 #define FALSE 0

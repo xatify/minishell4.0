@@ -29,8 +29,7 @@
         --handle identifier
         --case VAR or VAR=
 
-    - 6-5: unset
-        -- testing
+    + 6-5: unset without any option
     + 6-7: env
     - 6-8: exit
         - !!!!!must free everything before exiting
@@ -52,10 +51,13 @@
 - 7: Execute the commands list
     + build the args array from cmd->arguments !! needs testing 
     + non builtin simple command working ok
-    - built ins need testing ; 
+    - built ins need testing ;
+    - execution should start only if expansion is working fine
+
 8: collect the exit status
     - must check if any simple command change the exit_status inside the pipeline or just the \
       command of the pipeline.
+    - implement the exact exit status (maybe they  are the same as errno !!)
 
 9: go back to step 1
 

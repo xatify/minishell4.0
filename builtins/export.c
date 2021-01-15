@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:57:13 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/14 09:25:26 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/15 10:03:00 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int     export(char   **args, t_env_vars **envs)
     int     index;
     int     return_value;
 
-    return_value = 1;
+    return_value = 0;
     index = 1;
     while (args[index])
     {
@@ -31,7 +31,7 @@ int     export(char   **args, t_env_vars **envs)
                 change_env_var(envs, name, value);
             else
             {
-                return_value = 0;
+                return_value = 1;
                 // redirect error to standard error
                 ft_putstr_fd("not a valid identifier ", 1);
                 ft_putstr_fd(name, 1);
