@@ -53,7 +53,7 @@ all:
 clean:
 	rm $(NAME)
 
-fclean:
+fclean: clean
 	rm -rf *.dSYM
 
 re: clean all

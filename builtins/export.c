@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:57:13 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/15 12:38:09 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/15 14:10:48 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int     export(char   **args, t_data *data)
                 else
                 {
                     if (is_double_quote_token(value) || is_single_quote_token(value))
-                        value = remove_quotes(value);
+                         value = remove_quotes(value);
                     change_env_var(&(data->env_vars), name, value);
                 }
             }
