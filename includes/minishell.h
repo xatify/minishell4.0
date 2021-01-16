@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/15 18:58:00 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/16 09:12:26 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 #include "init_shell.h"
 #include "execution.h"
 #include "find_binary.h"
+#include "variables.h"
 
 /*
 ** building argv array from linked list

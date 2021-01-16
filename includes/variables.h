@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   variables.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 09:14:27 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/16 09:12:11 by keddib           ###   ########.fr       */
+/*   Created: 2021/01/16 09:10:48 by keddib            #+#    #+#             */
+/*   Updated: 2021/01/16 09:15:54 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#ifndef VARIABLES_H
+# define VARIABLES_H
 
-char	*ft_strrchr(const char *str, int c)
-{
-	char	*ptr;
-	char	*pos;
+/*
+** variables manipulation
+*/
 
-	ptr = (char *)str;
-	pos = 0;
-	while (*ptr != '\0')
-	{
-		if (*ptr == (char)c)
-			pos = ptr;
-		ptr++;
-	}
-	if (c == '\0')
-		return (ptr);
-	return (pos);
-}
+char				*remove_quotes(char *value);
+char 				**get_all_vars(t_env_vars *env_vars, t_strlist *unset_vars);
 
+#endif

@@ -35,6 +35,7 @@ SRCS			= minishell.c						\
 				execution.c							\
 				build_arguments_array.c				\
 				find_binary_path.c					\
+				variables.c							\
 				$(BUILTINS)/builtin_methodes.c		\
 				$(BUILTINS)/cd.c					\
 				$(BUILTINS)/echo.c					\
