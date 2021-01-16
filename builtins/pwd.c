@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:01:58 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/14 09:26:22 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/16 12:06:27 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int     pwd(void)
     if (cwd)
     {
         ft_putstr_fd(cwd, 1);
+        ft_putchar_fd('\n', 1);
         free(cwd);
         return (1);
     }

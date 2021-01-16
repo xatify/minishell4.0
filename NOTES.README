@@ -43,10 +43,6 @@
     + segfault !! don't know why (recoding the entire logic of expansions)
     + multiple $VAR inside the same token
 
-
-
-
-
 6: perform redirections
 
 - 7: Execute the commands list
@@ -56,6 +52,9 @@
     + execution should start only if expansion is working fine
 
 -8: redirections
+    - redirecting >
+    - redirection < 
+    - redirecting >>
 
 9: collect the exit status
     - must check if any simple command change the exit_status inside the pipeline or just the \
