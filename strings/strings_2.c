@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 09:04:09 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/15 12:12:20 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/16 10:29:00 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,30 @@ char    *ft_strchr(const char *str, int c)
         if (c == '\0')
                 return (ptr);
         return (0);
+}
+
+int     ft_atoi(const char *str)
+{
+        long    res;
+        int             sign;
+        long    max;
+
+        max = 9223372036854775807;
+        res = 0;
+        sign = 1;
+        while (*str == ' ' || (*str >= 9 && *str <= 13))
+                str++;
+        if (*str == '-' || *str == '+')
+                sign = (*str++ == '-') ? -1 : 1;
+        while (is_num(*str))
+        {
+                if (res <= (max - (*str - '0')) / 10)
+                        res = res * 10 + (*str++ - '0');
+                else
+                {
+                        res = (sign == -1) ? 0 : -1;
+                        break ;
+                }
+        }
+        return (res * sign);
 }

@@ -1,7 +1,7 @@
 
 !! steps
 
-- 1: get input
++ 1: get input
     + must handle when the input is empty
     + get_next
 + 2: tokenizing the input
@@ -10,60 +10,65 @@
     + problem with ; at the end of input fixed
     + there still problems with single quotes tokens !fixed
 
-- 3: parsing the tokens and build a 3D linked list of command
++ 3: parsing the tokens and build a 3D linked list of command
     + must handle redirection if the filename doesnt follow < or > or >>
     + implementation of freeing the parse tree after finish
     + multiple redirections of the same type must creat the first ones  if they don't
     exist and only redirect from or to the last one.
 
--- 6: implement built-in
++ 6: implement built-in
     + modification of builtins prototypes to accepts array of arguments not a linked list of arguments
     + 6-1: echo with option -n
     + 6-2: cd with only a relative and absolute path
         + $PWD  must change
         + $OLDPWD must change
     + 6-3: pwd
-    - 6-4: export
-        -- delete the quotes of the value of a VAR="VALUE"
-        -!! needs to redirecte the error to standard error
-        -- testing
-        --handle identifier
-        --case VAR or VAR=
+    + 6-4: export
+        + delete the quotes of the value of a VAR="VALUE"
+        + !! needs to redirecte the error to standard error
+        + testing
+        + handle identifier
+        + case VAR or VAR=
 
     + 6-5: unset without any option
     + 6-7: env
-    - 6-8: exit
-        - !!!!!must free everything before exiting
+    + 6-8: exit
+        + !!!!!must free everything before exiting
+        + must be tested with diffrent exit status
 
-
--- 5: shell expansions
-    -- $! and $VAR of the command before performing redirection
-        - needs to be tested
++  5: shell expansions
+    + $! and $VAR of the command before performing redirection
+        + needs to be tested
     + 5-1: environment variables needs to be tested
     + segfault !! don't know why (recoding the entire logic of expansions)
     + multiple $VAR inside the same token
 
 
 
-?? signal ????????????
+
 
 6: perform redirections
 
 - 7: Execute the commands list
     + build the args array from cmd->arguments !! needs testing 
     + non builtin simple command working ok
-    - built ins need testing ;
-    - execution should start only if expansion is working fine
+    + built ins need testing ;
+    + execution should start only if expansion is working fine
 
-8: collect the exit status
+-8: redirections
+
+9: collect the exit status
     - must check if any simple command change the exit_status inside the pipeline or just the \
       command of the pipeline.
     - implement the exact exit status (maybe they  are the same as errno !!)
+    - must pass the the environment variables to execve function 
+    
+10: signal
 
-9: go back to step 1
+11: go back to step 1
 
-10: check for leaks 
-    !!!
+12: check for leaks 
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!??????
 
 !!! Notes
 * built-ins need testing

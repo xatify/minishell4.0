@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:57:13 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/15 14:10:48 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/16 10:24:47 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void    show_vars(t_data *data)
+{
+    int     i;
+    char    **vars;
+
+    vars = get_all_vars(data->env_vars, data->unset_vars);
+    sort(vars);
+    i = 0;
+    while (vars[i])
+    {
+        ft_putstr_fd("declare -x ", 1);
+        ft_putstr_fd(vars[i], 1);
+        ft_putstr_fd("\n", 1);
+        i++;
+    }
+    free_argv(vars);
+}
 
 int     export(char   **args, t_data *data)
 {
@@ -21,6 +39,8 @@ int     export(char   **args, t_data *data)
 
     return_value = 0;
     index = 1;
+    if (!args[index])
+        show_vars(data);
     while (args[index])
     {
         name = get_env_name(args[index]);

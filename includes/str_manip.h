@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_manip.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:14:28 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/16 09:16:00 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/16 10:29:25 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ void				ft_putstr_fd(char *s, int fd);
 void				ft_putchar_fd(char c, int fd);
 char				*ft_strrchr(const char *str, int c);
 char				*ft_strchr(const char *str, int c);
+int                 ft_atoi(const char *str);
 
 #endif

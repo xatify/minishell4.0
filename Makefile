@@ -43,10 +43,11 @@ SRCS			= minishell.c						\
 				$(BUILTINS)/exit.c					\
 				$(BUILTINS)/export.c				\
 				$(BUILTINS)/pwd.c					\
-				$(BUILTINS)/unset.c
+				$(BUILTINS)/unset.c					\
+				sort.c
 # GNL				= get_next_line/get_next_line.c  get_next_line/get_next_line_utils.c
 all:
-	@$(GCC) -g -o $(NAME) $(SRCS)  gnl.a
+	@$(GCC) -g  -o $(NAME) $(SRCS)  gnl.a
 
 	#$(GCC) -g test.c -o test
 	@./minishell
