@@ -17,7 +17,7 @@
     + multiple redirections of the same type must creat the first ones  if they don't
     exist and only redirect from or to the last one.
 
-- 6: implement built-in
++ 6: implement built-in
     + modification of builtins prototypes to accepts array of arguments not a linked list of arguments
     + 6-1: echo with option -n
         + segfault if no argument is given 
@@ -49,30 +49,38 @@
     + build the args array from cmd->arguments !! needs testing 
     + non builtin simple command working ok
     + built ins need testing ;
-    + execution should start only if expansion is working fine
+    + execution should start only if the expansion of a pipeline is working fine
+    - execve function needs envp array to function properly
 
--8: redirections
+- 8: piplining:
+    - THEY SHOULD WORK BEFORE ANY REDIRECTIONS SPECIFIED BY THE command
+
+- 9: redirections
+    !! pipelining is performed before any redirections specified by the command
     - should handle the case if open returns -1
     + the first of (> or >>) define the output:
         if > is before >> in cmd the > file receive the output and >> files get created only
         or the opposite
     - which permession should the created files have ????      
-    + redirecting >
-    - redirection < 
-    + redirecting >>
+    -- redirecting >
+        - needs testing
+    - redirection <   
+    -- redirecting >>
+        - needs testing 
 
-9: collect the exit status
+- 10: collect the exit status
     - must check if any simple command change the exit_status inside the pipeline or just the \
       command of the pipeline.
     - implement the exact exit status (maybe they  are the same as errno !!)
     - must pass the the environment variables to execve function 
     
-10: signal
+- 11: handling signals
 
-11: go back to step 1
+- 12: check for leaks
 
-12: check for leaks 
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!??????
+- 13: optimize the code
+
+- 14: testing
 
 !!! Notes
 * before production phase, linked list must be handled so there will be no double code

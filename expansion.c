@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/14 11:28:31 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/17 14:57:26 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,8 @@ int     expand_cmd(t_simple_command *cmd, t_env_vars *vars, int *exit_status)
 {
     char    *tmp;
 
+    if (!cmd)
+        return (1);
     tmp = expand(&(cmd->cmd_name), vars, exit_status);
     if (!tmp)
         return (0);
@@ -169,5 +171,10 @@ int     expand_cmd(t_simple_command *cmd, t_env_vars *vars, int *exit_status)
     expand_list(cmd->infiles, vars, exit_status);
     expand_list(cmd->outfiles, vars, exit_status);
     expand_list(cmd->append_outfiles, vars, exit_status);
-    return (1);
+    return (expand_cmd(cmd->next, vars, exit_status));
+}
+
+int     expand_pipeline(t_pipeline *pipline, t_data *data)
+{
+    return (expand_cmd(pipline->simple_cmd, data->env_vars, &(data->exit_status)));
 }

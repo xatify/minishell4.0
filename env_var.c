@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:28:41 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/15 10:57:15 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/17 15:22:23 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_env_vars  *create_env_var(char *name, char *value)
         free(env_var);
         return (NULL);
     }
+    env_var->num = 0;
     ft_strcpy(env_var->name, name);
     ft_strcpy(env_var->value, value);
     env_var->next = NULL;
@@ -83,9 +84,15 @@ t_env_vars  *last_env_var(t_env_vars *env_vars)
 void       add_back_env(t_env_vars **vars, t_env_vars *new_var)
 {
     if (!(*vars))
+    {
         (*vars) = new_var;
+        new_var->num = 1;
+    }
     else
+    {
         last_env_var((*vars))->next = new_var;
+        (*vars)->num += 1;
+    }
 }
 
 t_env_vars  *build_env_vars(char *envp[])
@@ -191,3 +198,12 @@ void    show_env_vars(t_env_vars *vars)
         show_env_vars(vars->next);
     }
 }
+
+// char    built_envp(t_env_vars *vars)
+// {
+//     int vars_num;
+
+//     vars_num = vars->num + 1;
+
+    
+// }

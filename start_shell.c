@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:28:43 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/17 10:43:56 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/17 15:03:39 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ void show_prompt(t_data *data)
             ft_putstr_fd(cwd, 1);
         //free(cwd);
     }
-    ft_putstr_fd(" > ", 1);
+    ft_putstr_fd("$ ", 1);
     //ft_putstr_fd("\033[0m", 1);
 }

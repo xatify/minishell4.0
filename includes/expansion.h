@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 09:52:49 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/13 09:53:29 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/17 14:59:13 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ char   	*expand_unquoted_token(char *token, t_env_vars *vars, int *exit_status);
 int		expand_cmd(t_simple_command *cmd, t_env_vars *vars, int *exit_status);
 void	expand_list(t_strlist *list, t_env_vars *vars, int *exit_status);
 char	*expand(char **token, t_env_vars *vars, int *exit_status);
-
+int     expand_pipeline(t_pipeline *pipline, t_data *data);
 
 #endif

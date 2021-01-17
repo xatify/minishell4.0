@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:13:03 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/17 09:26:12 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/17 15:13:57 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_env_vars
 {
 	char		*name;
 	char		*value;
+	int			num;
 	struct	s_env_vars *next;
 }				t_env_vars;
 
