@@ -1,9 +1,10 @@
 
 !! steps
 
-+ 1: get input
+- 1: get input
     + must handle when the input is empty
-    + get_next
+    - get_next is integrated successfully but needs to not e recompiled 
+
 + 2: tokenizing the input
     + must handle tokens that have metacharcters inside them
     + search the tokens for special caracters and remove them
@@ -16,9 +17,10 @@
     + multiple redirections of the same type must creat the first ones  if they don't
     exist and only redirect from or to the last one.
 
-+ 6: implement built-in
+- 6: implement built-in
     + modification of builtins prototypes to accepts array of arguments not a linked list of arguments
     + 6-1: echo with option -n
+        + segfault if no argument is given 
     + 6-2: cd with only a relative and absolute path
         + $PWD  must change
         + $OLDPWD must change
@@ -36,14 +38,12 @@
         + !!!!!must free everything before exiting
         + must be tested with diffrent exit status
 
-+  5: shell expansions
++ 5: shell expansions
     + $! and $VAR of the command before performing redirection
         + needs to be tested
     + 5-1: environment variables needs to be tested
     + segfault !! don't know why (recoding the entire logic of expansions)
     + multiple $VAR inside the same token
-
-6: perform redirections
 
 - 7: Execute the commands list
     + build the args array from cmd->arguments !! needs testing 
@@ -52,9 +52,14 @@
     + execution should start only if expansion is working fine
 
 -8: redirections
-    - redirecting >
+    - should handle the case if open returns -1
+    + the first of (> or >>) define the output:
+        if > is before >> in cmd the > file receive the output and >> files get created only
+        or the opposite
+    - which permession should the created files have ????      
+    + redirecting >
     - redirection < 
-    - redirecting >>
+    + redirecting >>
 
 9: collect the exit status
     - must check if any simple command change the exit_status inside the pipeline or just the \
@@ -70,8 +75,5 @@
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!??????
 
 !!! Notes
-* built-ins need testing
 * before production phase, linked list must be handled so there will be no double code
-* itoa is used
-* spliting the header is done and exuction header ready to go
 * must redirect the error to stderror 2

@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 10:26:28 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/14 10:02:49 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/17 11:08:54 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,16 @@ char    **built_argv(t_simple_command *cmd)
     ft_strcpy(argv[0], cmd->cmd_name);
     fill_argv(argv, cmd->arguments);
     return (argv);
+}
+
+int     args_num(char **args)
+{
+    int num;
+
+    num = 0;
+    if (!args)
+        return (num);
+    while (args[num])
+        num++;
+    return (num);
 }

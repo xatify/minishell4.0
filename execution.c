@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/16 12:11:54 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/17 10:56:03 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,31 +72,22 @@ int     execute_binary(t_data *data, t_simple_command *cmd)
 void    execute_simple_cmd(t_data *data, t_simple_command *cmd)
 {
     char    built_in;
-    int     fd;
-    int     out;
+    int     default_out;
+    //int     default_in;
     
     if (cmd)
     {
         if (expand_cmd(cmd, data->env_vars, &(data->exit_status)))
         {
-            if (cmd->outfiles)
-            {
-                out = dup(STDOUT);
-                fd = open(cmd->outfiles->str, O_CREAT | O_RDWR, 0666);
-                dup2(fd, STDOUT);
-                close(fd);
-            }       
+            default_out = dup(STDOUT);
+            redirect_stdout(cmd);
             built_in = is_built_in(cmd->cmd_name);
             if (built_in != '\0')
                 data->exit_status = execute_built_in(built_in, data, cmd);
             else
                 data->exit_status = execute_binary(data, cmd);
         }
-        if (cmd->outfiles)
-        {
-            dup2(out, 1);
-            close(out);
-        }
+        dup2(default_out, STDOUT);
         execute_simple_cmd(data, cmd->next);
     }
 }

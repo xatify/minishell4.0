@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmdslistmethodes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:17:15 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/14 09:32:41 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/17 09:27:42 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void                initialize_cmd(t_simple_command *command)
 {
     ft_memset(command, 0, sizeof(t_simple_command));
+    command->output_stream = -1;
 }
 
 void                free_command(t_simple_command *command)

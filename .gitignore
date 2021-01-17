@@ -1,0 +1,5 @@
+minishell
+minishell.dSYM/
+a.out
+test/
+.vscode/

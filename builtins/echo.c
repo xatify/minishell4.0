@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:45:21 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/15 09:47:05 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/17 11:21:21 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,13 @@ int     echo(char   **args)
 {
     bool    new_line;
     int     i;
+    int     argsnum;
 
-    new_line = ft_strcmp(args[1], "-n");
+    argsnum = args_num(args);
+    if (argsnum >= 2)
+        new_line = ft_strcmp(args[1], "-n");
+    else
+        new_line = 1;
     i = (!new_line)? 2: 1;
     while (args[i])
     {
@@ -28,5 +33,5 @@ int     echo(char   **args)
     }
     if (new_line != 0)
         ft_putstr_fd("\n", 1);
-    return (1);
+    return (0);
 }

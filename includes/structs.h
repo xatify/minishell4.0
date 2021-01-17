@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:13:03 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/15 11:18:43 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/17 09:26:12 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef	struct s_strlist
 typedef	struct s_simple_command
 {
 	char		*cmd_name;
+	int 		output_stream;
 	t_strlist 	*arguments;
 	t_strlist	*infiles;
 	t_strlist	*outfiles;
