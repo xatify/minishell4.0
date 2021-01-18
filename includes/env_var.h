@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:16:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/12 16:17:31 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/18 08:50:27 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int					change_env_var(t_env_vars **vars, char *var_name, char *new_value);
 void				del_env_var(t_env_vars **envs, char *name);
 void    			show_env_vars(t_env_vars *vars);
 void				free_env_var(t_env_vars *vars);
-
+void                fill_envp(char **envp_i, t_env_vars *vars);
+char                **built_envp(t_env_vars *vars);
 
 #endif

@@ -6,12 +6,12 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 11:18:03 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/17 11:19:52 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/18 09:16:30 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ARGUMENTS_ARRAY_H
-# define ARGUMETNS_ARRAY_H
+# define ARGUMENTS_ARRAY_H
 
 /*
 ** building arguments array from the linked list

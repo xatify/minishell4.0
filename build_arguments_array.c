@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 10:26:28 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/17 11:08:54 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/18 08:55:44 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ char    **built_argv(t_simple_command *cmd)
     int     argc;
 
     argc = 2 + count_argv(cmd->arguments);
-    if (!(argv = (char **)malloc(argc)))
+    if (!(argv = (char **)malloc(argc * sizeof(char *))))
         return (NULL);
-    ft_memset(argv, 0, argc);
+    ft_memset(argv, 0, argc * sizeof(char *));
     if (!(argv[0] = (char *)malloc(ft_strlen(cmd->cmd_name) + 1)))
     {
         free(argv);

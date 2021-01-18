@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/17 15:23:08 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/18 12:19:36 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int     execute_binary(t_data *data, t_simple_command *cmd)
     pid_t       child_pid;
     int         status;
     char        **argv;
-    char        *envp[1] = {0};
+    char        **envp;
 
     path = find_binary_file(data, cmd->cmd_name);
     if (!path)
@@ -52,7 +52,7 @@ int     execute_binary(t_data *data, t_simple_command *cmd)
         return (1);
     }
     argv = built_argv(cmd);
-    
+    envp = built_envp(data->env_vars);
     child_pid = fork();
     if (child_pid == 0)
     {
@@ -65,7 +65,6 @@ int     execute_binary(t_data *data, t_simple_command *cmd)
     {
         waitpid(child_pid, &status, 0); // must check status
         free(path);
-        //free_argv(argv);
         return (status);
     }
 }
@@ -74,7 +73,7 @@ void    execute_simple_cmd(t_data *data, t_simple_command *cmd)
 {
     char    built_in;
     int     default_out;
-    
+
     if (cmd)
     {
         default_out = dup(STDOUT);

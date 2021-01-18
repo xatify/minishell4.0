@@ -48,10 +48,10 @@ SRCS			= minishell.c						\
 				redirections.c
 # GNL				= get_next_line/get_next_line.c  get_next_line/get_next_line_utils.c
 all:
-	@$(MAKE) -C get_next_line
-	@$(GCC) -g  -o $(NAME) $(SRCS) gnl.a
+	$(MAKE) -C get_next_line
+	$(GCC) -g  -o $(NAME) $(SRCS) gnl.a
 
-	#$(GCC) -g test.c -o test
+test:
 	./minishell
 
 clean:

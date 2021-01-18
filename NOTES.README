@@ -15,7 +15,7 @@
     + must handle redirection if the filename doesnt follow < or > or >>
     + implementation of freeing the parse tree after finish
     + multiple redirections of the same type must creat the first ones  if they don't
-    exist and only redirect from or to the last one.
+        exist and only redirect from or to the last one.
 
 + 6: implement built-in
     + modification of builtins prototypes to accepts array of arguments not a linked list of arguments
@@ -45,12 +45,12 @@
     + segfault !! don't know why (recoding the entire logic of expansions)
     + multiple $VAR inside the same token
 
-- 7: Execute the commands list
++ 7: Execute the commands list
     + build the args array from cmd->arguments !! needs testing 
     + non builtin simple command working ok
     + built ins need testing ;
     + execution should start only if the expansion of a pipeline is working fine
-    - execve function needs envp array to function properly
+    + execve function needs envp array to function properly
 
 - 8: piplining:
     - THEY SHOULD WORK BEFORE ANY REDIRECTIONS SPECIFIED BY THE command
@@ -85,3 +85,4 @@
 !!! Notes
 * before production phase, linked list must be handled so there will be no double code
 * must redirect the error to stderror 2
+* """WARNING: terminal is not fully functional""" error needs to be fixed

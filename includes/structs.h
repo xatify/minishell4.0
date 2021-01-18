@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:13:03 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/17 15:13:57 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/18 12:00:32 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ typedef struct s_data
 	char		*input_cmd;
 	t_pipeline	*parse_tree;
 	int			exit_status;
+	int			tmp_in;
+	int			tmp_out;
 }				t_data;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:28:41 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/17 15:22:23 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/18 08:54:12 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,11 +199,39 @@ void    show_env_vars(t_env_vars *vars)
     }
 }
 
-// char    built_envp(t_env_vars *vars)
-// {
-//     int vars_num;
+void    fill_envp(char **envp_i, t_env_vars *vars)
+{
+    int     name_len;
 
-//     vars_num = vars->num + 1;
+    name_len = ft_strlen(vars->name);
+    ft_strcpy(*envp_i, vars->name);
+    (*envp_i)[name_len] = '=';
+    ft_strcpy((*envp_i) + name_len + 1, vars->value);
+}
 
-    
-// }
+
+char    **built_envp(t_env_vars *vars)
+{
+    char    **envp;
+    int     vars_num;
+    int     i;
+
+    vars_num = vars->num + 1;
+    if (!(envp = (char **)malloc(sizeof(char *) * vars_num)))
+        return (NULL);
+    ft_memset(envp, 0, vars_num * sizeof(char *));
+    i = 0;
+    while (vars)
+    {
+        if (!(envp[i] == (char *)malloc(ft_strlen(vars->name) + ft_strlen(vars->value) + 2)))
+        {
+            free_argv(envp);
+            return (NULL);
+        }
+        fill_envp(&(envp[i]), vars);
+        vars = vars->next;
+        i++;
+    }
+    envp[i] = NULL;
+    return(envp);
+}
