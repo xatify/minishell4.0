@@ -53,6 +53,7 @@
     + execve function needs envp array to function properly
 
 - 8: piplining:
+    - the priority is for redirection before the pipe ???
     - THEY SHOULD WORK BEFORE ANY REDIRECTIONS SPECIFIED BY THE command
 
 - 9: redirections
