@@ -50,8 +50,6 @@ SRCS			= minishell.c						\
 all:
 	$(MAKE) -C get_next_line
 	$(GCC) -g  -o $(NAME) $(SRCS) gnl.a
-
-test:
 	./minishell
 
 clean:

@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/17 11:20:29 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/19 08:30:01 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 #include "find_binary.h"
 #include "variables.h"
 #include "sort.h"
-#include "output_redirection.h"
+#include "redirection.h"
 #include "arguments_array.h"
 
 #endif

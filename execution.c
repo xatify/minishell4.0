@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/18 12:19:36 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/19 12:51:46 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,31 +69,66 @@ int     execute_binary(t_data *data, t_simple_command *cmd)
     }
 }
 
-void    execute_simple_cmd(t_data *data, t_simple_command *cmd)
+int    execute_simple_cmd(t_data *data, t_simple_command *cmd)
 {
-    char    built_in;
-    int     default_out;
+    int     pipe_fd[2];
+    int     outfile;
+    int     infile;
 
+    outfile = -1;
+    infile = -1;
     if (cmd)
     {
-        default_out = dup(STDOUT);
-        redirect_stdout(cmd);
-        built_in = is_built_in(cmd->cmd_name);
-        if (built_in != '\0')
-            data->exit_status = execute_built_in(built_in, data, cmd);
+        if (!redirect_stdin(cmd, &infile))
+            return (0);
+        if (infile != -1)
+        {
+            dup2(data->tmp_in, infile);
+            close(infile);
+        }
+        if (!redirect_stdout(cmd, &outfile))
+            return (0);
+        if (outfile != -1)
+        {
+            dup2(data->tmp_out, outfile);
+            close(outfile);
+        }
+        else
+        {
+            if (cmd->next)
+            {
+                if (pipe(pipe_fd) < 0)
+                    return (0);
+                data->tmp_out = pipe_fd[STDOUT];
+                data->tmp_in = pipe_fd[STDIN];
+                close(pipe_fd[STDIN]);
+            }
+        }
+        if (cmd->built_in != '\0')
+            data->exit_status = execute_built_in(cmd->built_in, data, cmd);
         else
             data->exit_status = execute_binary(data, cmd);
-        dup2(default_out, STDOUT);
-        execute_simple_cmd(data, cmd->next);
+        return (execute_simple_cmd(data, cmd->next));
     }
+    return (1);
 }
 
 void    execute_pipeline(t_data *data, t_pipeline *pipeline)
 {
+    int tmp_in;
+    int tmp_out;
+
+    tmp_in = dup(0);
+    tmp_out = dup(1);
     if (pipeline)
     {
         if (expand_pipeline(pipeline, data))
-            execute_simple_cmd(data, pipeline->simple_cmd);
+        {
+            if (!execute_simple_cmd(data, pipeline->simple_cmd))
+                data->exit_status = 1;
+            dup2(tmp_in, 0);
+            dup2(tmp_out, 1);
+        }
         execute_pipeline(data, pipeline->next);
     }
 }

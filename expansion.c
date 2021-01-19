@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/17 14:57:26 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/19 09:20:37 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ int     expand_cmd(t_simple_command *cmd, t_env_vars *vars, int *exit_status)
     expand_list(cmd->infiles, vars, exit_status);
     expand_list(cmd->outfiles, vars, exit_status);
     expand_list(cmd->append_outfiles, vars, exit_status);
+    cmd->built_in = is_built_in(cmd->cmd_name);
     return (expand_cmd(cmd->next, vars, exit_status));
 }
 

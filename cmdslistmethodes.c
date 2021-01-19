@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:17:15 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/17 09:27:42 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/19 10:58:36 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ t_simple_command  *last_command(t_simple_command *cmd)
 void            add_back_command(t_simple_command **cmd_head, t_simple_command *command)
 {
     if (!(*cmd_head))
+    {
         *cmd_head = command;
+        command->first = 1;
+    }
     else
         last_command((*cmd_head))->next = command;
 }

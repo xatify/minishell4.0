@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 09:41:20 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/18 11:20:46 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/19 09:40:47 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int main(void)
     {
         close(fd[0]);
         dup2(fd[1], 1);
-        close(fd[0]);
         execl(cmd1[0], cmd1[1], cmd1[2], NULL);
     }
     return (0);
