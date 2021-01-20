@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:28:43 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/18 12:01:49 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/20 08:47:37 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ t_data  *start_shell(int argc, char **argv, char **envp)
     data->exit_status = 0;
     data->env_vars = build_env_vars(envp);
     data->unset_vars = NULL;
-    data->tmp_in = dup(STDIN);
-    data->tmp_out = dup(STDOUT);
     return (data);
 }
 

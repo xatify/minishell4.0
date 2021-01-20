@@ -17,7 +17,7 @@
     + multiple redirections of the same type must creat the first ones  if they don't
         exist and only redirect from or to the last one.
 
-+ 6: implement built-in
+- 6: implement built-in
     + modification of builtins prototypes to accepts array of arguments not a linked list of arguments
     + 6-1: echo with option -n
         + segfault if no argument is given 
@@ -37,6 +37,7 @@
     + 6-8: exit
         + !!!!!must free everything before exiting
         + must be tested with diffrent exit status
+    - must compile builtins programs to use inside the pipelines after forking 
 
 + 5: shell expansions
     + $! and $VAR of the command before performing redirection
@@ -45,7 +46,7 @@
     + segfault !! don't know why (recoding the entire logic of expansions)
     + multiple $VAR inside the same token
 
-+ 7: Execute the commands list
+- 7: Execute the commands list
     + build the args array from cmd->arguments !! needs testing 
     + non builtin simple command working ok
     + built ins need testing ;

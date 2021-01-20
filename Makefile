@@ -3,10 +3,11 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
+#    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/11/08 22:48:36 by abbouzid          #+#    #+#              #
-#    Updated: 2021/01/14 09:36:00 by keddib           ###   ########.fr        #                                                                            #
+#    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
+#    Updated: 2021/01/20 12:43:59 by abbouzid         ###   ########.fr        #
+#                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
