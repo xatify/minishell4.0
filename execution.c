@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/21 09:21:00 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/21 11:43:13 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int     execute_binary(t_data *data, t_simple_command *cmd)
     int         status;
     char        **argv;
     char        **envp;
+    
 
     path = find_binary_file(data, cmd->cmd_name);
     if (!path)
@@ -148,6 +149,8 @@ void    execute_pipeline(t_data *data, t_pipeline *pipeline)
         }
         dup2(fdout, STDOUT);
         close(fdout);
+        if (cmd->built_in != '\0')
+            data->exit_status = execute_built_in(cmd->built_in, data, cmd);
         ret = fork();
         if (ret == 0)
         {

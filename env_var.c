@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:28:41 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/18 08:54:12 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/21 12:41:04 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,25 @@ t_env_vars  *build_env_vars(char *envp[])
     char            *name;
     char            *value;
     int             i;
-
+    char            *tmp;
+    
     vars = NULL;
     i = 0;
     while (envp[i])
     {
         name = get_env_name(envp[i]);
         value = get_env_value(envp[i]);
+        if (ft_strcmp(name, "SHELL")  == 0)
+        {
+            free(value);
+            value = ft_strdup("minishell");
+        }
+        if (ft_strcmp(name, "SHLVL") == 0)
+        {
+            tmp = value;       
+            value = ft_itoa(ft_atoi(value) + 1);
+            free(tmp);
+        }
         add_back_env(&vars, create_env_var(name, value));
         free(name);
         free(value);
@@ -223,7 +235,7 @@ char    **built_envp(t_env_vars *vars)
     i = 0;
     while (vars)
     {
-        if (!(envp[i] == (char *)malloc(ft_strlen(vars->name) + ft_strlen(vars->value) + 2)))
+        if (!(envp[i] = (char *)malloc(ft_strlen(vars->name) + ft_strlen(vars->value) + 2)))
         {
             free_argv(envp);
             return (NULL);

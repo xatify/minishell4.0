@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 14:59:19 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/14 12:21:40 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/21 12:30:05 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char    *absolute_path(char *cmd_name, char *PATH_ENV)
     char    *final_path;
     int     i;
 
-    if (*cmd_name == '/')
+    if (ft_strchr(cmd_name, '/'))
         return cmd_name;
     paths = ft_split(PATH_ENV, ':');
     i  = 0;

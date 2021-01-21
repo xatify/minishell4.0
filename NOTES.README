@@ -43,10 +43,12 @@
     + $! and $VAR of the command before performing redirection
         + needs to be tested
     + 5-1: environment variables needs to be tested
+        + SHELL env must change to raysodibshell
+        + incrementation of SHLVL env var
     + segfault !! don't know why (recoding the entire logic of expansions)
     + multiple $VAR inside the same token
 
-- 7: Execute the commands list
++ 7: Execute the commands list
     + build the args array from cmd->arguments !! needs testing
     + non builtin simple command working ok
     + built ins need testing ;
@@ -54,12 +56,13 @@
     + execve function needs envp array to function properly
     + redirections and pipelining, before execution if there is an error while creating files or pipes
         the execution will not take place
-    - segfault while running "make"
+    + segfault while running "make"
 
 -- 8: piplining:
     + the priority is for redirection before the pipe ???
     + THEY SHOULD WORK BEFORE ANY REDIRECTIONS SPECIFIED BY THE command
     -- needs more testing
+
 -- 9: redirections
     !! pipelining is performed before any redirections specified by the command
     + should handle the case if open returns -1
@@ -71,11 +74,13 @@
     -- redirection <
     -- redirecting >>
 
+
 - 10: collect the exit status
     - must check if any simple command change the exit_status inside the pipeline or just the \
       command of the pipeline.
     - implement the exact exit status (maybe they  are the same as errno !!)
-    - must pass the the environment variables to execve function
+    + must pass the the environment variables to execve function
+
 
 - 11: handling signals
 
@@ -87,6 +92,6 @@
 
 !!! Notes
 * before production phase, linked list must be handled so there will be no double code
-* must redirect the error to stderror 2
-* """WARNING: terminal is not fully functional""" error needs to be fixed
++ must redirect the error to stderror 2
++ """WARNING: terminal is not fully functional""" error needs to be fixed
 
