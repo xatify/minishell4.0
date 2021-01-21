@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/20 12:41:00 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/21 09:21:00 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,20 +75,20 @@ int    execute_simple_cmd(t_data *data, t_simple_command *cmd)
     int fdout;
     int fdin;
     
+    tmp_in = dup(STDIN);
+    tmp_out = dup(STDOUT);
     if (cmd)
     {
-        tmp_in = dup(STDIN);
-        tmp_out = dup(STDOUT);
         fdout = tmp_out;
         fdin = tmp_in;
-        fdout = redirect_stdout(cmd);
-        fdin = redirect_stdin(cmd);
-        if (fdout == -1 || fdin == -1)
+        if (!redirect_stdin(cmd, &fdin) || !redirect_stdout(cmd, &fdout))
         {
             close(tmp_in);
             close(tmp_out);
             return (0);  
         }
+        dup2(fdout, STDOUT);
+        dup2(fdin, STDIN);
         if (cmd->built_in != '\0')
             data->exit_status = execute_built_in(cmd->built_in, data, cmd);
         else
@@ -97,10 +97,6 @@ int    execute_simple_cmd(t_data *data, t_simple_command *cmd)
         dup2(tmp_out, STDOUT);
         close(tmp_in);
         close(tmp_out);
-        if (tmp_in != fdin)
-            close(fdin);
-        if (tmp_out != fdout)
-            close(fdout);
     }
     return (1);
 }
@@ -110,9 +106,9 @@ void    execute_pipeline(t_data *data, t_pipeline *pipeline)
     int     tmp_in;
     int     tmp_out;
     int     fdin;
-    int     tmp;
     int     fdout;
     int     ret;
+    int     tmp;
     char        **argv;
     char        **envp;
     t_simple_command *cmd;
@@ -127,40 +123,27 @@ void    execute_pipeline(t_data *data, t_pipeline *pipeline)
     fdout = dup(tmp_out);
     while (cmd)
     {
-        tmp = redirect_stdin(cmd);
-        if (tmp == -1)
-        {
-            cmd = cmd->next;
-            continue;
-        }
-        if (tmp >= 0)
-            fdin = tmp;
+        if (!redirect_stdin(cmd, &fdin))
+            break;
         dup2(fdin, STDIN);
         close(fdin);
-        // if (!redirect_stdout(cmd, &fdout))
-        // {
-        //     cmd = cmd->next;
-        //     continue;
-        // }
-        // else
-        // {
-        tmp = redirect_stdout(cmd);
-        if (tmp == -1)
-        {
-             cmd = cmd->next;
-             continue;
-        }
-        if (tmp >= 0)
-            fdout = tmp;
+        tmp = -1;
+        if (!redirect_stdout(cmd, &tmp))
+            break;
         else
         {
-            if (!cmd->next)
-                fdout = dup(tmp_out);
+            if (tmp != -1)
+                fdout = tmp;
             else
             {
-                pipe(pipefd);
-                fdout = pipefd[1];
-                fdin = pipefd[0];
+                if (!cmd->next)
+                    fdout = dup(tmp_out);
+                else
+                {
+                    pipe(pipefd);
+                    fdout = pipefd[1];
+                    fdin = pipefd[0];
+                }
             }
         }
         dup2(fdout, STDOUT);
@@ -176,9 +159,9 @@ void    execute_pipeline(t_data *data, t_pipeline *pipeline)
         }
         cmd = cmd->next;
     }
-    dup2(tmp_in, 0);
+    dup2(tmp_in, STDIN);
     close(tmp_in);
-    dup2(tmp_out, 1);
+    dup2(tmp_out, STDOUT);
     close(tmp_out);
 
     waitpid(ret, NULL, 0);

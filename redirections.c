@@ -6,13 +6,13 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 09:19:07 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/20 12:41:45 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/21 08:23:52 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int    redirect_stdout(t_simple_command *cmd)
+int    redirect_stdout(t_simple_command *cmd, int *fdout)
 {
     int     fd;
     int     ret;
@@ -22,11 +22,14 @@ int    redirect_stdout(t_simple_command *cmd)
     {
         fd = open(cmd->outfiles->str, O_TRUNC | O_CREAT | O_RDWR, 0666);
         if (fd < 0)
-            return (-1);
+            return (0);
         if (!(cmd->outfiles->next))
         {
             if (cmd->output_stream == OUTPUT)
-                ret = fd;
+            {
+                *fdout = fd;
+                break;
+            }
         }
         else
             close(fd);
@@ -36,20 +39,23 @@ int    redirect_stdout(t_simple_command *cmd)
     {
         fd = open(cmd->append_outfiles->str, O_APPEND | O_CREAT | O_RDWR, 0666);
         if (fd < 0)
-            return (-1);
+            return (0);
         if (!(cmd->append_outfiles->next))
         {
             if (cmd->output_stream == APPEND_OUT)
-                ret = fd;
+            {
+                *fdout = fd;
+                break;
+            }
         }
         else
             close(fd);
         cmd->append_outfiles = cmd->append_outfiles->next;   
     }
-    return (ret);
+    return (1);
 }
 
-int     redirect_stdin(t_simple_command *cmd)
+int     redirect_stdin(t_simple_command *cmd, int *fdin)
 {
     int fd;
     
@@ -64,9 +70,12 @@ int     redirect_stdin(t_simple_command *cmd)
             return (0);
         }
         if (!(cmd->infiles->next))
-            return (fd);
+        {
+            *fdin = fd;
+            return (1);
+        }
         close(fd);
         cmd->infiles = cmd->infiles->next;
     }
-    return (-2);
+    return (1);
 }

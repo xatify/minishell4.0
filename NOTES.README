@@ -17,7 +17,7 @@
     + multiple redirections of the same type must creat the first ones  if they don't
         exist and only redirect from or to the last one.
 
-- 6: implement built-in
++ 6: implement built-in
     + modification of builtins prototypes to accepts array of arguments not a linked list of arguments
     + 6-1: echo with option -n
         + segfault if no argument is given 
@@ -37,8 +37,8 @@
     + 6-8: exit
         + !!!!!must free everything before exiting
         + must be tested with diffrent exit status
-    - must compile builtins programs to use inside the pipelines after forking 
-
+    + must compile builtins programs to use inside the pipelines after forking 
+        (there is already binary builtin in the system)
 + 5: shell expansions
     + $! and $VAR of the command before performing redirection
         + needs to be tested
@@ -52,15 +52,15 @@
     + built ins need testing ;
     + execution should start only if the expansion of a pipeline is working fine
     + execve function needs envp array to function properly
-    - redirections and pipelining, before execution if there is an error while creating files or pipes
+    + redirections and pipelining, before execution if there is an error while creating files or pipes
         the execution will not take place
     - segfault while running "make"
 
-- 8: piplining:
-    - the priority is for redirection before the pipe ???
-    - THEY SHOULD WORK BEFORE ANY REDIRECTIONS SPECIFIED BY THE command
-
-- 9: redirections
+-- 8: piplining:
+    + the priority is for redirection before the pipe ???
+    + THEY SHOULD WORK BEFORE ANY REDIRECTIONS SPECIFIED BY THE command
+    -- needs more testing
+-- 9: redirections
     !! pipelining is performed before any redirections specified by the command
     + should handle the case if open returns -1
     + the first of (> or >>) define the output:
@@ -68,11 +68,8 @@
         or the opposite
     - which permession should the created files have ????      
     -- redirecting >
-        - needs testing
-    -- redirection <
-        - needs testing   
-    -- redirecting >>
-        - needs testing 
+    -- redirection <   
+    -- redirecting >> 
 
 - 10: collect the exit status
     - must check if any simple command change the exit_status inside the pipeline or just the \

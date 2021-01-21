@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirection.h                                      :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/17 10:25:23 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/21 08:24:16 by abbouzid         ###   ########.fr       */
+/*   Created: 2021/01/21 08:18:25 by abbouzid          #+#    #+#             */
+/*   Updated: 2021/01/21 08:19:03 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OUTPUT_REDIRECTION_H
-# define OUTPUT_REDIRECTION_H
+#include "includes/minishell.h"
 
-/*
-** creating output files and redirecting to the right file
-*/
+int		main(int	argc, char **argv, char **envp)
+{
+	t_data 	*data;
 
-int     redirect_stdout(t_simple_command *cmd, int *fd);
-int     redirect_stdin(t_simple_command *cmd, int *fd);
-#endif
+	data = start_shell(argc, argv, envp);
+	while (TRUE)
+	{
+		show_prompt(data);
+		if (get_next_line(0, &(data->input_cmd)))
+		{
+			data->parse_tree = parser(data->input_cmd);
+			execute(data, data->parse_tree);
+		}
+	}
+	return (0);
+}
