@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:27:29 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/17 09:26:40 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/21 10:04:06 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int     parse_cmd_name(t_token **tokens, t_simple_command *command)
         if (!(command->cmd_name = ft_strdup((*tokens)->tkn)))
             return (0);
         del_token_head(tokens);
-        return  (1);    
+        return  (1);
     }
     return (0);
 }
@@ -60,11 +60,9 @@ t_simple_command    *parse_simple_command(t_token    **tokens)
 {
     t_simple_command    *command;
     int                 id;
-    int                 first_redirection;
-    
+
     if (!(command = new_cmd()))
         return (NULL);
-    first_redirection = 0;
     while (*tokens && (*tokens)->id != PIPE && (*tokens)->id != SEMICOLON)
     {
         id  = (*tokens)->id;
@@ -75,11 +73,8 @@ t_simple_command    *parse_simple_command(t_token    **tokens)
                 free_command(command);
                 return (NULL);
             }
-            else if ((id == OUTPUT || id == APPEND_OUT) && !first_redirection)
-            {
-                first_redirection = 1;
+            else if (id == OUTPUT || id == APPEND_OUT)
                 command->output_stream = id;
-            }
         }
         else if (command->cmd_name == NULL)
         {
@@ -108,7 +103,7 @@ t_pipeline      *parse_pipe_line(t_token **tokens)
 {
     t_pipeline          *pipeline;
     t_simple_command    *command;
-    
+
     if (!(pipeline = new_pipe_line()))
         return (NULL);
     while (*tokens && (*tokens)->id != SEMICOLON)
@@ -134,7 +129,7 @@ t_pipeline      *parser(char    *input_cmd)
     t_token        *tokens;
     t_pipeline     *pipeline_head;
     t_pipeline     *tmp;
-    
+
     tokens = lexer(input_cmd);
     pipeline_head = NULL;
     while (tokens)

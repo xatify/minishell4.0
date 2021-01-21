@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 09:19:07 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/21 08:23:52 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/21 10:26:50 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int    redirect_stdout(t_simple_command *cmd, int *fdout)
 {
     int     fd;
     int     ret;
-    
+
     ret = -2;
     while (cmd->outfiles)
     {
@@ -33,7 +33,7 @@ int    redirect_stdout(t_simple_command *cmd, int *fdout)
         }
         else
             close(fd);
-        cmd->outfiles = cmd->outfiles->next;    
+        cmd->outfiles = cmd->outfiles->next;
     }
     while (cmd->append_outfiles)
     {
@@ -50,7 +50,7 @@ int    redirect_stdout(t_simple_command *cmd, int *fdout)
         }
         else
             close(fd);
-        cmd->append_outfiles = cmd->append_outfiles->next;   
+        cmd->append_outfiles = cmd->append_outfiles->next;
     }
     return (1);
 }
@@ -58,7 +58,7 @@ int    redirect_stdout(t_simple_command *cmd, int *fdout)
 int     redirect_stdin(t_simple_command *cmd, int *fdin)
 {
     int fd;
-    
+
     while(cmd->infiles)
     {
         fd = open(cmd->infiles->str, O_RDONLY);

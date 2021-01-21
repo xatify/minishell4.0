@@ -1,5 +1,5 @@
-minishell
-minishell.dSYM/
 a.out
-test/
-.vscode/
+test
+.vscode
+minishell.dSYM
+minishell
