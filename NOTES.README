@@ -75,6 +75,13 @@
     - which permession should the created files have ????
     -- redirecting >
         + problem with " ** > ** | ** " fixed
+        - error ls -la | grep "keddib" | > a
+        - error echo "jfhdfh\'"
+        - error echo 'a'b'c';
+        - error echo 'Don'\''t do that'
+        - error echo "The quote for today is "\"TGIF\"
+        - error echo "The quote for today is "\""TGIF"\"
+
     -- redirection <
     -- redirecting >>
 
@@ -98,4 +105,3 @@
 * before production phase, linked list must be handled so there will be no double code
 + must redirect the error to stderror 2
 + """WARNING: terminal is not fully functional""" error needs to be fixed
-
