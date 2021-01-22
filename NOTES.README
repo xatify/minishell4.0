@@ -57,6 +57,8 @@
     + redirections and pipelining, before execution if there is an error while creating files or pipes
         the execution will not take place
     + segfault while running "make"
+    + only "cd" builtin will run in a seperate process if it is inside a pipeline
+
 
 -- 8: piplining:
     + the priority is for redirection before the pipe ???

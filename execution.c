@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/21 11:43:13 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/22 08:20:47 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void    execute_pipeline(t_data *data, t_pipeline *pipeline)
         }
         dup2(fdout, STDOUT);
         close(fdout);
-        if (cmd->built_in != '\0')
+        if (cmd->built_in != '\0' && ft_strcmp(cmd->cmd_name, "cd") != 0)
             data->exit_status = execute_built_in(cmd->built_in, data, cmd);
         ret = fork();
         if (ret == 0)
