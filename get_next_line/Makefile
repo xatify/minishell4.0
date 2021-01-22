@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
+#    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/18 09:05:19 by abbouzid          #+#    #+#              #
-#    Updated: 2021/01/18 09:15:01 by abbouzid         ###   ########.fr        #
+#    Updated: 2021/01/22 08:43:33 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ OBJS		= $(SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME):
+$(NAME): $(SRCS)
 	gcc -D BUFFER_SIZE=$(BUFSIZE) -c $(SRCS)
 	ar rs $(NAME) $(OBJS)
 

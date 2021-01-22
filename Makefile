@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
+#    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/01/20 12:43:59 by abbouzid         ###   ########.fr        #
+#    Updated: 2021/01/22 08:44:41 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,16 +48,16 @@ SRCS			= minishell.c						\
 				sort.c								\
 				redirections.c
 # GNL				= get_next_line/get_next_line.c  get_next_line/get_next_line_utils.c
-all:
+all:	$(NAME)
+$(NAME) : $(SRCS)
 	$(MAKE) -C get_next_line
 	$(GCC) -g  -o $(NAME) $(SRCS) gnl.a
-	./minishell
 
 clean:
 	rm $(NAME)
 
 fclean: clean
-	rm -rf *.dSYM
+	rm -rf *.dSYM minishell
 
 re: clean all
 
