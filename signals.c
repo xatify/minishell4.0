@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.h                                        :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/13 09:59:42 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/22 11:52:26 by abbouzid         ###   ########.fr       */
+/*   Created: 2021/01/22 10:21:32 by abbouzid          #+#    #+#             */
+/*   Updated: 2021/01/22 10:54:11 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTION_H
-# define EXECUTION_H
+#include "includes/minishell.h"
 
-/*
-** execution functions
-*/
+void    sig_int_handler(int signum)
+{
+    
+    printf("\n%d:hello world\n", signum);
+}
 
-int     execute_simple_cmd(t_data *data, t_simple_command *cmd);
-void    execute(t_data   *data, t_pipeline *pipeline);
-void     execute_pipeline(t_data *data, t_pipeline *pipeline);
-int     execute_binary(t_data *data, t_simple_command *cmd);
-int     execute_built_in(char built_in, t_data *data, t_simple_command *cmd);
-
-#endif
+// void    sig_quit_handler(int signum)
+// {  
+// }

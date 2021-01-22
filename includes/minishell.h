@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/22 09:34:44 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/22 10:31:22 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@
 #include "sort.h"
 #include "redirection.h"
 #include "arguments_array.h"
+#include "sig_handling.h"
 
 #endif

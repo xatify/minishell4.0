@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
+#    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/01/22 08:44:41 by keddib           ###   ########.fr        #
+#    Updated: 2021/01/22 10:33:02 by abbouzid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,8 @@ SRCS			= minishell.c						\
 				$(BUILTINS)/pwd.c					\
 				$(BUILTINS)/unset.c					\
 				sort.c								\
-				redirections.c
+				redirections.c						\
+				signals.c
 # GNL				= get_next_line/get_next_line.c  get_next_line/get_next_line_utils.c
 all:	$(NAME)
 $(NAME) : $(SRCS)

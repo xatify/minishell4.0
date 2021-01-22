@@ -67,7 +67,7 @@
     -- needs more testing
 
 -- 9: redirections
-    !! pipelining is performed before any redirections specified by the command
+    + !! pipelining is performed before any redirections specified by the command
     + should handle the case if open returns -1
     + the first of (> or >>) define the output:
         if > is before >> in cmd the > file receive the output and >> files get created only
