@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/22 08:20:47 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/22 10:00:33 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int    execute_simple_cmd(t_data *data, t_simple_command *cmd)
     return (1);
 }
 
+
 void    execute_pipeline(t_data *data, t_pipeline *pipeline)
 {
     int     tmp_in;
@@ -134,7 +135,10 @@ void    execute_pipeline(t_data *data, t_pipeline *pipeline)
         else
         {
             if (tmp != -1)
+            {
                 fdout = tmp;
+                dup2(fdin, STDIN);
+            }
             else
             {
                 if (!cmd->next)

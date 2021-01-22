@@ -6,13 +6,14 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/19 08:30:01 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/22 09:34:44 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+#include <signal.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>

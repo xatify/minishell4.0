@@ -39,6 +39,7 @@
         + must be tested with diffrent exit status
     + must compile builtins programs to use inside the pipelines after forking
         (there is already binary builtin in the system)
+
 + 5: shell expansions
     + $! and $VAR of the command before performing redirection
         + needs to be tested
@@ -73,6 +74,7 @@
         or the opposite
     - which permession should the created files have ????
     -- redirecting >
+        + problem with " ** > ** | ** " fixed
     -- redirection <
     -- redirecting >>
 
