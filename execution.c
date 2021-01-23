@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/23 07:46:39 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/23 08:33:35 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,14 +128,9 @@ void    execute_pipeline(t_data *data, t_pipeline *pipeline)
             break;
         dup2(fdin, STDIN);
         close(fdin);
-        if (!cmd->next)
-            fdout = dup(tmp_out);
-        else
-        {
-            pipe(pipefd);
-            fdout = pipefd[1];
-            fdin = pipefd[0];
-        }
+        pipe(pipefd);
+        fdout = pipefd[1];
+        fdin = pipefd[0];
         tmp = -1;
         if (!redirect_stdout(cmd, &tmp))
             break;
@@ -144,6 +139,8 @@ void    execute_pipeline(t_data *data, t_pipeline *pipeline)
             fdout = tmp;
             close(pipefd[1]);
         }
+        else if (!cmd->next)
+            fdout = dup(tmp_out);
         dup2(fdout, STDOUT);
         close(fdout);
 
@@ -152,14 +149,14 @@ void    execute_pipeline(t_data *data, t_pipeline *pipeline)
         else
         {
             ret = fork();
-        if (ret == 0)
-        {
-            argv = built_argv(cmd);
-            envp = built_envp(data->env_vars);
-            execve(find_binary_file(data, cmd->cmd_name), argv, envp);
-            perror("execve error");
-            _exit(1);
-        }
+            if (ret == 0)
+            {
+                argv = built_argv(cmd);
+                envp = built_envp(data->env_vars);
+                execve(find_binary_file(data, cmd->cmd_name), argv, envp);
+                perror("execve error");
+                _exit(1);
+            }
         }
         cmd = cmd->next;
     }

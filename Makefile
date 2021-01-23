@@ -6,7 +6,7 @@
 #    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/01/22 10:33:02 by abbouzid         ###   ########.fr        #
+#    Updated: 2021/01/23 08:01:51 by abbouzid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ all:	$(NAME)
 $(NAME) : $(SRCS)
 	$(MAKE) -C get_next_line
 	$(GCC) -g  -o $(NAME) $(SRCS) gnl.a
+	#./minishell
 
 clean:
 	rm $(NAME)

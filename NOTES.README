@@ -70,10 +70,11 @@
 + 8: piplining:
     + the priority is for redirection before the pipe ???
     + THEY SHOULD WORK BEFORE ANY REDIRECTIONS SPECIFIED BY THE command
+    + duplicating the stdout if it's the last cmd and no outputfile is given
 
 -- 9: redirections
     + !! pipelining is performed before any redirections specified by the command
-    + should handle the case if open returns -1
+    - should handle the case if open returns -1
     + the first of (> or >>) define the output:
         if > is before >> in cmd the > file receive the output and >> files get created only
         or the opposite
