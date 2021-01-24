@@ -16,6 +16,7 @@
         - error echo 'Don'\''t do that'
         - error echo "The quote for today is "\"TGIF\"
         - error echo "The quote for today is "\""TGIF"\"
+        - error echo somthing"more"something
 
 + 3: parsing the tokens and build a 3D linked list of command
     + must handle redirection if the filename doesnt follow < or > or >>
