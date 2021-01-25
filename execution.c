@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/23 08:33:35 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/25 14:59:53 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,13 @@ int    execute_simple_cmd(t_data *data, t_simple_command *cmd)
         }
         dup2(fdout, STDOUT);
         dup2(fdin, STDIN);
-        if (cmd->built_in != '\0')
-            data->exit_status = execute_built_in(cmd->built_in, data, cmd);
-        else
-            data->exit_status = execute_binary(data, cmd);
+        if (cmd->cmd_name)
+        {
+            if (cmd->built_in != '\0')
+                data->exit_status = execute_built_in(cmd->built_in, data, cmd);
+            else
+                data->exit_status = execute_binary(data, cmd);
+        }
         dup2(tmp_in, STDIN);
         dup2(tmp_out, STDOUT);
         close(tmp_in);
@@ -143,19 +146,21 @@ void    execute_pipeline(t_data *data, t_pipeline *pipeline)
             fdout = dup(tmp_out);
         dup2(fdout, STDOUT);
         close(fdout);
-
-        if (cmd->built_in != '\0' && ft_strcmp(cmd->cmd_name, "cd") != 0)
-            data->exit_status = execute_built_in(cmd->built_in, data, cmd);
-        else
+        if (cmd->cmd_name)
         {
-            ret = fork();
-            if (ret == 0)
+            if (cmd->built_in != '\0' && ft_strcmp(cmd->cmd_name, "cd") != 0)
+                data->exit_status = execute_built_in(cmd->built_in, data, cmd);
+            else
             {
-                argv = built_argv(cmd);
-                envp = built_envp(data->env_vars);
-                execve(find_binary_file(data, cmd->cmd_name), argv, envp);
-                perror("execve error");
-                _exit(1);
+                ret = fork();
+                if (ret == 0)
+                {
+                    argv = built_argv(cmd);
+                    envp = built_envp(data->env_vars);
+                    execve(find_binary_file(data, cmd->cmd_name), argv, envp);
+                    perror("execve error");
+                    _exit(1);
+                }
             }
         }
         cmd = cmd->next;

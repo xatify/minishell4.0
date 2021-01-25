@@ -81,9 +81,9 @@
         if > is before >> in cmd the > file receive the output and >> files get created only
         or the opposite
     + which permession should the created files have ????
-    -- redirecting >
+    + redirecting >
         + problem with " ** > ** | ** " fixed
-        - error ls -la | grep "keddib" | > a
+        + error ls -la | grep "keddib" | > a
     + redirection <
     + redirecting >>
 

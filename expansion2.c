@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/25 14:19:25 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/25 14:42:35 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,16 +260,20 @@ int     expand_cmd(t_simple_command *cmd, t_data *data)
 
     if (!cmd)
         return (1);
-    tmp = cmd->cmd_name;
-    cmd->cmd_name = expand(&(cmd->cmd_name), data);
-    free(tmp);
-    if (!cmd->cmd_name)
-        return (0);
+    if (cmd->cmd_name)
+    {
+        tmp = cmd->cmd_name;
+        cmd->cmd_name = expand(&(cmd->cmd_name), data);
+        free(tmp);
+        if (!cmd->cmd_name)
+            return (0);
+        cmd->built_in = is_built_in(cmd->cmd_name);
+    }
     expand_list(cmd->arguments, data);
     expand_list(cmd->infiles, data);
     expand_list(cmd->outfiles, data);
     expand_list(cmd->append_outfiles, data);
-    cmd->built_in = is_built_in(cmd->cmd_name);
+    
     return (expand_cmd(cmd->next, data));
 }
 
