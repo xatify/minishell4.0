@@ -6,7 +6,7 @@
 #    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/01/23 08:01:51 by abbouzid         ###   ########.fr        #
+#    Updated: 2021/01/25 10:07:56 by abbouzid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,14 +23,14 @@ SRCS			= minishell.c						\
 				$(STR)/ft_putstr_fd.c				\
 				$(STR)/ft_itoa.c					\
 				$(STR)/ft_strrchr.c					\
-				lexer.c								\
+				lexer2.c							\
 				stack.c								\
 				parser.c							\
 				strlistmethodes.c					\
 				cmdslistmethodes.c					\
 				pipelinelistmethodes.c				\
 				tokenslistmethodes.c				\
-				expansion.c							\
+				expansion2.c						\
 				env_var.c							\
 				start_shell.c						\
 				execution.c							\

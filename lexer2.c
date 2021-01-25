@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   lexer2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/21 18:40:06 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/25 07:36:14 by abbouzid         ###   ########.fr       */
+/*   Created: 2021/01/25 07:33:33 by abbouzid          #+#    #+#             */
+/*   Updated: 2021/01/25 12:45:59 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,27 @@ int     handle_single_quote(t_stack **stack, char **input_cmd)
     while (**input_cmd)
     {
         push(stack, *(*input_cmd)++);
-        if (top_stack(stack) != 0x27)
-            continue;
-        break;
+        if (top_stack(stack) == 0x27)
+            break;
     }
     if (top_stack(stack) == 0x27)
+        return (1);
+    return (0);
+}
+
+int     handle_double_quote(t_stack **stack, char **input_cmd)
+{
+    while(**input_cmd)
     {
-        if (is_white_character((**input_cmd)) || is_meta(**input_cmd) || !(**input_cmd))
+        push(stack, *(*input_cmd)++);
+        if (top_stack(stack) != '"')
+           continue;
+        else
         {
-            push(stack, *(*input_cmd));
-            return (1);
+            if (special(*stack))
+                continue;
+            else
+                return (1);
         }
     }
     return (0);
@@ -52,30 +63,30 @@ int     special(t_stack *stack)
     return (spcl % 2);
 }
 
-
-int     handle_double_quote(t_stack **stack, char **input_cmd)
+int     handle_quotes(t_stack **stack, char **input_cmd)
 {
-    while(**input_cmd)
+    char       quote;
+    int        error;
+    
+    error = 0;
+    quote = top_stack(stack);
+    if (!special((*stack)))
     {
-        push(stack, *(*input_cmd)++);
-        if (top_stack(stack) != '"')
-           continue;
+        if (quote == '\'')
+        {
+            if (!handle_single_quote(stack, input_cmd))
+                error = 1;
+        }
         else
         {
-            if (special(*stack))
-                continue;
-            else
-            {
-                if (is_white_character(**input_cmd) || **input_cmd == '\0')
-                {
-                    push(stack, *(*input_cmd)++);
-                    return (1);
-                }
-            }
-            break;
+            if (!handle_double_quote(stack, input_cmd))
+                error = 1;
         }
+        if (error)
+            return (0);
+        return (1);
     }
-    return (0);
+    return (1);
 }
 
 int     handle_metacharacter(t_stack **stack, t_token **tokens, char **input_cmd)
@@ -111,61 +122,39 @@ int     handle_metacharacter(t_stack **stack, t_token **tokens, char **input_cmd
     return (1);
 }
 
-int       handle_quotes(t_stack **stack, char **input_cmd, t_token **tokens)
-{
-    char    quote;
-    int     error;
-
-    error = 0;
-    quote = top_stack(stack);
-    if (!special((*stack)))
-    {
-        if (quote == 0x27) // single_quote
-        {
-            if (!handle_single_quote(stack, input_cmd))
-                error = 1;
-        }
-        else
-        {
-            if (!handle_double_quote(stack, input_cmd))
-                error = 1;
-        }
-        if (error)
-        {
-            ft_putstr_fd("error while tokenizing\n", 1);
-            free_tokens(tokens);
-            free_stack(stack);
-            return (0);
-        }
-        return (1);
-    }
-    return (1);
-}
-
-t_token     *lexer(char *input_cmd)
+t_token *lexer(char *input_cmd)
 {
     t_token     *token = NULL;
     t_stack     *stack = NULL;
 
-
     if (*input_cmd == '\0')
         return (0);
-    while (TRUE)
+    while(TRUE)
     {
         push(&stack, *input_cmd++);
-        if (top_stack(&stack) == 0x27 || top_stack(&stack) == 0x22)
+        if (top_stack(&stack) == '\'' || top_stack(&stack) == '\"')
         {
-            if (!handle_quotes(&stack, &input_cmd, &token))
+            if (!handle_quotes(&stack, &input_cmd))
+            {
+                free_tokens(&token);
+                free_stack(&stack);
                 break;
+            }
         }
-        if (top_stack(&stack) == ' ' || top_stack(&stack) == '\t')
+        if (top_stack(&stack) == ' ')
         {
+            if (special(stack))
+                continue;
             pop(&stack);
             if (top_stack(&stack) != '\0' && stack != NULL)
             {
-                if (empty_stack(&stack, &token))
-                    continue;
-                break;
+                if (!empty_stack(&stack, &token))
+                {
+                    free_tokens(&token);
+                    free_stack(&stack);
+                    break;
+                }
+                continue;
             }
         }
         if (stack && stack->meta)

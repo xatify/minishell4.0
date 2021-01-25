@@ -11,12 +11,13 @@
     + problem with ; at the end of input fixed
     + there still problems with single quotes tokens !fixed
     !!! error while tokenizing need to be fixed
-        - error echo "jfhdfh\'"
-        - error echo 'a'b'c';
-        - error echo 'Don'\''t do that'
-        - error echo "The quote for today is "\"TGIF\"
-        - error echo "The quote for today is "\""TGIF"\"
-        - error echo somthing"more"something
+        + error echo heheh\\\ !! lexer
+        + error echo "jfhdfh\'"
+        + error echo 'a'b'c';
+        + error echo 'Don'\''t do that'
+        + error echo "The quote for today is "\"TGIF\"
+        + error echo "The quote for today is "\""TGIF"\"
+        + error echo somthing"more"something
 
 + 3: parsing the tokens and build a 3D linked list of command
     + must handle redirection if the filename doesnt follow < or > or >>
