@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/25 14:59:53 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/25 16:37:00 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int     execute_built_in(char built_in, t_data *data, t_simple_command *cmd)
 int     execute_binary(t_data *data, t_simple_command *cmd)
 {
     char        *path;
-    pid_t       pid;
+    //pid_t       pid;
     int         status;
     char        **argv;
     char        **envp;
@@ -53,17 +53,20 @@ int     execute_binary(t_data *data, t_simple_command *cmd)
     }
     argv = built_argv(cmd);
     envp = built_envp(data->env_vars);
-    pid = fork();
-    if (pid == 0)
+    g_pid = fork();
+    if (g_pid == 0)
     {
+        signal(SIGQUIT, SIG_DFL);
+        signal(SIGINT, SIG_DFL);
         execve(path, argv, envp);
         return (1);
     }
-    else if (pid < 0)
+    else if (g_pid < 0)
         return (1);
     else
     {
-        waitpid(pid, &status, 0); // must check status
+        waitpid(g_pid, &status, 0); // must check status
+        g_pid = -1;
         free(path);
         return(WIFEXITED(status));
     }
@@ -111,7 +114,7 @@ void    execute_pipeline(t_data *data, t_pipeline *pipeline)
     int     tmp_out;
     int     fdin;
     int     fdout;
-    int     ret;
+    //int     ret;
     int     tmp;
     char        **argv;
     char        **envp;
@@ -152,8 +155,8 @@ void    execute_pipeline(t_data *data, t_pipeline *pipeline)
                 data->exit_status = execute_built_in(cmd->built_in, data, cmd);
             else
             {
-                ret = fork();
-                if (ret == 0)
+                g_pid = fork();
+                if (g_pid == 0)
                 {
                     argv = built_argv(cmd);
                     envp = built_envp(data->env_vars);
@@ -170,7 +173,8 @@ void    execute_pipeline(t_data *data, t_pipeline *pipeline)
     dup2(tmp_out, STDOUT);
     close(tmp_out);
 
-    waitpid(ret, NULL, 0);
+    waitpid(g_pid, NULL, 0);
+    g_pid = -1;
 }
 
 void    execute(t_data *data, t_pipeline *pipeline)

@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 08:18:25 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/23 07:46:24 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/25 16:53:41 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@ int		main(int	argc, char **argv, char **envp)
 	t_data 	*data;
 
 	data = start_shell(argc, argv, envp);
-	//signal(SIGINT, sig_int_handler);
+	
 	while (TRUE)
 	{
-		show_prompt(data);
+		signal(SIGINT, sig_int_handler);
+		signal(SIGQUIT, sig_quit_handler);
+		ft_putstr_fd(PROMPT, 1);
 		if (get_next_line(0, &(data->input_cmd)))
 		{
 			data->parse_tree = parser(data->input_cmd);
