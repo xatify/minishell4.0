@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:17:15 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/19 10:58:36 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/25 14:32:28 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void                free_command(t_simple_command *command)
         free(command->cmd_name);
     free_strlist(command->infiles);
     free_strlist(command->outfiles);
-    free_strlist(command->outfiles);
+    free_strlist(command->append_outfiles);
     free_strlist(command->arguments);
     free(command);
 }

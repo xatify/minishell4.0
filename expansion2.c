@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/25 12:44:28 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/25 14:19:25 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,8 @@ int     expand_unquoted_token(t_stack **stack, char **token, t_data *data)
 {
     int         first_back_slash;
 
-    if (*stack && (*stack)->character == '\\')
-    {
-        first_back_slash = 1;
-        (*stack)->special = 1;
-    }
-    else
-        first_back_slash = 0;
+    (*token)--;
+    pop(stack);
     while (**token)
     {
         if (**token != '$' && **token != '\\')
@@ -270,8 +265,6 @@ int     expand_cmd(t_simple_command *cmd, t_data *data)
     free(tmp);
     if (!cmd->cmd_name)
         return (0);
-    
-    //cmd->cmd_name = tmp;
     expand_list(cmd->arguments, data);
     expand_list(cmd->infiles, data);
     expand_list(cmd->outfiles, data);

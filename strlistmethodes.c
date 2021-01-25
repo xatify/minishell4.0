@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strlistmethodes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:04:18 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/14 09:27:49 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/25 14:27:56 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,12 @@ int     add_strlist(t_strlist **strlist, char *str)
 
 void                free_strlist(t_strlist *strlist)
 {
-    t_strlist *tmp;
-
     if (!strlist)
         return;
-    tmp = strlist->next;
+    free_strlist(strlist->next);
     free(strlist->str);
     free(strlist);
-    free_strlist(tmp);
+    
 }
 
 void        show_strlist(t_strlist *strlist)
