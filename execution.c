@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/25 16:37:00 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/26 09:56:51 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,63 +36,55 @@ int     execute_built_in(char built_in, t_data *data, t_simple_command *cmd)
     return (ret);
 }
 
-int     execute_binary(t_data *data, t_simple_command *cmd)
+int    execute_child(t_data *data, t_simple_command *cmd)
 {
     char        *path;
-    //pid_t       pid;
-    int         status;
     char        **argv;
     char        **envp;
-    
 
     path = find_binary_file(data, cmd->cmd_name);
+    argv = built_argv(cmd);
+    envp = built_envp(data->env_vars);
     if (!path)
     {
         ft_putstr_fd("no such file or directory\n", 2);
-        return (1);
+        return (127);
     }
-    argv = built_argv(cmd);
-    envp = built_envp(data->env_vars);
+    signal(SIGQUIT, SIG_DFL);
+    signal(SIGINT, SIG_DFL);
+    execve(path, argv, envp);
+    data->exit_status = 126;
+    return (126);
+}
+
+int     execute_binary(t_data *data, t_simple_command *cmd)
+{
+    int         status;
+
     g_pid = fork();
     if (g_pid == 0)
-    {
-        signal(SIGQUIT, SIG_DFL);
-        signal(SIGINT, SIG_DFL);
-        execve(path, argv, envp);
-        return (1);
-    }
+        return (execute_child(data, cmd));
     else if (g_pid < 0)
         return (1);
     else
     {
         waitpid(g_pid, &status, 0); // must check status
         g_pid = -1;
-        free(path);
-        return(WIFEXITED(status));
+        return(!(WIFEXITED(status)));
     }
 }
 
 int    execute_simple_cmd(t_data *data, t_simple_command *cmd)
 {
-    int tmp_out;
-    int tmp_in;
-    int fdout;
-    int fdin;
-    
-    tmp_in = dup(STDIN);
-    tmp_out = dup(STDOUT);
+    int save_std[2];
+    int tmp_fd[2];
+
+    save_std[0] = dup(STDIN);
+    save_std[1] = dup(STDOUT);
     if (cmd)
     {
-        fdout = tmp_out;
-        fdin = tmp_in;
-        if (!redirect_stdin(cmd, &fdin) || !redirect_stdout(cmd, &fdout))
-        {
-            close(tmp_in);
-            close(tmp_out);
-            return (0);  
-        }
-        dup2(fdout, STDOUT);
-        dup2(fdin, STDIN);
+        if (!simple_cmd_file_redirection(cmd, save_std, tmp_fd))
+            return (0);
         if (cmd->cmd_name)
         {
             if (cmd->built_in != '\0')
@@ -100,55 +92,34 @@ int    execute_simple_cmd(t_data *data, t_simple_command *cmd)
             else
                 data->exit_status = execute_binary(data, cmd);
         }
-        dup2(tmp_in, STDIN);
-        dup2(tmp_out, STDOUT);
-        close(tmp_in);
-        close(tmp_out);
+        set_to_std(save_std);
     }
     return (1);
 }
 
 void    execute_pipeline(t_data *data, t_pipeline *pipeline)
 {
-    int     tmp_in;
-    int     tmp_out;
-    int     fdin;
-    int     fdout;
-    //int     ret;
-    int     tmp;
-    char        **argv;
-    char        **envp;
-    t_simple_command *cmd;
-    int             pipefd[2];
+    int                 tmp_fd[2];
+    int                 save_std[2];
+    int                 status;
+    t_simple_command    *cmd;
     
 
-    tmp_in = dup(STDIN);
-    tmp_out = dup(STDOUT);
+    save_std[0] = dup(STDIN);
+    save_std[1] = dup(STDOUT);
     
     cmd = pipeline->simple_cmd;
-    fdin = dup(tmp_in);
-    fdout = dup(tmp_out);
+    tmp_fd[0] = dup(save_std[0]);
+    tmp_fd[1] = dup(save_std[1]);
     while (cmd)
     {
-        if (!redirect_stdin(cmd, &fdin))
-            break;
-        dup2(fdin, STDIN);
-        close(fdin);
-        pipe(pipefd);
-        fdout = pipefd[1];
-        fdin = pipefd[0];
-        tmp = -1;
-        if (!redirect_stdout(cmd, &tmp))
-            break;
-        if (tmp != -1)
+        if (!pipeline_stream(cmd, save_std, tmp_fd))
         {
-            fdout = tmp;
-            close(pipefd[1]);
+            tmp_fd[0] = dup(save_std[0]);
+            tmp_fd[1] = dup(save_std[1]);
+            cmd = cmd->next;
+            continue;
         }
-        else if (!cmd->next)
-            fdout = dup(tmp_out);
-        dup2(fdout, STDOUT);
-        close(fdout);
         if (cmd->cmd_name)
         {
             if (cmd->built_in != '\0' && ft_strcmp(cmd->cmd_name, "cd") != 0)
@@ -157,24 +128,17 @@ void    execute_pipeline(t_data *data, t_pipeline *pipeline)
             {
                 g_pid = fork();
                 if (g_pid == 0)
-                {
-                    argv = built_argv(cmd);
-                    envp = built_envp(data->env_vars);
-                    execve(find_binary_file(data, cmd->cmd_name), argv, envp);
-                    perror("execve error");
-                    _exit(1);
-                }
+                    data->exit_status = execute_child(data, cmd);
+                else if (g_pid < 0)
+                    data->exit_status = 1;
             }
         }
         cmd = cmd->next;
     }
-    dup2(tmp_in, STDIN);
-    close(tmp_in);
-    dup2(tmp_out, STDOUT);
-    close(tmp_out);
-
-    waitpid(g_pid, NULL, 0);
+    set_to_std(save_std);
+    waitpid(g_pid, &status, 0);
     g_pid = -1;
+    data->exit_status = !(WIFEXITED(status));
 }
 
 void    execute(t_data *data, t_pipeline *pipeline)
@@ -186,11 +150,10 @@ void    execute(t_data *data, t_pipeline *pipeline)
             if (pipeline->simple_cmd->next)
                 execute_pipeline(data, pipeline);
             else
-            {
-                if (!execute_simple_cmd(data, pipeline->simple_cmd))
-                    data->exit_status = 1;
-            }
+                execute_simple_cmd(data, pipeline->simple_cmd);
         }
+        else
+            data->exit_status = 1;
         pipeline = pipeline->next;
     }
 }

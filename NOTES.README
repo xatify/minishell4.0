@@ -88,12 +88,19 @@
     + redirecting >>
 
 - 10: collect the exit status
-    - must check if any simple command change the exit_status inside the pipeline or just the \
-      command of the pipeline.
-    - implement the exact exit status (maybe they  are the same as errno !!)
-    + must pass the the environment variables to execve function
+    + $? of an executed cmd is the value returned by WAITPID
+    - fatal signal (QUIT || INT) whose number is N, $? = 128 + N
+        - t_data *data should be a global varibial to modify the exit status if a signal is received
+    + cmd not found, the child process created for execution returns 127
+    + if cmd is found, but not executed the return status is 126
+    + if a command fails because of an error during (expansion or redirection) $? > 0
+    - all builtins returns $? = 2 to indicate incorrect usage
+
 
 - 11: handling signals
+    ?? https://stackoverflow.com/questions/42563400/hide-c-pressing-ctrl-c-in-c
+    - CTRL-D
+    - must find a way to not use the global variable g_pid;
     - INT signal
         - should not print ^C
         - must rethink the showprompt to show PWD after receiving the SIG_QUIT
@@ -110,3 +117,4 @@
 * before production phase, linked list must be handled so there will be no double code
 + must redirect the error to stderror 2
 + """WARNING: terminal is not fully functional""" error needs to be fixed
+* t_data *data should be a global varibial to modify the exit status if a signal is received

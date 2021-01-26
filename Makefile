@@ -6,7 +6,7 @@
 #    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/01/25 10:07:56 by abbouzid         ###   ########.fr        #
+#    Updated: 2021/01/26 09:56:30 by abbouzid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,8 @@ SRCS			= minishell.c						\
 				$(BUILTINS)/unset.c					\
 				sort.c								\
 				redirections.c						\
-				signals.c
+				signals.c							\
+				pipelining.c
 # GNL				= get_next_line/get_next_line.c  get_next_line/get_next_line_utils.c
 all:	$(NAME)
 $(NAME) : $(SRCS)
