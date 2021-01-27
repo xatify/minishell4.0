@@ -1,9 +1,9 @@
 
 !! steps
 
-- 1: get input
++ 1: get input
     + must handle when the input is empty
-    - get_next is integrated successfully but needs to not e recompiled
+    + get_next is integrated successfully but needs to not e recompiled
 
 + 2: tokenizing the input
     + must handle tokens that have metacharcters inside them
@@ -105,7 +105,7 @@
         - should not print ^C
         - must rethink the showprompt to show PWD after receiving the SIG_QUIT
     - QUIT signal
-        - should not print ^\ if there is no program running 
+        - should not print ^\ if there is no program running
 
 - 12: check for leaks
 

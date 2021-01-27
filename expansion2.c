@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/25 14:42:35 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/27 11:21:14 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void    expand_env_var(t_stack **primary_stack, t_stack **secondary_stack, t_env
 {
        t_token      *var;
        t_env_vars    *env_var;
-    
+
         var = NULL;
         empty_stack(secondary_stack, &var);
         if (var && *(var->tkn))
@@ -41,7 +41,7 @@ void    expand_env_var(t_stack **primary_stack, t_stack **secondary_stack, t_env
 void    expand_dollar_sign(char **token, t_stack **primary_stack, t_data *data)
 {
     t_stack *secondary_stack;
-    
+
     secondary_stack = NULL;
     if (**token == '?')
     {
@@ -97,9 +97,9 @@ int     expand_unquoted_token(t_stack **stack, char **token, t_data *data)
             push(stack, **token);
             (*stack)->special = 1;
         }
-        else if (**token == '\\' && (*stack)->special)
+        else if (**token == '\\' &&  (* stack) && (*stack)->special)
             (*stack)->special = 0;
-        else if (**token == '\\' && !((*stack)->special))
+        else if (**token == '\\' && (*stack) && !((*stack)->special))
         {
             push(stack, **token);
             (*stack)->special = 1;
@@ -210,7 +210,7 @@ char    *expand(char **token, t_data *data)
     t_stack     *stack = NULL;
     t_token        *tmp;
     char           *tkn;
-    
+
     while (**token)
     {
         push(&stack, *(*token)++);
@@ -250,7 +250,7 @@ void    expand_list(t_strlist *list, t_data *data)
         list->str = ft_strdup("");
       else
         list->str = tmp;
-      expand_list(list->next, data); 
+      expand_list(list->next, data);
     }
 }
 
@@ -273,7 +273,7 @@ int     expand_cmd(t_simple_command *cmd, t_data *data)
     expand_list(cmd->infiles, data);
     expand_list(cmd->outfiles, data);
     expand_list(cmd->append_outfiles, data);
-    
+
     return (expand_cmd(cmd->next, data));
 }
 

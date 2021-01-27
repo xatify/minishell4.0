@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 07:33:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/25 12:45:59 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/27 11:27:05 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ int     handle_single_quote(t_stack **stack, char **input_cmd)
         if (top_stack(stack) == 0x27)
             break;
     }
-    if (top_stack(stack) == 0x27)
-        return (1);
-    return (0);
+    if (**input_cmd == '\0')
+        return (0);
+    if (top_stack(stack) != 0x27)
+        return (0);
+    return (1);
 }
 
 int     handle_double_quote(t_stack **stack, char **input_cmd)
@@ -67,7 +69,7 @@ int     handle_quotes(t_stack **stack, char **input_cmd)
 {
     char       quote;
     int        error;
-    
+
     error = 0;
     quote = top_stack(stack);
     if (!special((*stack)))
