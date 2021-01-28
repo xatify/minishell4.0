@@ -94,9 +94,11 @@
     + if a command fails because of an error during (expansion or redirection) $? > 0
 
 
-- 11: handling signals
++ 11: handling signals
     ?? https://stackoverflow.com/questions/42563400/hide-c-pressing-ctrl-c-in-c
-    - CTRL-D
+    + CTRL-D
+        + if no input is given minishell should exit
+        + else the prompt waits
     + INT signal
         + must rethink the showprompt to show PWD after receiving the SIG_QUIT
     + QUIT signal

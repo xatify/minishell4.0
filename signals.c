@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 10:21:32 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/28 09:20:44 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/28 16:46:44 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void    sig_quit_handler(int signum)
     }
     else
     {
-        ft_putstr_fd("\b\b\r", 1);
+        g_exit_status = 1;
+        ft_putstr_fd("\r", 1);
         ft_putstr_fd(PROMPT, 1);
     }
     (void)signum;
