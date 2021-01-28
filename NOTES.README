@@ -3,7 +3,7 @@
 
 + 1: get input
     + must handle when the input is empty
-    + get_next is integrated successfully but needs to not e recompiled
+    + get_next is integrated successfully but needs to not recompiled
 
 + 2: tokenizing the input
     + must handle tokens that have metacharcters inside them
@@ -39,14 +39,13 @@
         + testing
         + handle identifier
         + case VAR or VAR=
+        - must remove the unset var from unset_var linked list
 
     + 6-5: unset without any option
     + 6-7: env
     + 6-8: exit
         + !!!!!must free everything before exiting
         + must be tested with diffrent exit status
-    + must compile builtins programs to use inside the pipelines after forking
-        (there is already binary builtin in the system)
 
 + 5: shell expansions
     + $! and $VAR of the command before performing redirection
@@ -103,14 +102,15 @@
         + must rethink the showprompt to show PWD after receiving the SIG_QUIT
     + QUIT signal
 
-- 12: check for leaks
+- 12: optimize and refactoring the code
 
-- 13: optimize the code
+- 13: check for leaks
 
 - 14: testing
+
+- 15: norme
 
 !!! Notes
 * before production phase, linked list must be handled so there will be no double code
 + must redirect the error to stderror 2
 + """WARNING: terminal is not fully functional""" error needs to be fixed
-* t_data *data should be a global varibial to modify the exit status if a signal is received

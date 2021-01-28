@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 08:18:25 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/28 16:47:38 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/28 18:06:30 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int		main(int	argc, char **argv, char **envp)
 	data = start_shell(argc, argv, envp);
 	
 	tmp = ft_strdup("");
+	signal(SIGINT, sig_int_handler);
+	signal(SIGQUIT, sig_quit_handler);
 	while (TRUE)
 	{
 		signal(SIGINT, sig_int_handler);

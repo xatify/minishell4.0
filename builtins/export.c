@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:57:13 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/16 10:24:47 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/28 17:04:25 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int     export(char   **args, t_data *data)
                     if (is_double_quote_token(value) || is_single_quote_token(value))
                          value = remove_quotes(value);
                     change_env_var(&(data->env_vars), name, value);
+                    //must remove the unset var from unset_var linked list
                 }
             }
             else

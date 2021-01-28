@@ -6,7 +6,7 @@
 #    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/01/26 09:56:30 by abbouzid         ###   ########.fr        #
+#    Updated: 2021/01/28 17:31:59 by abbouzid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,6 @@ GCC				= gcc -Wall -Wextra -Werror
 STR				= strings
 BUILTINS		= builtins
 SRCS			= minishell.c						\
-				get_command.c						\
 				$(STR)/strings.c					\
 				$(STR)/strings_2.c					\
 				$(STR)/ft_split.c					\
@@ -23,7 +22,7 @@ SRCS			= minishell.c						\
 				$(STR)/ft_putstr_fd.c				\
 				$(STR)/ft_itoa.c					\
 				$(STR)/ft_strrchr.c					\
-				lexer2.c							\
+				lexer.c								\
 				stack.c								\
 				parser.c							\
 				strlistmethodes.c					\

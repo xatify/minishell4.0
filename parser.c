@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:27:29 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/25 14:34:31 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/28 17:17:22 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,6 @@ t_simple_command    *parse_simple_command(t_token    **tokens)
             return (NULL);
         }
     }
-    // if (!command->cmd_name)
-    // {
-    //     free_command(command);
-    //     return (NULL);
-    // }
     return (command);
 }
 
