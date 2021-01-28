@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_arguments_array.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 10:26:28 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/28 08:19:39 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/28 11:26:28 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void    free_argv(char **argv)
         i++;
     }
     free(argv);
-}    
+}
 
 void    fill_argv(char **argv, t_strlist *args)
 {

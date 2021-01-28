@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/28 10:24:26 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/28 12:45:05 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ int    execute_child(t_data *data, t_simple_command *cmd)
     path = find_binary_file(data, cmd->cmd_name);
     argv = built_argv(cmd);
     envp = built_envp(data->env_vars);
-    ////// problem
     if (!path)
     {
-        ft_putstr_fd("no such file or directory\n", 2);
+        ft_putstr_fd("no such file or directory : ", 2);
+        ft_putstr_fd(cmd->cmd_name, 1);
+        ft_putstr_fd("\n", 1);
         exit(127);
     }
     signal(SIGQUIT, SIG_DFL);

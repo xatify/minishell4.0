@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:28:41 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/28 08:16:09 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/28 12:45:46 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,8 @@ char    *get_env_value(char *name_value)
         i++;
     if (name_value[i] == '\0')
         i--;
-    if (!(value = (char *)malloc(ft_strlen(&name_value[i + 1]) + 1)))
-        return (NULL);
-    ft_strcpy(value, &name_value[i + 1]);
+
+    value = ft_strdup(&name_value[i + 1]);
     return (value);
 }
 
@@ -100,7 +99,7 @@ t_env_vars  *build_env_vars(char *envp[])
     char            *value;
     int             i;
     char            *tmp;
-    
+
     vars = NULL;
     i = 0;
     while (envp[i])
@@ -114,7 +113,7 @@ t_env_vars  *build_env_vars(char *envp[])
         }
         if (ft_strcmp(name, "SHLVL") == 0)
         {
-            tmp = value;       
+            tmp = value;
             value = ft_itoa(ft_atoi(value) + 1);
             free(tmp);
         }

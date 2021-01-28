@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 09:14:27 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/16 09:12:11 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/28 11:18:27 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,3 +30,17 @@ char	*ft_strrchr(const char *str, int c)
 	return (pos);
 }
 
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	size_t i;
+
+	if (!src && !dst)
+		return (NULL);
+	i = 0;
+	while (i < n)
+	{
+		*((char*)dst + i) = *((char*)src + i);
+		i++;
+	}
+	return (dst);
+}

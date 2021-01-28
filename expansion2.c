@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/27 11:21:14 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/28 12:26:48 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,11 +117,13 @@ int     expand_unquoted_token(t_stack **stack, char **token, t_data *data)
                 expand_dollar_sign(token, stack, data);
             }
         }
+        if (**token == '\0')
+            break;
         (*token)++;
     }
     if ((*stack) && (*stack)->special)
     {
-        ft_putstr_fd("error while parsing", 2);
+        ft_putstr_fd("error while parsing !", 2);
         return (0);
     }
     return(1);
