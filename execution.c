@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/28 07:26:32 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/28 10:24:26 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,13 @@ int    execute_child(t_data *data, t_simple_command *cmd)
     if (!path)
     {
         ft_putstr_fd("no such file or directory\n", 2);
-        data->exit_status = 127;
-        _exit(127);
-        return (127);
+        exit(127);
     }
     signal(SIGQUIT, SIG_DFL);
     signal(SIGINT, SIG_DFL);
     execve(path, argv, envp);
-     ft_putstr_fd("no such file or directory 2\n", 2);
-    data->exit_status = 126;
-    _exit(126);
-    return (126);
+    ft_putstr_fd("no such file or directory 2\n", 2);
+    exit(126);
 }
 
 int     execute_binary(t_data *data, t_simple_command *cmd)
@@ -68,15 +64,16 @@ int     execute_binary(t_data *data, t_simple_command *cmd)
 
     g_pid = fork();
     if (g_pid == 0)
-        return (execute_child(data, cmd));
+    {
+        exit(execute_child(data, cmd));
+    }
     else if (g_pid < 0)
         return (1);
-    else
-    {
-        waitpid(g_pid, &status, 0); // must check status
-        g_pid = -1;
-        return(!(WIFEXITED(status)));
-    }
+    waitpid(g_pid, &status, 0); // must check status
+    g_pid = -1;
+    if (WIFEXITED(status))
+        return (WEXITSTATUS(status));
+    return (status);
 }
 
 int    execute_simple_cmd(t_data *data, t_simple_command *cmd)
@@ -143,7 +140,10 @@ void    execute_pipeline(t_data *data, t_pipeline *pipeline)
     set_to_std(save_std);
     waitpid(g_pid, &status, 0);
     g_pid = -1;
-    data->exit_status = !(WIFEXITED(status));
+    if (WIFEXITED(status))
+        data->exit_status = WEXITSTATUS(status);
+    else
+        data->exit_status = status;
 }
 
 void    execute(t_data *data, t_pipeline *pipeline)

@@ -74,7 +74,7 @@
     + THEY SHOULD WORK BEFORE ANY REDIRECTIONS SPECIFIED BY THE command
     + duplicating the stdout if it's the last cmd and no outputfile is given
 
--- 9: redirections
++ 9: redirections
     + !! pipelining is performed before any redirections specified by the command
     + should handle the case if open returns -1
     + the first of (> or >>) define the output:
@@ -87,25 +87,20 @@
     + redirection <
     + redirecting >>
 
-- 10: collect the exit status
++ 10: collect the exit status
     + $? of an executed cmd is the value returned by WAITPID
-    - fatal signal (QUIT || INT) whose number is N, $? = 128 + N
-        - t_data *data should be a global varibial to modify the exit status if a signal is received
+    + fatal signal (QUIT || INT) whose number is N, $? = 128 + N
     + cmd not found, the child process created for execution returns 127
     + if cmd is found, but not executed the return status is 126
     + if a command fails because of an error during (expansion or redirection) $? > 0
-    - all builtins returns $? = 2 to indicate incorrect usage
 
 
 - 11: handling signals
     ?? https://stackoverflow.com/questions/42563400/hide-c-pressing-ctrl-c-in-c
     - CTRL-D
-    - must find a way to not use the global variable g_pid;
-    - INT signal
-        - should not print ^C
-        - must rethink the showprompt to show PWD after receiving the SIG_QUIT
-    - QUIT signal
-        - should not print ^\ if there is no program running
+    + INT signal
+        + must rethink the showprompt to show PWD after receiving the SIG_QUIT
+    + QUIT signal
 
 - 12: check for leaks
 
