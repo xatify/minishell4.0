@@ -50,10 +50,10 @@
 
 + 5: shell expansions
     + $! and $VAR of the command before performing redirection
-        + needs to be tested
-    + 5-1: environment variables needs to be tested
-        + SHELL env must change to raysodibshell
-        + incrementation of SHLVL env var
+    - 5-1: environment variables needs to be tested
+        + SHELL env must change to minishell
+        - incrementation of SHLVL env var
+            - error echo $SHLVL
     + segfault !! don't know why (recoding the entire logic of expansions)
     + multiple $VAR inside the same token
 

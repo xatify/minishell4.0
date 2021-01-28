@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:28:41 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/23 07:40:37 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/28 08:16:09 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ t_env_vars  *create_env_var(char *name, char *value)
 
     if (!(env_var = (t_env_vars *)malloc(sizeof(t_env_vars))))
         return (NULL);
-    env_var->name = (char *)malloc(ft_strlen(name) + 1);
+    env_var->name = ft_strdup(name);
     if (env_var->name == NULL)
     {
         free(env_var);
         return (NULL);
     }
-    env_var->value = (char *)malloc(ft_strlen(value) + 1);
+    env_var->value = ft_strdup(value);
     if (env_var->value == NULL)
     {
         free(env_var->name);
@@ -32,8 +32,6 @@ t_env_vars  *create_env_var(char *name, char *value)
         return (NULL);
     }
     env_var->num = 0;
-    ft_strcpy(env_var->name, name);
-    ft_strcpy(env_var->value, value);
     env_var->next = NULL;
     return (env_var);
 }

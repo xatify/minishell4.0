@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 10:26:28 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/18 08:55:44 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/28 08:19:39 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,12 @@ void    fill_argv(char **argv, t_strlist *args)
     {
         while (!(args->str))
             args = args->next;
-        if (!(argv[i] = (char *)malloc(ft_strlen(args->str) + 1)))
+        if (!(argv[i] = ft_strdup(args->str)))
         {
             free_argv(argv);
             argv = NULL;
             return;
         }
-        ft_strcpy(argv[i], args->str);
         i++;
         args = args->next;
     }
@@ -69,12 +68,12 @@ char    **built_argv(t_simple_command *cmd)
     if (!(argv = (char **)malloc(argc * sizeof(char *))))
         return (NULL);
     ft_memset(argv, 0, argc * sizeof(char *));
-    if (!(argv[0] = (char *)malloc(ft_strlen(cmd->cmd_name) + 1)))
+    argv[0] = ft_strdup(cmd->cmd_name);
+    if (!argv[0])
     {
         free(argv);
         return (NULL);
     }
-    ft_strcpy(argv[0], cmd->cmd_name);
     fill_argv(argv, cmd->arguments);
     return (argv);
 }

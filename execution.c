@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/27 11:12:21 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/28 07:26:32 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void    execute_pipeline(t_data *data, t_pipeline *pipeline)
             {
                 g_pid = fork();
                 if (g_pid == 0)
-                    data->exit_status = execute_child(data, cmd);
+                    execute_child(data, cmd);
                 else if (g_pid < 0)
                     data->exit_status = 1;
             }

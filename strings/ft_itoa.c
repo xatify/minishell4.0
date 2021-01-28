@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 14:54:55 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/14 09:35:06 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/28 08:02:01 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static	void	count_mem(int n, int *len)
 {
-	long i;
 	long num;
 
 	num = (long)n;
@@ -24,11 +23,14 @@ static	void	count_mem(int n, int *len)
 		*len += 1;
 		num = -num;
 	}
-	i = 10;
-	*len += 1;
-	while (i <= num)
+	if (num == 0)
 	{
-		i = i * 10;
+		*len += 1;
+		return;
+	}
+	while (num > 0)
+	{
+		num = num / 10;
 		*len += 1;
 	}
 }
