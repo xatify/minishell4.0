@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/28 12:26:48 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/29 09:19:08 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,18 @@ void    expand_dollar_sign(char **token, t_stack **primary_stack, t_data *data)
         push_str_to_stack(primary_stack, ft_itoa(data->exit_status));
         return;
     }
+    if (is_num(**token))
+    {
+        (*token)++;
+        return;
+    
+    }
     if (!(is_underscore(**token) || is_alpha(**token)))
-        push(&secondary_stack, *(*token)++);
+    {
+        push(primary_stack, '$');
+        //push(primary_stack, *(*token)++);
+        return;
+    }
     while (**token)
     {
         if (is_alpha(**token) || is_num(**token) || is_underscore(**token))
@@ -70,6 +80,7 @@ int     expand_unquoted_token(t_stack **stack, char **token, t_data *data)
 
     (*token)--;
     pop(stack);
+    first_back_slash = 0;
     while (**token)
     {
         if (**token != '$' && **token != '\\')
@@ -115,6 +126,7 @@ int     expand_unquoted_token(t_stack **stack, char **token, t_data *data)
             {
                 (*token)++;
                 expand_dollar_sign(token, stack, data);
+                continue;
             }
         }
         if (**token == '\0')
@@ -179,6 +191,7 @@ int     expand_double_quotes(t_stack **stack, char **token, t_data *data)
             {
                 (*token)++;
                 expand_dollar_sign(token, stack, data);
+                continue;
             }
         }
         (*token)++;

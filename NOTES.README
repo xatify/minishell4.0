@@ -29,23 +29,28 @@
     + modification of builtins prototypes to accepts array of arguments not a linked list of arguments
     + 6-1: echo with option -n
         + segfault if no argument is given
-    + 6-2: cd with only a relative and absolute path
+    - 6-2: cd with only a relative and absolute path
         + $PWD  must change
         + $OLDPWD must change
+        -- refactoring
+
     + 6-3: pwd
-    + 6-4: export
+    - 6-4: export
         + delete the quotes of the value of a VAR="VALUE"
         + !! needs to redirecte the error to standard error
         + testing
         + handle identifier
         + case VAR or VAR=
         - must remove the unset var from unset_var linked list
+        - implement the += behavior (see error 3 in tests.txt)
 
     + 6-5: unset without any option
     + 6-7: env
-    + 6-8: exit
+    - 6-8: exit
         + !!!!!must free everything before exiting
         + must be tested with diffrent exit status
+        - exit errors in tests.txt
+        
 
 + 5: shell expansions
     + $! and $VAR of the command before performing redirection
@@ -54,6 +59,7 @@
         + incrementation of SHLVL env var
     + segfault !! don't know why (recoding the entire logic of expansions)
     + multiple $VAR inside the same token
+    - breaking the the token retrieved from env_var if it has ' ' (space) inside of it (see error 4 in tests.txt)
 
 + 7: Execute the commands list
     + build the args array from cmd->arguments !! needs testing
@@ -102,13 +108,16 @@
         + must rethink the showprompt to show PWD after receiving the SIG_QUIT
     + QUIT signal
 
-- 12: optimize and refactoring the code
+- 12: testing
 
-- 13: check for leaks
+- 13: optimize and refactoring the code
 
-- 14: testing
+- 14: check for leaks
+    - error 2 in tests.txt is causing memory leaks and unavailable resources for fork ... 
 
 - 15: norme
+
+- 16 : testing
 
 !!! Notes
 * before production phase, linked list must be handled so there will be no double code
