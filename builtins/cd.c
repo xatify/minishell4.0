@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:29:16 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/20 10:29:33 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/29 10:40:05 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int     cd(char *path, t_env_vars **vars)
        change_env_var(vars, "OLDPWD", pwd);
        free(pwd);
         pwd = getcwd(NULL, 0);
-       change_env_var(vars, "PWD", pwd); 
+       change_env_var(vars, "PWD", pwd);
+       return (!ret); 
     }
-    else
-        ft_putstr_fd("no such file or directory\n", 2);  
-    return (!ret);
+    ft_putstr_fd("no such file or directory\n", 2);
+    return (1);
 }

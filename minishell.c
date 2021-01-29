@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 08:18:25 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/28 18:06:30 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/29 10:30:05 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ int		main(int	argc, char **argv, char **envp)
 				g_exit_status = 0;
 			}
 			data->parse_tree = parser(data->input_cmd);
-			execute(data, data->parse_tree);
+			if (!data->parse_tree)
+				ft_putstr_fd("error while parsing\n", 2);
+			else
+				execute(data, data->parse_tree);
 			tmp = ft_strdup("");
 		}
 		else if ((data->input_cmd)[0] == '\0')

@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:27:29 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/28 17:17:22 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/29 10:29:15 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ t_pipeline      *parse_pipe_line(t_token **tokens)
     t_pipeline          *pipeline;
     t_simple_command    *command;
 
+    if ((*tokens)->id == SEMICOLON || (*tokens)->id == PIPE)
+        return (NULL);
     if (!(pipeline = new_pipe_line()))
         return (NULL);
     while (*tokens && (*tokens)->id != SEMICOLON)
@@ -132,6 +134,7 @@ t_pipeline      *parser(char    *input_cmd)
         if (!(tmp = parse_pipe_line(&tokens)))
         {
             free_pipeline_list(pipeline_head);
+            free_tokens(&tokens);
             return (NULL);
         }
         add_back_pipeline(&pipeline_head, tmp);
