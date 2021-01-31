@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:16:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/18 08:50:27 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/31 08:44:27 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 ** environment variables linked list functions prototypes
 */
 
+t_list			    *build_env_vars(char **envp);
 t_env_vars			*create_env_var(char *name, char *value);
 t_env_vars			*last_env_var(t_env_vars *env_vars);
 char				*get_env_name(char *name_value);

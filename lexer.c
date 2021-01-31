@@ -1,39 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer2.c                                           :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 07:33:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/28 12:41:44 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/31 09:35:06 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int     handle_single_quote(t_stack **stack, char **input_cmd)
+int     handle_single_quote(t_list **stack, char **input_cmd)
 {
-    bool a;
-
-    a = 0;
+    bool second_quote;
+    
+    second_quote = 0;
     while (**input_cmd)
     {
         push(stack, *(*input_cmd)++);
         if (top_stack(stack) == 0x27)
         {
-            a = 1;
+            second_quote = 1;
             break;
         }
     }
-    if (!a)
+    if (!second_quote)
         return (0);
     if (**input_cmd == '\0' && top_stack(stack) != 0x27)
         return (0);
     return (1);
 }
 
-int     handle_double_quote(t_stack **stack, char **input_cmd)
+int     handle_double_quote(t_list **stack, char **input_cmd)
 {
     while(**input_cmd)
     {
@@ -51,27 +51,26 @@ int     handle_double_quote(t_stack **stack, char **input_cmd)
     return (0);
 }
 
-int     special(t_stack *stack)
+int     special(t_list *stack)
 {
-    t_stack *tmp;
-    int     spcl;
+    int     special;
 
-    spcl = 0;
-    tmp = stack->next;
-    while (tmp)
+    special = 0;
+    stack = stack->next;
+    while (stack)
     {
-        if (tmp->character == 0x5c)
+        if (((t_stack *)(stack->content))->character == 0x5c)
         {
-            spcl++;
-            tmp = tmp->next;
+            special++;
+            stack = stack->next;
         }
         else
             break;
     }
-    return (spcl % 2);
+    return (special % 2);
 }
 
-int     handle_quotes(t_stack **stack, char **input_cmd)
+int     handle_quotes(t_list **stack, char **input_cmd)
 {
     char       quote;
     int        error;
@@ -97,7 +96,7 @@ int     handle_quotes(t_stack **stack, char **input_cmd)
     return (1);
 }
 
-int     handle_metacharacter(t_stack **stack, t_token **tokens, char **input_cmd)
+int     handle_metacharacter(t_list **stack, t_list **tokens, char **input_cmd)
 {
     char        top;
     int         append;
@@ -118,8 +117,8 @@ int     handle_metacharacter(t_stack **stack, t_token **tokens, char **input_cmd
     }
     else if (is_meta(**input_cmd))
     {
-        free_stack(stack);
-        free_tokens(tokens);
+        ft_lstclear(stack, free);
+        ft_lst(tokens, free_token);
         return (0);
     }
     if (!empty_stack(stack, tokens))
@@ -130,13 +129,13 @@ int     handle_metacharacter(t_stack **stack, t_token **tokens, char **input_cmd
     return (1);
 }
 
-t_token *lexer(char *input_cmd)
+t_list     *lexer(char *input_cmd)
 {
     t_token     *token = NULL;
-    t_stack     *stack = NULL;
+    t_list      *stack = NULL;
 
     if (*input_cmd == '\0')
-        return (0);
+        return (NULL);
     while(TRUE)
     {
         push(&stack, *input_cmd++);
@@ -165,7 +164,7 @@ t_token *lexer(char *input_cmd)
                 continue;
             }
         }
-        if (stack && stack->meta)
+        if (stack && ((t_stack *)(stack->content))->meta)
         {
             if (!handle_metacharacter(&stack, &token, &input_cmd))
                 break;

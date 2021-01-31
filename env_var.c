@@ -3,37 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:28:41 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/28 12:45:46 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/31 08:50:05 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-t_env_vars  *create_env_var(char *name, char *value)
+void    free_env_var(t_env_var *var)
 {
-    t_env_vars  *env_var;
+    free(var->name);
+    free(var->value);
+    free(var);
+}
 
-    if (!(env_var = (t_env_vars *)malloc(sizeof(t_env_vars))))
-        return (NULL);
-    env_var->name = ft_strdup(name);
-    if (env_var->name == NULL)
+t_list      *build_env_vars(char **envp)
+{
+    t_list      **list_head;
+    t_list      *new;
+    t_env_var   *var;
+    char        *tmp;
+    int         i;
+
+    i = 0;
+    *list_head = NULL;
+    while (envp[i])
     {
-        free(env_var);
-        return (NULL);
+        if (!(var = (t_env_var *)malloc(sizeof(t_env_var))))
+        {
+            ft_lstclear((*list_head), free_env_var);
+            return (NULL);
+        }
+        var->name = get_env_value(envp[i]);
+        if (ft_strcmp(var->name, "SHELL") == 0)
+            var->value = ft_strdup("minishell");
+        else if (ft_strcmp(var->name, "SHLVL") == 0)
+        {
+            tmp = get_env_value(envp[i]);
+            var->value = ft_itoa(ft_atoi(tmp) + 1);
+            free(tmp);
+        }
+        else
+            var->value = get_env_value(envp[i]);
+        
+        if (!(new = ft_lstnew(var)))
+        {
+            free_env_var(var);
+            ft_lstclear((*list_head), free_env_var);
+        }
+        ft_lstadd_back(list_head, new);
+        i++;
     }
-    env_var->value = ft_strdup(value);
-    if (env_var->value == NULL)
-    {
-        free(env_var->name);
-        free(env_var);
-        return (NULL);
-    }
-    env_var->num = 0;
-    env_var->next = NULL;
-    return (env_var);
+    return ((*list_head));
 }
 
 char    *get_env_name(char *name_value)
@@ -64,65 +87,6 @@ char    *get_env_value(char *name_value)
 
     value = ft_strdup(&name_value[i + 1]);
     return (value);
-}
-
-t_env_vars  *last_env_var(t_env_vars *env_vars)
-{
-    t_env_vars  *tmp;
-
-    if (!env_vars)
-        return (env_vars);
-    tmp = env_vars;
-    if (!tmp->next)
-        return (tmp);
-    return (last_env_var(tmp->next));
-}
-
-void       add_back_env(t_env_vars **vars, t_env_vars *new_var)
-{
-    if (!(*vars))
-    {
-        (*vars) = new_var;
-        new_var->num = 1;
-    }
-    else
-    {
-        last_env_var((*vars))->next = new_var;
-        (*vars)->num += 1;
-    }
-}
-
-t_env_vars  *build_env_vars(char *envp[])
-{
-    t_env_vars      *vars;
-    char            *name;
-    char            *value;
-    int             i;
-    char            *tmp;
-
-    vars = NULL;
-    i = 0;
-    while (envp[i])
-    {
-        name = get_env_name(envp[i]);
-        value = get_env_value(envp[i]);
-        if (ft_strcmp(name, "SHELL")  == 0)
-        {
-            free(value);
-            value = ft_strdup("minishell");
-        }
-        if (ft_strcmp(name, "SHLVL") == 0)
-        {
-            tmp = value;
-            value = ft_itoa(ft_atoi(value) + 1);
-            free(tmp);
-        }
-        add_back_env(&vars, create_env_var(name, value));
-        free(name);
-        free(value);
-        i++;
-    }
-    return (vars);
 }
 
 t_env_vars      *search_var(t_env_vars **env_vars, char *var_name)
@@ -160,52 +124,6 @@ int             change_env_var(t_env_vars **vars, char *var_name, char *new_valu
             return (0);
     }
     return (1);
-}
-
-void    del_env_var(t_env_vars **envs, char *name)
-{
-    t_env_vars *tmp;
-    t_env_vars *prev;
-
-    tmp = (*envs);
-    if (!ft_strcmp((*envs)->name, name))
-    {
-        tmp = (*envs)->next;
-        free_env_var((*envs));
-        (*envs) = tmp;
-        return;
-    }
-    prev = (*envs);
-    tmp = (*envs)->next;
-    while (tmp)
-    {
-        if (!ft_strcmp(tmp->name, name))
-        {
-            prev->next = tmp->next;
-            free_env_var(tmp);
-            return;
-        }
-        prev = tmp;
-        tmp = tmp->next;
-    }
-}
-
-void    free_env_var(t_env_vars *var)
-{
-    free(var->name);
-    free(var->value);
-    free(var);
-}
-
-void    show_env_vars(t_env_vars *vars)
-{
-    if (vars)
-    {
-        ft_putstr_fd(vars->name, 1);
-        ft_putstr_fd(vars->value, 1);
-        ft_putchar_fd('\n', 1);
-        show_env_vars(vars->next);
-    }
 }
 
 void    fill_envp(char **envp_i, t_env_vars *vars)

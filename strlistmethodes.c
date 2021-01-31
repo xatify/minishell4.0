@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:04:18 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/30 08:58:52 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/31 09:34:34 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,3 +58,5 @@ void                free_strlist(t_strlist *strlist)
     free(strlist);
     
 }
+
+

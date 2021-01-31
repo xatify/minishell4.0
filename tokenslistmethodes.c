@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:43:36 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/25 14:57:45 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/31 09:42:09 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ t_token *new_token(char **str)
     
     if (!(token = (t_token *)malloc(sizeof(t_token))))
         return (NULL);
-    token->tkn = (*str);
-    token->next = NULL;
+    token->tkn = *str;
     return (token);
 }
 
@@ -92,18 +91,8 @@ void    add_token(t_token **tokens, t_token *new_token)
         last_token((*tokens))->next = new_token;
 }
 
-void     free_tokens(t_token **head)
+void    free_token(t_token *token)
 {
-    t_token  *tmp;
-
-    if (*head == NULL)
-        return;
-    else
-    {
-        tmp = (*head)->next;
-        free((*head)->tkn);
-        free(*head);
-        *head = NULL;
-        free_tokens(&tmp);
-    }  
+    free(token->tkn);
+    free(token);
 }

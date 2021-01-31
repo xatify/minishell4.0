@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:27:29 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/30 08:34:59 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/31 08:53:21 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ t_pipeline      *parse_pipe_line(t_token **tokens)
 
 t_pipeline      *parser(char    *input_cmd)
 {
-    t_token        *tokens;
-    t_pipeline     *pipeline_head;
+    t_list          *tokens;
+    t_list          *pipelines;
     t_pipeline     *tmp;
 
     tokens = lexer(input_cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:07:30 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/12 16:10:46 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/31 09:34:58 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ t_token 		*new_token(char **str);
 int            identify_all_tokens(t_token *tokens);
 t_token 		*last_token(t_token *tokens);
 void			add_token(t_token **tokens, t_token *new_token);
-void			free_tokens(t_token **head);
+void			free_token(t_token *token);
 
 #endif

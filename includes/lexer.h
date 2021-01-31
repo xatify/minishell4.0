@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:12:08 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/25 08:05:12 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/31 09:45:49 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 ** lexer functions
 */
 
-int     handle_single_quote(t_stack **stack, char **input_cmd);
-int     special(t_stack *stack);
-int     handle_double_quote(t_stack **stack, char **input_cmd);
-int     handle_metacharacter(t_stack **stack, t_token **tokens, char **input_cmd);
-int      handle_quotes(t_stack **stack, char **input_cmd);
-t_token    *lexer(char *input_cmd);
+int         handle_single_quote(t_list **stack, char **input_cmd);
+int         special(t_list *stack);
+int         handle_double_quote(t_list **stack, char **input_cmd);
+int         handle_metacharacter(t_list **stack, t_list **tokens, char **input_cmd);
+int         handle_quotes(t_list **stack, char **input_cmd);
+t_list     *lexer(char *input_cmd);
 
 #endif

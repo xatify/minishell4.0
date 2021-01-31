@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 17:02:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/11 11:27:33 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/31 09:43:31 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,88 +21,63 @@ t_stack     *new_element(char character)
     new_element->character = character;
     new_element->meta = 0;
     new_element->special = 0;
-    new_element->next = NULL;
     return (new_element);
 }
 
 
-void	   push(t_stack **stack_head, char 	character)
+void	   push(t_list **stack, char 	character)
 {
-	t_stack		*element;
-    t_stack     *tmp;
+	t_stack		*stack_element;
+    t_list      *node;
 
-    element = new_element(character);
-    if (!element)
-        return;
-    if (!(*stack_head))
-        (*stack_head) = element;
-    else
-    {
-        tmp = (*stack_head);
-        (*stack_head) = element;
-        (*stack_head)->next = tmp;
-    }
-    is_metacharacter(stack_head);
+    stack_element = new_element(character);
+    node = ft_lstnew(stack_element);
+    ft_lstadd_back(stack, stack_element);
+    is_metacharacter(stack);
 }
 
-char    pop(t_stack **stack_head)
+char    pop(t_list **stack)
 {
-    t_stack     *tmp;
+    t_list     *tmp;
     char        c;
-    if ((*stack_head))
+    
+    if (*stack)
     {
-        c = (*stack_head)->character;
-        tmp = (*stack_head)->next;
-        free((*stack_head));
-        (*stack_head) = tmp;
+        c = ((t_stack *)((*stack)->content))->character;
+        tmp = (*stack)->next;
+        free((*stack)->content);
+        free((*stack));
+        (*stack) = tmp;
         return (c);
     }
     return ('\0');
 }
 
-char    top_stack(t_stack **head)
+char    top_stack(t_list **stack)
 {
-    if (*head)
-        return ((*head)->character);
-    return ('\0');       
+    if (*stack)
+        return (((t_stack *)(*stack)->content)->character);
+    return ('\0');
 }
 
-int     stack_len(t_stack **head)
-{
-    t_stack *tmp;
-    int     i;
-
-    i = 0;
-    tmp = *head;
-    while(tmp)
-    {
-        i++;
-        tmp= tmp->next;
-    }
-    return (i);
-}
-
-void    free_stack(t_stack **stack)
-{
-    while (*stack)
-        pop(stack);   
-}
-
-int    empty_stack(t_stack **head, t_token **tokens)
+int    empty_stack(t_list **stack, t_list **tokens)
 {
     int     len;
     char    *str;
+    t_token *tkn;
 
-    len = stack_len(head);
+    len = ft_lstsize((*stack));
     if (!(str = (char *)malloc(len + 1)))
-    {
-        free_tokens(tokens);
         return (0);
-    }
     str[len] = '\0';
     while (--len >= 0)
-        str[len] = pop(head);
-    add_token(tokens, new_token(&str));
+        str[len] = pop(stack);
+    if (!(tkn = new_token(&str)))
+    {
+        free(str);
+        return (0);
+    }   
+    ft_lstadd_back(tokens, ft_lstnew(tkn));
     return (1);
 }
 
