@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:13:03 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/25 16:32:00 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/30 08:34:49 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,18 @@ typedef	struct s_strlist
 
 typedef	struct s_simple_command
 {
-	char		*cmd_name;
-	int			first;
-	int 		output_stream;
-	t_strlist 	*arguments;
+	t_strlist 	*name_and_args;
 	t_strlist	*infiles;
 	t_strlist	*outfiles;
-	char 		built_in;
 	t_strlist	*append_outfiles;
+	int 		output_stream;
+	char 		built_in;
 	struct s_simple_command		*next;
-}				t_simple_command;
+}				t_command;
 
 typedef struct s_pipeline
 {
-	t_simple_command 	*simple_cmd;
+	t_command 	*simple_cmd;
 	struct 	s_pipeline  *next;
 }				t_pipeline;
 
@@ -73,8 +71,6 @@ typedef struct s_data
 	char		*input_cmd;
 	t_pipeline	*parse_tree;
 	int			exit_status;
-	int			tmp_in;
-	int			tmp_out;
 }				t_data;
 
 #endif

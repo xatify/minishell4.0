@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_arguments_array.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 10:26:28 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/28 11:26:28 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/30 09:39:30 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void    fill_argv(char **argv, t_strlist *args)
 {
     int         i;
 
-    i = 1;
+    i = 0;
     while (args)
     {
         while (!(args->str))
@@ -59,22 +59,16 @@ void    fill_argv(char **argv, t_strlist *args)
 }
 
 
-char    **built_argv(t_simple_command *cmd)
+char    **built_argv(t_command *cmd)
 {
     char    **argv;
     int     argc;
 
-    argc = 2 + count_argv(cmd->arguments);
+    argc = 1 + count_argv(cmd->name_and_args);
     if (!(argv = (char **)malloc(argc * sizeof(char *))))
         return (NULL);
     ft_memset(argv, 0, argc * sizeof(char *));
-    argv[0] = ft_strdup(cmd->cmd_name);
-    if (!argv[0])
-    {
-        free(argv);
-        return (NULL);
-    }
-    fill_argv(argv, cmd->arguments);
+    fill_argv(argv, cmd->name_and_args);
     return (argv);
 }
 

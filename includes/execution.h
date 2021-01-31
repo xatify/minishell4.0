@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 09:59:42 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/26 08:45:25 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/30 08:34:49 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 ** execution functions
 */
 
-int     execute_simple_cmd(t_data *data, t_simple_command *cmd);
+int     execute_simple_cmd(t_data *data, t_command *cmd);
 void    execute(t_data   *data, t_pipeline *pipeline);
 void    execute_pipeline(t_data *data, t_pipeline *pipeline);
-int     execute_binary(t_data *data, t_simple_command *cmd);
-int     execute_built_in(char built_in, t_data *data, t_simple_command *cmd);
+int     execute_binary(t_data *data, t_command *cmd);
+int     execute_built_in(char built_in, t_data *data, t_command *cmd);
 
 #endif

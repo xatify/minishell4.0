@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:04:18 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/25 14:27:56 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/30 08:58:52 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,4 @@ void                free_strlist(t_strlist *strlist)
     free(strlist->str);
     free(strlist);
     
-}
-
-void        show_strlist(t_strlist *strlist)
-{
-    if (strlist)
-    {
-        //if (strlist->str)
-            ft_putstr_fd(strlist->str, 1);
-            ft_putchar_fd('\t', 1);
-        show_strlist(strlist->next);
-    }
 }

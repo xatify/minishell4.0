@@ -6,14 +6,14 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:27:29 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/29 10:29:15 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/30 08:34:59 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "includes/minishell.h"
 
-int            parse_redirection(t_token **tokens, t_simple_command *command, int redirection)
+int     parse_redirection(t_token **tokens, t_command *command, int redirection)
 {
     t_strlist        **streams;
 
@@ -34,31 +34,18 @@ int            parse_redirection(t_token **tokens, t_simple_command *command, in
     return (0);
 }
 
-int     parse_cmd_name(t_token **tokens, t_simple_command *command)
+int     parse_name_and_args(t_token **tokens, t_command *command)
 {
-    if ((*tokens) && (*tokens)->id >= WORD)
-    {
-        if (!(command->cmd_name = ft_strdup((*tokens)->tkn)))
-            return (0);
-        del_token_head(tokens);
-        return  (1);
-    }
-    return (0);
-}
-
-
-int     parse_arguments(t_token **tokens, t_simple_command *command)
-{
-    if (!add_strlist((&command->arguments), (*tokens)->tkn))
+    if (!add_strlist((&command->name_and_args), (*tokens)->tkn))
         return (0);
     del_token_head(tokens);
     return (1);
 }
 
 
-t_simple_command    *parse_simple_command(t_token    **tokens)
+t_command    *parse_simple_command(t_token    **tokens)
 {
-    t_simple_command    *command;
+    t_command    *command;
     int                 id;
 
     if (!(command = new_cmd()))
@@ -76,15 +63,7 @@ t_simple_command    *parse_simple_command(t_token    **tokens)
             else if (id == OUTPUT || id == APPEND_OUT)
                 command->output_stream = id;
         }
-        else if (command->cmd_name == NULL)
-        {
-            if (!parse_cmd_name(tokens, command))
-            {
-                free_command(command);
-                return (NULL);
-            }
-        }
-        else if(!parse_arguments(tokens, command))
+        else if(!parse_name_and_args(tokens, command))
         {
             free_command(command);
             return (NULL);
@@ -97,7 +76,7 @@ t_simple_command    *parse_simple_command(t_token    **tokens)
 t_pipeline      *parse_pipe_line(t_token **tokens)
 {
     t_pipeline          *pipeline;
-    t_simple_command    *command;
+    t_command    *command;
 
     if ((*tokens)->id == SEMICOLON || (*tokens)->id == PIPE)
         return (NULL);

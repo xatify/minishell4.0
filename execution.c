@@ -6,13 +6,13 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/29 08:23:43 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/30 10:51:00 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int     execute_built_in(char built_in, t_data *data, t_simple_command *cmd)
+int     execute_built_in(char built_in, t_data *data, t_command *cmd)
 {
     int     ret;
     char    **argv;
@@ -36,19 +36,19 @@ int     execute_built_in(char built_in, t_data *data, t_simple_command *cmd)
     return (ret);
 }
 
-int    execute_child(t_data *data, t_simple_command *cmd)
+int    execute_child(t_data *data, t_command *cmd)
 {
     char        *path;
     char        **argv;
     char        **envp;
 
-    path = find_binary_file(data, cmd->cmd_name);
+    path = find_binary_file(data, cmd->name_and_args->str);
     argv = built_argv(cmd);
     envp = built_envp(data->env_vars);
     if (!path)
     {
         ft_putstr_fd("no such file or directory : ", 2);
-        ft_putstr_fd(cmd->cmd_name, 1);
+        ft_putstr_fd(cmd->name_and_args->str, 1);
         ft_putstr_fd("\n", 1);
         exit(127);
     }
@@ -59,7 +59,7 @@ int    execute_child(t_data *data, t_simple_command *cmd)
     exit(126);
 }
 
-int     execute_binary(t_data *data, t_simple_command *cmd)
+int     execute_binary(t_data *data, t_command *cmd)
 {
     int         status;
 
@@ -77,7 +77,7 @@ int     execute_binary(t_data *data, t_simple_command *cmd)
     return (status);
 }
 
-int    execute_simple_cmd(t_data *data, t_simple_command *cmd)
+int    execute_simple_cmd(t_data *data, t_command *cmd)
 {
     int save_std[2];
     int tmp_fd[2];
@@ -88,8 +88,9 @@ int    execute_simple_cmd(t_data *data, t_simple_command *cmd)
     {
         if (!simple_cmd_file_redirection(cmd, save_std, tmp_fd))
             return (0);
-        if (cmd->cmd_name)
+        if (cmd->name_and_args && cmd->name_and_args->str[0])
         {
+            cmd->built_in = is_built_in(cmd->name_and_args->str);
             if (cmd->built_in != '\0')
                 data->exit_status = execute_built_in(cmd->built_in, data, cmd);
             else
@@ -105,7 +106,7 @@ void    execute_pipeline(t_data *data, t_pipeline *pipeline)
     int                 tmp_fd[2];
     int                 save_std[2];
     int                 status;
-    t_simple_command    *cmd;
+    t_command    *cmd;
 
 
     save_std[0] = dup(STDIN);
@@ -123,9 +124,10 @@ void    execute_pipeline(t_data *data, t_pipeline *pipeline)
             cmd = cmd->next;
             continue;
         }
-        if (cmd->cmd_name)
+        if (cmd->name_and_args && cmd->name_and_args->str[0])
         {
-            if (cmd->built_in != '\0' && ft_strcmp(cmd->cmd_name, "cd") != 0)
+            cmd->built_in = is_built_in(cmd->name_and_args->str);
+            if (cmd->built_in != '\0' && ft_strcmp(cmd->name_and_args->str, "cd") != 0)
                 data->exit_status = execute_built_in(cmd->built_in, data, cmd);
             else
             {
@@ -151,15 +153,11 @@ void    execute(t_data *data, t_pipeline *pipeline)
 {
     while (pipeline)
     {
-        if (expand_pipeline(pipeline, data))
-        {
-            if (pipeline->simple_cmd->next)
-                execute_pipeline(data, pipeline);
-            else
-                execute_simple_cmd(data, pipeline->simple_cmd);
-        }
+        expand_pipeline(pipeline, data);
+        if (pipeline->simple_cmd->next)
+            execute_pipeline(data, pipeline);
         else
-            data->exit_status = 1;
+            execute_simple_cmd(data, pipeline->simple_cmd);
         pipeline = pipeline->next;
     }
 }

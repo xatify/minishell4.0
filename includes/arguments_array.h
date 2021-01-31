@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 11:18:03 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/18 09:16:30 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/30 08:34:49 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** building arguments array from the linked list
 */
 
-char    **built_argv(t_simple_command *cmd);
+char    **built_argv(t_command *cmd);
 void    free_argv(char **argv);
 int     args_num(char **args);
 

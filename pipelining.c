@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 09:03:59 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/26 09:57:25 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/31 07:47:12 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 void    set_to_std(int *save_std)
 {
     dup2(save_std[0], STDIN);
-    close(save_std[0]);
-    dup2(save_std[1], STDOUT);    
-    close(save_std[1]);
+    dup2(save_std[1], STDOUT);
 }
 
-int     simple_cmd_file_redirection(t_simple_command *cmd, int *save_std, int *tmp_fd)
+int     simple_cmd_file_redirection(t_command *cmd, int *save_std, int *tmp_fd)
 {
     //set to default
     tmp_fd[1] = save_std[1];
@@ -35,7 +33,7 @@ int     simple_cmd_file_redirection(t_simple_command *cmd, int *save_std, int *t
     return (1);
 }
 
-int     pipeline_stream(t_simple_command *cmd, int *save_std, int *tmp_fd)
+int     pipeline_stream(t_command *cmd, int *save_std, int *tmp_fd)
 {
     int     tmp;
     int     pipe_fd[2];
@@ -43,7 +41,6 @@ int     pipeline_stream(t_simple_command *cmd, int *save_std, int *tmp_fd)
     if (!redirect_stdin(cmd, &tmp_fd[0]))
         return (0);
     dup2(tmp_fd[0], STDIN);
-    close(tmp_fd[0]);
     if (pipe(pipe_fd) < 0)
         return (0);
     tmp_fd[0] = pipe_fd[0];

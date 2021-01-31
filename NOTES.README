@@ -59,7 +59,7 @@
         + incrementation of SHLVL env var
     + segfault !! don't know why (recoding the entire logic of expansions)
     + multiple $VAR inside the same token
-    - breaking the the token retrieved from env_var if it has ' ' (space) inside of it (see error 4 in tests.txt)
+    + breaking the the token retrieved from env_var if it has ' ' (space) inside of it (see error 4 in tests.txt)
 
 + 7: Execute the commands list
     + build the args array from cmd->arguments !! needs testing

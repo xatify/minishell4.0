@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 09:19:07 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/22 14:20:40 by keddib           ###   ########.fr       */
+/*   Updated: 2021/01/30 08:34:49 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int    redirect_stdout(t_simple_command *cmd, int *fdout)
+int    redirect_stdout(t_command *cmd, int *fdout)
 {
     int     fd;
     int     ret;
@@ -55,7 +55,7 @@ int    redirect_stdout(t_simple_command *cmd, int *fdout)
     return (1);
 }
 
-int     redirect_stdin(t_simple_command *cmd, int *fdin)
+int     redirect_stdin(t_command *cmd, int *fdin)
 {
     int fd;
 

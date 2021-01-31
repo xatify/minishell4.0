@@ -6,32 +6,31 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:17:15 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/25 14:32:28 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/01/30 09:32:40 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/minishell.h"
 
-void                initialize_cmd(t_simple_command *command)
+void                initialize_cmd(t_command *command)
 {
-    ft_memset(command, 0, sizeof(t_simple_command));
+    ft_memset(command, 0, sizeof(t_command));
     command->output_stream = -1;
 }
 
-void                free_command(t_simple_command *command)
+void                free_command(t_command *command)
 {
     if (!command)
         return;
-    if (command->cmd_name)
-        free(command->cmd_name);
+    free_strlist(command->name_and_args);
     free_strlist(command->infiles);
     free_strlist(command->outfiles);
     free_strlist(command->append_outfiles);
-    free_strlist(command->arguments);
+
     free(command);
 }
 
-t_simple_command  *last_command(t_simple_command *cmd)
+t_command  *last_command(t_command *cmd)
 {
     if (!cmd)
         return (NULL);
@@ -40,56 +39,22 @@ t_simple_command  *last_command(t_simple_command *cmd)
     return (last_command(cmd->next));
 }
 
-void            add_back_command(t_simple_command **cmd_head, t_simple_command *command)
+void            add_back_command(t_command **cmd_head, t_command *command)
 {
     if (!(*cmd_head))
     {
         *cmd_head = command;
-        command->first = 1;
     }
     else
         last_command((*cmd_head))->next = command;
 }
 
-t_simple_command    *new_cmd(void)
+t_command    *new_cmd(void)
 {
-    t_simple_command    *cmd;
+    t_command    *cmd;
 
-    if (!(cmd = (t_simple_command *)malloc(sizeof(t_simple_command))))
+    if (!(cmd = (t_command *)malloc(sizeof(t_command))))
         return (NULL);
     initialize_cmd(cmd);
     return (cmd);
-}
-
-void            show_command(t_simple_command *cmd)
-{
-    if (cmd)
-    {
-        ft_putstr_fd("cmd_name :", 1);
-        ft_putstr_fd(cmd->cmd_name, 1);
-        ft_putstr_fd(" \t\n", 1);
-        if (cmd->arguments)
-        {
-            ft_putstr_fd("args : ", 1);
-            show_strlist(cmd->arguments);
-        }
-        if (cmd->outfiles)
-        {
-            ft_putstr_fd("> ", 1);
-            show_strlist(cmd->outfiles);
-        }
-        if (cmd->infiles)
-        {
-            ft_putstr_fd("< ", 1);
-            show_strlist(cmd->infiles);
-        }
-        if (cmd->append_outfiles)
-        {
-            ft_putstr_fd("<< ", 1);
-            show_strlist(cmd->append_outfiles);
-        }
-        if (cmd->next)
-            ft_putstr_fd(" | ", 1);
-        show_command(cmd->next);
-    }
 }
