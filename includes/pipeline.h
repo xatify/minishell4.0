@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 09:50:20 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/13 09:51:20 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/01 16:25:19 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,6 @@
 */
 
 t_pipeline	*new_pipe_line(void);
-void        free_pipeline(t_pipeline *pipeline);
-void        free_pipeline_list(t_pipeline *pipeline_head);
-t_pipeline	*last_pipeline(t_pipeline *pipeline);
-void        add_back_pipeline(t_pipeline **pipe_head, t_pipeline *pipeline);
-void		show_pipeline(t_pipeline *pipeline);
-
+void        free_pipeline(void *pipeline);
 
 #endif

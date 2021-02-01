@@ -6,13 +6,13 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:28:31 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/01 10:02:31 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 16:25:59 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/minishell.h"
 
-t_pipeline *new_pipe_line(void)
+t_pipeline      *new_pipe_line(void)
 {
     t_pipeline      *pipeline;
 
@@ -23,12 +23,10 @@ t_pipeline *new_pipe_line(void)
 }
 
 
-void        free_pipeline(t_pipeline *pipeline)
+void        free_pipeline(void *pipeline)
 {
-    t_command *tmp;
-
     if (!(pipeline))
         return;
-    ft_lstclear(pipeline->cmds, free_command);
+    ft_lstclear(&(((t_pipeline *)pipeline)->cmds), free_command);
     free(pipeline);
 }

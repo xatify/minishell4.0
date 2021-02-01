@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:27:29 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/01 09:39:30 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 16:11:48 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ int     parse_redirection(t_list **tokens, t_command *command, int redirection)
 
 int     parse_name_and_args(t_list **tokens, t_command *command)
 {
-    t_token *token;
-
-    token = (t_token *)((*tokens)->content);
-    ft_lstadd_back(&(command->name_and_args), ft_strdup(token));
+    char *token;
+    
+    token = ((t_token *)((*tokens)->content))->tkn;
+    ft_lstadd_back(&(command->name_and_args), ft_lstnew(ft_strdup(token)));
     del_token_head(tokens);
     return (1);
 }
@@ -78,7 +78,7 @@ t_command    *parse_simple_command(t_list    **tokens)
 }
 
 
-t_list      *parse_pipe_line(t_list **tokens)
+t_pipeline      *parse_pipe_line(t_list **tokens)
 {
     t_pipeline      *pipeline;
     t_command       *command;
@@ -96,7 +96,7 @@ t_list      *parse_pipe_line(t_list **tokens)
             free_pipeline(pipeline);
             return (NULL);
         }
-        ft_lstadd_back(&(pipeline->cmds), command);
+        ft_lstadd_back(&(pipeline->cmds), ft_lstnew(command));
         if ((*tokens) && ((t_token *)((*tokens)->content))->id == PIPE)
         {
             del_token_head(tokens);
@@ -107,7 +107,7 @@ t_list      *parse_pipe_line(t_list **tokens)
 }
 
 
-t_pipeline      *parser(char    *input_cmd)
+t_list      *parser(char    *input_cmd)
 {
     t_list          *tokens;
     t_list          *pipelines;
@@ -123,7 +123,7 @@ t_pipeline      *parser(char    *input_cmd)
             ft_lstclear(&tokens, free);
             return (NULL);
         }
-        ft_lstadd_back(&pipelines, tmp);
+        ft_lstadd_back(&pipelines, ft_lstnew(tmp));
         if (tokens && ((t_token *)((tokens)->content))->id == SEMICOLON)
         {
             del_token_head(&tokens);

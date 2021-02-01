@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:17:15 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/01 10:04:16 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 16:31:13 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,16 @@ t_command    *new_cmd(void)
     return (cmd);
 }
 
-void                free_command(t_command *command)
+void                free_command(void *cmd)
 {
-    if (!command)
+    t_command *command;
+    
+    if (!cmd)
         return;
-    ft_lstclear(command->name_and_args, free);
-    ft_lstclear(command->infiles, free);
-    ft_lstclear(command->outfiles, free);
-    ft_lstclear(command->append_outfiles, free);
+    command = (t_command *)cmd;
+    ft_lstclear(&(command->name_and_args), free);
+    ft_lstclear(&(command->infiles), free);
+    ft_lstclear(&(command->outfiles), free);
+    ft_lstclear(&(command->append_outfiles), free);
     free(command);
 }

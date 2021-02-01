@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/01 11:27:00 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 18:04:09 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int     execute_built_in(char built_in, t_data *data, t_command *cmd)
     argv = built_argv(cmd);
     ret = 0;
     if (built_in == 'c')
-        ret = cd(argv[1], &(data->env_vars));
+        ret = cd(argv[1], data);
     else if (built_in == 'e')
         ret = echo(argv);
     else if (built_in == 'n')
@@ -30,11 +30,12 @@ int     execute_built_in(char built_in, t_data *data, t_command *cmd)
     else if (built_in == 'p')
         ret = export(argv, data);
     else if (built_in == 'w')
-        ret = pwd();
+        ret = pwd(data);
     else
-        exit_(data, argv);
+        ret = exit_(data, argv);
     return (ret);
 }
+
 
 int    execute_child(t_data *data, t_command *cmd)
 {
@@ -125,7 +126,7 @@ void    execute_pipeline(t_data *data, t_list *pipeline)
     tmp_fd[1] = dup(save_std[1]);
     while (cmd)
     {
-        if (!pipeline_stream((t_command *)(cmd->content), save_std, tmp_fd))
+        if (!pipeline_stream(cmd, save_std, tmp_fd))
         {
             tmp_fd[0] = dup(save_std[0]);
             tmp_fd[1] = dup(save_std[1]);
@@ -134,10 +135,10 @@ void    execute_pipeline(t_data *data, t_list *pipeline)
         }
         if (((t_command *)(cmd->content))->name_and_args)
         {
-            name_and_args = ((t_command *)(cmd->content))->name_and_args;
+            name_and_args = (((t_command *)(cmd->content))->name_and_args)->content;
             ((t_command *)(cmd->content))->built_in = is_built_in(name_and_args);
             if (((t_command *)(cmd->content))->built_in != '\0' && ft_strcmp(name_and_args, "cd") != 0)
-                data->exit_status = execute_built_in(((t_command *)(cmd->content))->built_in, data, cmd);
+                data->exit_status = execute_built_in(((t_command *)(cmd->content))->built_in, data, (t_command *)(cmd->content));
             else
             {
                 g_pid = fork();

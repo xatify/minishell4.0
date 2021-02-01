@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:13:03 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/31 09:04:21 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 15:54:06 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@
 /*
 ** structures prototypes
 */
+
+typedef	struct		s_list
+{
+	void			*content;
+	struct s_list	*next;
+}					t_list;
 
 typedef	struct s_command
 {
@@ -29,7 +35,7 @@ typedef	struct s_command
 
 typedef struct s_pipeline
 {
-	t_list  	*cmds
+	t_list  	*cmds;
 }				t_pipeline;
 
 typedef  struct s_token
@@ -56,7 +62,7 @@ typedef struct s_data
 	t_list		*env_vars;
 	t_list		*unset_vars;
 	char		*input_cmd;
-	t_pipeline	*parse_tree;
+	t_list		*parse_tree;
 	int			exit_status;
 }				t_data;
 

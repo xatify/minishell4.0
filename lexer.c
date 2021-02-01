@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 07:33:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/01 10:22:16 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 18:09:01 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int     handle_metacharacter(t_list **stack, t_list **tokens, char **input_cmd)
     else if (is_meta(**input_cmd))
     {
         ft_lstclear(stack, free);
-        ft_lst(tokens, free_token);
+        ft_lstclear(tokens, free_token);
         return (0);
     }
     if (!empty_stack(stack, tokens))
@@ -131,7 +131,7 @@ int     handle_metacharacter(t_list **stack, t_list **tokens, char **input_cmd)
 
 t_list     *lexer(char *input_cmd)
 {
-    t_token     *token = NULL;
+    t_list      *tokens = NULL;
     t_list      *stack = NULL;
 
     if (*input_cmd == '\0')
@@ -139,11 +139,12 @@ t_list     *lexer(char *input_cmd)
     while(TRUE)
     {
         push(&stack, *input_cmd++);
+        printf("%c\n", top_stack(&stack));
         if (top_stack(&stack) == '\'' || top_stack(&stack) == '\"')
         {
             if (!handle_quotes(&stack, &input_cmd))
             {
-                ft_lstclear(&token, free);
+                ft_lstclear(&tokens, free);
                 ft_lstclear(&stack, free);
                 break;
             }
@@ -155,9 +156,9 @@ t_list     *lexer(char *input_cmd)
             pop(&stack);
             if (top_stack(&stack) != '\0' && stack != NULL)
             {
-                if (!empty_stack(&stack, &token))
+                if (!empty_stack(&stack, &tokens))
                 {
-                    ft_lstclear(&token, free);
+                    ft_lstclear(&tokens, free);
                     ft_lstclear(&stack, free);
                     break;
                 }
@@ -166,7 +167,7 @@ t_list     *lexer(char *input_cmd)
         }
         if (stack && ((t_stack *)(stack->content))->meta)
         {
-            if (!handle_metacharacter(&stack, &token, &input_cmd))
+            if (!handle_metacharacter(&stack, &tokens, &input_cmd))
                 break;
         }
         else if (top_stack(&stack) == '\0')
@@ -175,19 +176,19 @@ t_list     *lexer(char *input_cmd)
             {
                 pop(&stack);
                 if (stack != NULL)
-                    empty_stack(&stack, &token);
+                    empty_stack(&stack, &tokens);
                 break;
             }
         }
     }
-    if (!token)
+    if (!tokens)
     {
         ft_putstr_fd("error while parsing !\n", 1);
         return (NULL);
     }
-    if (identify_all_tokens(token))
-        return (token);
-    ft_lstclear(&token, free);
+    if (identify_all_tokens(tokens))
+        return (tokens);
+    ft_lstclear(&tokens, free);
     ft_putstr_fd("error while parsing !\n", 1);
     return (NULL);
 }

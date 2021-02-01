@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 08:01:54 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/31 09:09:51 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 17:51:47 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,6 @@ int		ft_lstsize(t_list *lst)
 	return (1 + ft_lstsize(lst->next));
 }
 
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
-{
-	t_list	*new_list;
-	t_list	*l;
-	int		i;
-
-	l = lst;
-	i = ft_lstsize(l);
-	while (i--)
-	{
-		ft_lstadd_back(&new_list, ft_lstnew(f(l->content)));
-		if (!ft_lstlast(new_list))
-		{
-			ft_lstclear(&new_list, del);
-			return (NULL);
-		}
-		l = l->next;
-	}
-	return (new_list);
-}
-
 t_list	*ft_lstlast(t_list *lst)
 {
 	t_list *node;
@@ -63,18 +42,6 @@ t_list	*ft_lstlast(t_list *lst)
 	if (!node->next)
 		return (node);
 	return (ft_lstlast(node->next));
-}
-
-void	ft_lstiter(t_list *lst, void (*f)(void *))
-{
-	t_list *node;
-
-	node = lst;
-	if (node && f)
-	{
-		ft_lstiter(node->next, f);
-		f(node->content);
-	}
 }
 
 void	ft_lstdelone(t_list *lst, void (*del)(void *))

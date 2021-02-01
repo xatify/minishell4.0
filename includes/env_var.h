@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:16:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/31 08:44:27 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 16:51:42 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,15 @@
 */
 
 t_list			    *build_env_vars(char **envp);
-t_env_vars			*create_env_var(char *name, char *value);
-t_env_vars			*last_env_var(t_env_vars *env_vars);
+t_env_var			*create_env_var(char *name, char *value);
 char				*get_env_name(char *name_value);
 char				*get_env_value(char *name_value);
-void				add_back_env(t_env_vars **vars, t_env_vars *new_var);
-t_env_vars			*build_env_vars(char *envp[]);
-t_env_vars			*search_var(t_env_vars **env_vars, char *var_name);
-int					change_env_var(t_env_vars **vars, char *var_name, char *new_value);
-void				del_env_var(t_env_vars **envs, char *name);
-void    			show_env_vars(t_env_vars *vars);
-void				free_env_var(t_env_vars *vars);
-void                fill_envp(char **envp_i, t_env_vars *vars);
-char                **built_envp(t_env_vars *vars);
+t_list			    *build_env_vars(char *envp[]);
+t_env_var			*search_var(t_list **env_vars, char *var_name);
+int					change_env_var(t_list **vars, char *var_name, char *new_value);
+void				free_env_var(void *var);
+void                fill_envp(char **envp_i, t_env_var *var);
+char                **built_envp(t_list *vars);
+void                del_env_var(t_list **vars, char *name);
 
 #endif

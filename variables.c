@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 09:12:56 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/16 10:19:32 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/01 14:41:53 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,13 @@ char	*remove_quotes(char *value)
 	return (value);
 }
 
-int					get_vars_len(t_env_vars *env_vars, t_strlist *unset_vars)
+int					get_vars_len(t_list *env_vars, t_list *unset_vars)
 {
-	int		len;
-
-	len = 0;
-	while(env_vars != NULL)
-    {
-		len++;
-        env_vars = env_vars->next;
-    }
-	while(unset_vars != NULL)
-	{
-		len++;
-		unset_vars = unset_vars->next;
-	}
-	return len;
+	return (ft_lstsize(env_vars) + ft_lstsize(unset_vars));
 }
 
 
-char 				**get_all_vars(t_env_vars *env_vars, t_strlist *unset_vars)
+char 				**get_all_vars(t_list *env_vars, t_list *unset_vars)
 {
 	int		len;
 	int		i;
@@ -62,8 +49,8 @@ char 				**get_all_vars(t_env_vars *env_vars, t_strlist *unset_vars)
 	i = 0;
 	while (env_vars != NULL)
 	{
-		first = ft_strjoin(env_vars->name, "=\"");
-		second = ft_strjoin(env_vars->value, "\"");
+		first = ft_strjoin(((t_env_var *)(env_vars->content))->name, "=\"");
+		second = ft_strjoin(((t_env_var *)(env_vars->content))->value, "\"");
 		if (!(holder[i++] = ft_strjoin(first, second)))
 		{
 			free_argv(holder);
@@ -75,7 +62,7 @@ char 				**get_all_vars(t_env_vars *env_vars, t_strlist *unset_vars)
 	}
 	while (unset_vars != NULL)
 	{
-		if (!(holder[i++] = ft_strdup(unset_vars->str)))
+		if (!(holder[i++] = ft_strdup(unset_vars->content)))
 		{
 			free_argv(holder);
 			return (NULL);

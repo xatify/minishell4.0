@@ -6,13 +6,13 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:57:13 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/28 17:04:25 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 17:31:46 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void    show_vars(t_data *data)
+void      show_vars(t_data *data)
 {
     int     i;
     char    **vars;
@@ -30,13 +30,82 @@ void    show_vars(t_data *data)
     free_argv(vars);
 }
 
+bool    is_unset_var(t_list **unset_vars, char *name)
+{
+    t_list *tmp;
+
+    tmp = *(unset_vars);
+    while (tmp)
+    {
+        if (ft_strcmp(tmp->content, name) == 0)
+            return (TRUE);
+        tmp = tmp->next;
+    }
+    return (FALSE);
+}
+
+int             append_env_var(t_list **vars, char *var_name, char *new_value)
+{
+    t_env_var  *var;
+    char    *tmp;
+    
+    var = search_var(vars, var_name);
+    if (var)
+    {
+        if (!(tmp = ft_strjoin(var->value, new_value)))
+            return (0);
+        free(var->value);
+        var->value = tmp;
+    }
+    else
+    {
+        var = create_env_var(var_name, new_value);
+        if (var)
+            ft_lstadd_back(vars, ft_lstnew(var));
+        else
+            return (0);
+    }
+    return (1);
+}
+
+void        remove_unset_var(t_list **unset_vars, char *name)
+{
+    t_list      *tmp;
+    t_list      *last;
+    
+    last = NULL;
+    tmp = *(unset_vars);
+    while (tmp)
+    {
+        if (ft_strcmp(tmp->content, name) == 0)
+        {
+            if (tmp->next)
+            {
+                if (last == NULL)
+                    (*unset_vars) = tmp->next;
+                else
+                    last->next = tmp->next;
+            }
+            else if (last == NULL)
+                (*unset_vars) = NULL;
+            else
+                last->next = NULL;
+            free(tmp->content);
+            free(tmp);
+            return;
+        }
+        last = tmp;
+        tmp = tmp->next;
+    }
+}
+
 int     export(char   **args, t_data *data)
 {
     char    *name;
     char    *value;
     int     index;
     int     return_value;
-
+    
     return_value = 0;
     index = 1;
     if (!args[index])
@@ -50,13 +119,21 @@ int     export(char   **args, t_data *data)
             if (*name && is_identifier(name))
             {
                 if (ft_strchr(args[index], '=') == NULL)
-                    add_strlist(&(data->unset_vars), name);
+                {
+                    if (!search_var(&(data->env_vars), name))
+                        if (!is_unset_var(&(data->unset_vars), name))
+                            ft_lstadd_back(&(data->unset_vars), ft_lstnew(name));
+                }
                 else
                 {
                     if (is_double_quote_token(value) || is_single_quote_token(value))
                          value = remove_quotes(value);
-                    change_env_var(&(data->env_vars), name, value);
-                    //must remove the unset var from unset_var linked list
+                    if (is_unset_var(&(data->unset_vars), name))
+                        remove_unset_var(&(data->unset_vars), name);
+                    if (ft_strchr(args[index], '+'))
+                        append_env_var(&(data->env_vars), name, value);
+                    else
+                        change_env_var(&(data->env_vars), name, value);
                 }
             }
             else

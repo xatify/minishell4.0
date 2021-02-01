@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 09:19:07 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/30 08:34:49 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 15:47:23 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 int    redirect_stdout(t_command *cmd, int *fdout)
 {
     int     fd;
-    int     ret;
+    t_list  *tmp;
 
-    ret = -2;
-    while (cmd->outfiles)
+    tmp = cmd->outfiles;
+    while (tmp)
     {
-        fd = open(cmd->outfiles->str, O_TRUNC | O_CREAT | O_RDWR, 0666);
+        fd = open(tmp->content, O_TRUNC | O_CREAT | O_RDWR, 0666);
         if (fd < 0)
             return (0);
-        if (!(cmd->outfiles->next))
+        if (!(tmp->next))
         {
             if (cmd->output_stream == OUTPUT)
             {
@@ -33,14 +33,15 @@ int    redirect_stdout(t_command *cmd, int *fdout)
         }
         else
             close(fd);
-        cmd->outfiles = cmd->outfiles->next;
+        tmp = tmp->next;
     }
-    while (cmd->append_outfiles)
+    tmp = cmd->append_outfiles;
+    while (tmp)
     {
-        fd = open(cmd->append_outfiles->str, O_APPEND | O_CREAT | O_RDWR, 0666);
+        fd = open(tmp->content, O_APPEND | O_CREAT | O_RDWR, 0666);
         if (fd < 0)
             return (0);
-        if (!(cmd->append_outfiles->next))
+        if (!(tmp->next))
         {
             if (cmd->output_stream == APPEND_OUT)
             {
@@ -50,7 +51,7 @@ int    redirect_stdout(t_command *cmd, int *fdout)
         }
         else
             close(fd);
-        cmd->append_outfiles = cmd->append_outfiles->next;
+        tmp = tmp->next;
     }
     return (1);
 }
@@ -58,24 +59,27 @@ int    redirect_stdout(t_command *cmd, int *fdout)
 int     redirect_stdin(t_command *cmd, int *fdin)
 {
     int fd;
+    t_list *tmp;
 
-    while(cmd->infiles)
+    tmp = cmd->infiles;
+    
+    while(tmp)
     {
-        fd = open(cmd->infiles->str, O_RDONLY);
+        fd = open(tmp->content, O_RDONLY);
         if (fd < 0)
         {
             ft_putstr_fd("no such file or directory: ", 2);
-            ft_putstr_fd(cmd->infiles->str, 2);
+            ft_putstr_fd(tmp->content, 2);
             ft_putchar_fd('\n', 2);
             return (0);
         }
-        if (!(cmd->infiles->next))
+        if (!(tmp->next))
         {
             *fdin = fd;
             return (1);
         }
         close(fd);
-        cmd->infiles = cmd->infiles->next;
+        tmp = tmp->next;
     }
     return (1);
 }

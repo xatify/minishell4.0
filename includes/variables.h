@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variables.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 09:10:48 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/16 09:15:54 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/01 15:50:40 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 */
 
 char				*remove_quotes(char *value);
-char 				**get_all_vars(t_env_vars *env_vars, t_strlist *unset_vars);
+int					get_vars_len(t_list *env_vars, t_list *unset_vars);
+char 				**get_all_vars(t_list *env_vars, t_list *unset_vars);
 
 #endif

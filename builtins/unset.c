@@ -6,13 +6,13 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:55:39 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/20 10:25:45 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 15:14:26 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int     unset(char **args, t_env_vars **envs)
+int     unset(char **args, t_list **envs)
 {
     int     index;
     int     ret;

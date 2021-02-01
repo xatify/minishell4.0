@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:29:16 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/01 11:34:29 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 18:02:33 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,61 @@
 
 /* change corrent directory to path if path is not null otherwise to $HOME */
 
-int     cd(char *path, t_list **vars)
+int    hundle_removed_path(char *path, t_list **vars, t_data *data)
 {
-    char    *dir;
-    int     ret;
-    char    *pwd;
+    t_env_var   *var_env;
+    char        *tmp;
+    int         i;
+    
+    i = 0;
+    while (path[i])
+        i++;
+    if ((var_env = search_var(&(data->env_vars), "PWD")))
+    {
+        tmp = (path[--i] != '/') ? ft_strjoin("/", path) : path;
+        change_env_var(vars, "OLDPWD", var_env->value);
+        change_env_var(vars, "PWD", ft_strjoin(var_env->value, tmp));
+    }
+    ft_putstr_fd("cd: error retrieving current directory:\n", 2);
+    return (0);
+}
 
-    dir = (path) ? path: search_var(vars, "HOME")->value;
+int     cd(char *path, t_data *data)
+{
+    char        *dir;
+    int         ret;
+    char        *pwd;
+    t_env_var   *var_env;
+    
+    if ((var_env = search_var(&(data->env_vars), "HOME")))
+        dir = var_env->value;
+    dir = (path) ? path: dir;
     pwd = getcwd(NULL, 0);
     ret = chdir(dir);
-    if (!ret && pwd)
+    dir = NULL;
+    dir = getcwd(NULL, 0);
+    if (!ret && (pwd || dir))
     {
-       change_env_var(vars, "OLDPWD", pwd);
-       free(pwd);
+        if (pwd)
+            change_env_var(&(data->env_vars), "OLDPWD", pwd);
+        else
+        {
+             if ((var_env = search_var(&(data->env_vars), "PWD")))
+                change_env_var(&(data->env_vars), "OLDPWD", var_env->value);
+        }
+        free(pwd);
         pwd = getcwd(NULL, 0);
-       change_env_var(vars, "PWD", pwd);
-       return (!ret); 
+        change_env_var(&(data->env_vars), "PWD", pwd);
     }
-    ft_putstr_fd("no such file or directory\n", 2);
-    return (1);
+    else if (!pwd && !ret)
+    {
+        hundle_removed_path(path, &(data->env_vars), data);
+        return (0);
+    }
+    else
+    {
+        ft_putstr_fd("no such file or directory\n", 2);
+        return (1);
+    }
+    return (ret);
 }

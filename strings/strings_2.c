@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 09:04:09 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/16 10:29:00 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 17:43:45 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char    *ft_strchr(const char *str, int c)
         return (0);
 }
 
-int     ft_atoi(const char *str)
+int     ft_atoi(const char *str, int *exit)
 {
         long    res;
         int             sign;
@@ -93,6 +93,8 @@ int     ft_atoi(const char *str)
                         res = res * 10 + (*str++ - '0');
                 else
                 {
+                        if (exit)
+                                *exit = 1;
                         res = (sign == -1) ? 0 : -1;
                         break ;
                 }

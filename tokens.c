@@ -6,15 +6,25 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:43:36 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/01 10:17:55 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 16:23:15 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/minishell.h"
 
+t_token     *new_token(char **str)
+{
+    t_token     *token;
+    
+    if (!(token = (t_token *)malloc(sizeof(t_token))))
+        return (NULL);
+    token->tkn = (*str);
+    return (token);
+}
+
 void                del_token_head(t_list **tokens)
 {
-    t_token     *tmp;
+    t_list     *tmp;
 
     tmp = (*tokens)->next;
     ft_lstdelone((*tokens), free_token);
@@ -64,8 +74,8 @@ int            identify_all_tokens(t_list *tokens)
     return (1);
 }
 
-void    free_token(t_token *token)
+void    free_token(void *token)
 {
-    free(token->tkn);
+    free(((t_token *)token)->tkn);
     free(token);
 }

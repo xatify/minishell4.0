@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/31 08:10:36 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 14:33:25 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@
 #include "env_var.h"
 #include "parser.h"
 #include "builtins.h"
-#include "strlist.h"
 #include "simple_command.h"
 #include "pipeline.h"
 #include "expansion.h"

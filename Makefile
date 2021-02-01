@@ -6,14 +6,18 @@
 #    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/01/28 17:31:59 by abbouzid         ###   ########.fr        #
+#    Updated: 2021/02/01 18:04:28 by abbouzid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
+
 GCC				= gcc -Wall -Wextra -Werror
+
 STR				= strings
+
 BUILTINS		= builtins
+
 SRCS			= minishell.c						\
 				$(STR)/strings.c					\
 				$(STR)/strings_2.c					\
@@ -25,15 +29,14 @@ SRCS			= minishell.c						\
 				lexer.c								\
 				stack.c								\
 				parser.c							\
-				strlistmethodes.c					\
-				cmdslistmethodes.c					\
-				pipelinelistmethodes.c				\
-				tokenslistmethodes.c				\
-				expansion2.c						\
+				command.c							\
+				pipeline.c							\
+				tokens.c							\
+				expansions.c						\
 				env_var.c							\
 				start_shell.c						\
 				execution.c							\
-				build_arguments_array.c				\
+				arguments_array.c					\
 				find_binary_path.c					\
 				variables.c							\
 				$(BUILTINS)/builtin_methodes.c		\
@@ -47,13 +50,15 @@ SRCS			= minishell.c						\
 				sort.c								\
 				redirections.c						\
 				signals.c							\
-				pipelining.c
-# GNL				= get_next_line/get_next_line.c  get_next_line/get_next_line_utils.c
+				piping.c							\
+				lst_methodes.c
+
+
 all:	$(NAME)
+
 $(NAME) : $(SRCS)
 	$(MAKE) -C get_next_line
 	$(GCC) -g  -o $(NAME) $(SRCS) gnl.a
-	#./minishell
 
 clean:
 	rm $(NAME)

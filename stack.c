@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 17:02:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/01 10:21:20 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 18:10:30 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	   push(t_list **stack, char 	character)
 
     stack_element = new_element(character);
     node = ft_lstnew(stack_element);
-    ft_lstadd_back(stack, stack_element);
+    ft_lstadd_front(stack, node);
     is_metacharacter(stack);
 }
 
@@ -88,16 +88,16 @@ bool    is_meta(char c)
     return (FALSE);
 }
 
-void        is_metacharacter(t_stack **stack)
+void        is_metacharacter(t_list **stack)
 {
     char    top;
 
     top = top_stack(stack);
     if (is_meta(top) && !special((*stack)))
-        (*stack)->meta = 1;
+        ((t_stack *)((*stack)->content))->meta = 1;
 }
 
-void    push_str_to_stack(t_stack **stack, char *str)
+void    push_str_to_stack(t_list **stack, char *str)
 {
     int i;
 

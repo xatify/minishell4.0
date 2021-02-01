@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 14:59:19 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/21 12:30:05 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 17:01:57 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char    *find_binary_file(t_data *data, char *cmd_name)
 
 char    *get_bins_path(t_data *data)
 {
-    t_env_vars      *bins_path;
+    t_env_var      *bins_path;
 
     bins_path = search_var(&(data->env_vars), "PATH");
     if (!bins_path)
