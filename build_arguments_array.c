@@ -6,17 +6,17 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 10:26:28 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/30 09:39:30 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 11:28:55 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int     count_argv(t_strlist *list)
+int     count_argv(t_list *list)
 {
     if (list)
     {
-        if (list->str)
+        if (list->content)
             return (1 + count_argv(list->next));
         else
             return (count_argv(list->next));
@@ -37,16 +37,16 @@ void    free_argv(char **argv)
     free(argv);
 }
 
-void    fill_argv(char **argv, t_strlist *args)
+void    fill_argv(char **argv, t_list *args)
 {
     int         i;
 
     i = 0;
     while (args)
     {
-        while (!(args->str))
+        while (!(args->content))
             args = args->next;
-        if (!(argv[i] = ft_strdup(args->str)))
+        if (!(argv[i] = ft_strdup(args->content)))
         {
             free_argv(argv);
             argv = NULL;

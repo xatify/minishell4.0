@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 07:33:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/31 09:35:06 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 10:22:16 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,8 @@ t_list     *lexer(char *input_cmd)
         {
             if (!handle_quotes(&stack, &input_cmd))
             {
-                free_tokens(&token);
-                free_stack(&stack);
+                ft_lstclear(&token, free);
+                ft_lstclear(&stack, free);
                 break;
             }
         }
@@ -157,8 +157,8 @@ t_list     *lexer(char *input_cmd)
             {
                 if (!empty_stack(&stack, &token))
                 {
-                    free_tokens(&token);
-                    free_stack(&stack);
+                    ft_lstclear(&token, free);
+                    ft_lstclear(&stack, free);
                     break;
                 }
                 continue;
@@ -187,7 +187,7 @@ t_list     *lexer(char *input_cmd)
     }
     if (identify_all_tokens(token))
         return (token);
-    free_tokens(&token);
+    ft_lstclear(&token, free);
     ft_putstr_fd("error while parsing !\n", 1);
     return (NULL);
 }

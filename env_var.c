@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:28:41 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/31 08:50:05 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 11:37:07 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,31 +89,32 @@ char    *get_env_value(char *name_value)
     return (value);
 }
 
-t_env_vars      *search_var(t_env_vars **env_vars, char *var_name)
+t_env_var      *search_var(t_list **env_vars, char *var_name)
 {
-    t_env_vars *tmp;
-
-    tmp = (*env_vars);
-    while (tmp)
+    t_env_var      *tmp;
+    t_list         *list;
+    
+    list = (*env_vars);
+    while (list)
     {
+        tmp = (t_env_var *)(list->content);
         if (ft_strcmp(tmp->name, var_name) == 0)
             return (tmp);
-        tmp = tmp->next;
+        list = list->next;
     }
-    return (tmp);
+    return (list);
 }
 
-int             change_env_var(t_env_vars **vars, char *var_name, char *new_value)
+int             change_env_var(t_list **vars, char *var_name, char *new_value)
 {
-    t_env_vars  *var;
+    t_env_var  *var;
 
     var = search_var(vars, var_name);
     if (var)
     {
         free(var->value);
-        if (!(var->value = (char *)malloc(ft_strlen(new_value) + 1)))
+        if (!(var->value = ft_strdup(new_value)))
             return (0);
-        ft_strcpy(var->value, new_value);
     }
     else
     {

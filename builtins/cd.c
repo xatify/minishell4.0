@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:29:16 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/29 10:40:05 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 11:34:29 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* change corrent directory to path if path is not null otherwise to $HOME */
 
-int     cd(char *path, t_env_vars **vars)
+int     cd(char *path, t_list **vars)
 {
     char    *dir;
     int     ret;

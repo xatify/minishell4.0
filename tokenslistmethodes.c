@@ -6,19 +6,18 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:43:36 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/31 09:42:09 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/01 10:17:55 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/minishell.h"
 
-void                del_token_head(t_token **tokens)
+void                del_token_head(t_list **tokens)
 {
     t_token     *tmp;
 
     tmp = (*tokens)->next;
-    free((*tokens)->tkn);
-    free(*tokens);
+    ft_lstdelone((*tokens), free_token);
     (*tokens) = tmp;
 }
 
@@ -37,58 +36,32 @@ int             token_id(char *token)
     return (WORD);
 }
 
-t_token *new_token(char **str)
+int            identify_all_tokens(t_list *tokens)
 {
     t_token     *token;
     
-    if (!(token = (t_token *)malloc(sizeof(t_token))))
-        return (NULL);
-    token->tkn = *str;
-    return (token);
-}
-
-int            identify_all_tokens(t_token *tokens)
-{
-    t_token     *token;
-
-    token = tokens;
-    while (token)
+    while (tokens)
     {
+        token = (t_token *)(tokens->content);
         token->id = token_id(token->tkn);
         if (token->id != WORD)
         {
-            if (token->id == SEMICOLON && !token->next)
+            if (token->id == SEMICOLON && !(tokens->next))
                 return (1);
-            if (!token->next)
+            if (!(tokens->next))
                 return (0);
-            if ((token->id == SEMICOLON || token->id == PIPE) && token_id((token->next)->tkn) <= 2)
+            if ((token->id == SEMICOLON || token->id == PIPE) &&
+                token_id(((t_token *)((tokens->next)->content))->tkn) <= 2)
             {
-                token = token->next;
+                tokens = tokens->next;
                 continue;
             }
-            if (token_id((token->next)->tkn) != WORD)
+            if (token_id(((t_token *)((tokens->next)->content))->tkn) != WORD)
                 return (0);
         }
-        token = token->next;
+        tokens = tokens->next;
     }
     return (1);
-}
-
-t_token *last_token(t_token *tokens)
-{
-    if (!tokens)
-        return (NULL);
-    if (!tokens->next)
-        return (tokens);
-    return (last_token(tokens->next));
-}
-
-void    add_token(t_token **tokens, t_token *new_token)
-{
-    if (!(*tokens))
-        (*tokens) = new_token;
-    else
-        last_token((*tokens))->next = new_token;
 }
 
 void    free_token(t_token *token)
