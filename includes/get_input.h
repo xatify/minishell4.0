@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 09:56:47 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/13 09:57:37 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/02 11:36:53 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@
 */
 
 int				get_next_line(int fd, char **line);
-
+void            free_data(t_data *data);
 
 #endif

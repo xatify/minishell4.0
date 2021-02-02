@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 11:28:41 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/01 17:43:23 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/02 08:09:36 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_list      *build_env_vars(char **envp)
             ft_lstclear(&list_head, free_env_var);
             return (NULL);
         }
-        var->name = get_env_value(envp[i]);
+        var->name = get_env_name(envp[i]);
         if (ft_strcmp(var->name, "SHELL") == 0)
             var->value = ft_strdup("minishell");
         else if (ft_strcmp(var->name, "SHLVL") == 0)

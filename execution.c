@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/01 18:04:09 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/02 16:10:23 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int    execute_child(t_data *data, t_command *cmd)
     if (!path)
     {
         ft_putstr_fd("no such file or directory : ", 2);
-        ft_putstr_fd(cmd->name_and_args->content, 1);
+        ft_putstr_fd(cmd->name_and_args->content, 2);
         ft_putstr_fd("\n", 1);
         exit(127);
     }
@@ -80,12 +80,14 @@ int     execute_binary(t_data *data, t_command *cmd)
 
 int    execute_simple_cmd(t_data *data, t_list *pipeline)
 {
-    t_command   *cmd;
+    t_pipeline      *pipeline_;
+    t_command       *cmd;
     int     save_std[2];
     int     tmp_fd[2];
     char    *name_and_args;
 
-    cmd = (t_command *)(pipeline->content);
+    pipeline_ = (t_pipeline *)(pipeline->content);
+    cmd = (t_command *)(pipeline_->cmds->content);
     save_std[0] = dup(STDIN);
     save_std[1] = dup(STDOUT);
     if (cmd)
@@ -115,6 +117,7 @@ void    execute_pipeline(t_data *data, t_list *pipeline)
     int                 save_std[2];
     int                 status;
     t_list              *cmd;
+    t_pipeline          *ppline;
     char                *name_and_args;
 
 
@@ -124,6 +127,8 @@ void    execute_pipeline(t_data *data, t_list *pipeline)
     cmd = pipeline->content;
     tmp_fd[0] = dup(save_std[0]);
     tmp_fd[1] = dup(save_std[1]);
+    ppline= (t_pipeline *)(pipeline->content);
+    cmd = ppline->cmds;
     while (cmd)
     {
         if (!pipeline_stream(cmd, save_std, tmp_fd))
@@ -159,15 +164,22 @@ void    execute_pipeline(t_data *data, t_list *pipeline)
         data->exit_status = status;
 }
 
-void    execute(t_data *data, t_list *pipelines)
+void    execute(t_data *data)
 {
+    t_list      *pipelines;
+    t_pipeline *pipeline;
+    
+    pipelines = data->parse_tree;
     while (pipelines)
     {
-        expand_pipeline((t_pipeline *)(pipelines->content), data);
-        if (((t_list *)(pipelines->content))->next)
-            execute_pipeline(data, pipelines);
-        else
-            execute_simple_cmd(data, pipelines);
+        pipeline = (t_pipeline *)(pipelines->content);
+        if (expand_pipeline(pipeline, data))
+        {
+            if (pipeline->cmds->next)
+                execute_pipeline(data, pipelines);
+            else
+                execute_simple_cmd(data, pipelines);
+        }
         pipelines = pipelines->next;
     }
 }

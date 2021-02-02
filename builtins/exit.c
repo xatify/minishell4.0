@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:25:50 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/01 17:50:46 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/02 11:40:55 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,15 @@ int    exit_(t_data *data, char **argv)
     ex = 0;
     if (argv[1] && argv[2])
     {
-        ft_putstr_fd("exit : too many arguments\n", 1);
+        ft_putstr_fd("exit\ntoo many arguments\n", 1);
         return (1);
     }
     if (argv[1])
     {
-        status = (argv[1])? ft_atoi(argv[1], &ex): 0; // byte shiffting required
+        status = ft_atoi(argv[1], &ex);
         if (ex == 1 || is_arg_alpha(argv[1]))
         {
-            ft_putstr_fd("exit: numeric argument required\n", 1);
+            ft_putstr_fd("exit\nnumeric argument required\n", 1);
             status = 255;
         }
     }

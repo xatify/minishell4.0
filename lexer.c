@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 07:33:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/01 18:09:01 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/02 16:57:56 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,26 +70,25 @@ int     special(t_list *stack)
     return (special % 2);
 }
 
-int     handle_quotes(t_list **stack, char **input_cmd)
+int     handle_quotes(t_list **stack, char **input_cmd, int *error)
 {
     char       quote;
-    int        error;
 
-    error = 0;
+    *error = 0;
     quote = top_stack(stack);
     if (!special((*stack)))
     {
         if (quote == '\'')
         {
             if (!handle_single_quote(stack, input_cmd))
-                error = 1;
+                *error = 1;
         }
         else
         {
             if (!handle_double_quote(stack, input_cmd))
-                error = 1;
+                *error = 1;
         }
-        if (error)
+        if (*error)
             return (0);
         return (1);
     }
@@ -104,11 +103,8 @@ int     handle_metacharacter(t_list **stack, t_list **tokens, char **input_cmd)
     append = 0;
     top = top_stack(stack);
     pop(stack);
-    if ((*stack))
-    {
-        if (!empty_stack(stack, tokens))
-            return (0);
-    }
+    if ((*stack) && !empty_stack(stack, tokens))
+        return (0);
     push(stack, top);
     if (top == '>' && **input_cmd == '>')
     {
@@ -129,41 +125,80 @@ int     handle_metacharacter(t_list **stack, t_list **tokens, char **input_cmd)
     return (1);
 }
 
+int        handle_space(t_list **stack, t_list **tokens, int *error)
+{
+    if (special(*stack))
+        return (1);
+    pop(stack);
+    if (top_stack(stack) != '\0' && *stack != NULL)
+    {
+        if (!empty_stack(stack, tokens))
+        {
+            *error = 1;
+            return (0);
+        }
+    }
+    *error = 0;
+    return (1);
+}
+
+int       handle_end_token(t_list **stack, t_list **tokens)
+{
+    if (*stack != NULL)
+    {
+        pop(stack);
+        if (*stack != NULL)
+            empty_stack(stack, tokens);
+        return (1);
+    }
+    return (0);
+}
+
+t_list     *tokenizer(int error, t_list **tokens, t_list **stack)
+{
+    if (error)
+    {
+        ft_lstclear(tokens, free);
+        ft_lstclear(stack, free);
+        return(NULL);
+    }
+    if (!(*tokens))
+    {
+        if ((*stack))
+            ft_lstclear(stack, free);
+        ft_putstr_fd("error while parsing !\n", 1);
+        return (NULL);
+    }
+    if (identify_all_tokens(*tokens))
+        return (*tokens);
+    ft_lstclear(tokens, free);
+    if ((*stack))
+            ft_lstclear(stack, free);
+    ft_putstr_fd("error while parsing !\n", 1);
+    return (NULL);
+}
+
 t_list     *lexer(char *input_cmd)
 {
     t_list      *tokens = NULL;
     t_list      *stack = NULL;
+    int         error;
 
-    if (*input_cmd == '\0')
-        return (NULL);
+    tokens = NULL;
+    stack = NULL;
     while(TRUE)
     {
+        error = 0;
         push(&stack, *input_cmd++);
-        printf("%c\n", top_stack(&stack));
         if (top_stack(&stack) == '\'' || top_stack(&stack) == '\"')
-        {
-            if (!handle_quotes(&stack, &input_cmd))
-            {
-                ft_lstclear(&tokens, free);
-                ft_lstclear(&stack, free);
+            if (!handle_quotes(&stack, &input_cmd, &error))
                 break;
-            }
-        }
         if (top_stack(&stack) == ' ')
         {
-            if (special(stack))
+            if (!handle_space(&stack, &tokens, &error))
+                break;
+            else
                 continue;
-            pop(&stack);
-            if (top_stack(&stack) != '\0' && stack != NULL)
-            {
-                if (!empty_stack(&stack, &tokens))
-                {
-                    ft_lstclear(&tokens, free);
-                    ft_lstclear(&stack, free);
-                    break;
-                }
-                continue;
-            }
         }
         if (stack && ((t_stack *)(stack->content))->meta)
         {
@@ -171,24 +206,8 @@ t_list     *lexer(char *input_cmd)
                 break;
         }
         else if (top_stack(&stack) == '\0')
-        {
-            if (stack != NULL)
-            {
-                pop(&stack);
-                if (stack != NULL)
-                    empty_stack(&stack, &tokens);
+            if (handle_end_token(&stack, &tokens))
                 break;
-            }
-        }
     }
-    if (!tokens)
-    {
-        ft_putstr_fd("error while parsing !\n", 1);
-        return (NULL);
-    }
-    if (identify_all_tokens(tokens))
-        return (tokens);
-    ft_lstclear(&tokens, free);
-    ft_putstr_fd("error while parsing !\n", 1);
-    return (NULL);
+    return (tokenizer(error, &tokens, &stack));
 }

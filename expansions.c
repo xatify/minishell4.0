@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansion2.c                                       :+:      :+:    :+:   */
+/*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/01 16:50:16 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/02 18:48:34 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,70 +22,66 @@ bool    is_double_quote_token(char *token)
     return ((token[0] == '"')? TRUE: FALSE);
 }
 
+void    expand_token_list(t_list *list, t_env_var *env_var, t_list **p_stack)
+{
+    int         i;
+    char         **splits;
+    t_list      *new_args;
+    t_list      *tmp;
+
+    if (list)
+    {
+        splits = ft_split(env_var->value, ' ');
+        i = 0;
+        if (env_var->value[0] != ' ')
+        {
+            push_str_to_stack(p_stack, splits[0]);
+            i = 1;
+        }
+        while (splits[i])
+        {
+            ft_lstadd_back(&new_args, ft_lstnew(ft_strdup(splits[i])));
+            i++;
+        }
+        if (new_args != NULL)
+        {
+            tmp = list->next;
+            list->next = new_args;
+            ft_lstlast(new_args)->next = tmp;
+        }
+        free_argv(splits);
+    }
+    else
+        push_str_to_stack(p_stack, env_var->value);
+}
+
 void    expand_env_var(t_list **p_stack, t_list **s_stack, t_list **vars, t_list *list)
 {
-       t_list      *var_name;
+       t_list       *var_name;
        t_env_var    *env_var;
-       char         **splits;
-       char         first_char;
-       t_list       *new_args;
-       t_list       *tmp;
-       int          i;
 
         var_name = NULL;
-        new_args = NULL;
         empty_stack(s_stack, &var_name);
         if (var_name && *((t_token *)(var_name->content))->tkn)
        {
             env_var = search_var(vars, ((t_token *)(var_name->content))->tkn);
             if (env_var)
-            {
-                first_char = env_var->value[0];
-                if (list)
-                {
-                    splits = ft_split(env_var->value, ' ');
-                    i = 0;
-                    if (first_char != ' ')
-                    {
-                        push_str_to_stack(p_stack, splits[0]);
-                        i = 1;
-                    }
-                    while (splits[i])
-                    {
-                        ft_lstadd_back(&new_args, ft_lstnew(splits[i]));
-                        i++;
-                    }
-                    if (new_args != NULL)
-                    {
-                        tmp = list->next;
-                        list->next = new_args;
-                        ft_lstlast(new_args)->next = tmp;
-                    }
-                    free_argv(splits);
-                }
-                else
-                    push_str_to_stack(p_stack, env_var->name);
-            }
+                expand_toke_list(list, env_var, p_stack);
             ft_lstclear(&var_name, free_token);
        }
 }
 
-void    expand_dollar_sign(char **token, t_list **p_stack, t_data *data, t_list *list)
+void    expand_exit_status(t_list **p_stack, t_data *data, char **token)
+{
+    (*token)++;
+    push_str_to_stack(p_stack, ft_itoa(data->exit_status));
+}
+
+void    handle_expand_env_var(char **token, t_list **p_stack, t_data *data, t_list *list)
 {
     t_list *s_stack;
 
     s_stack = NULL;
-    if (**token == '?')
-    {
-        (*token)++;
-        push_str_to_stack(p_stack, ft_itoa(data->exit_status));
-        return;
-    }
-    if (is_num(**token))
-    {
-        (*token)++;
-        return;
-    }
     if (!(is_underscore(**token) || is_alpha(**token)))
     {
         push(p_stack, '$');
@@ -104,6 +100,84 @@ void    expand_dollar_sign(char **token, t_list **p_stack, t_data *data, t_list 
     expand_env_var(p_stack, &s_stack, &(data->env_vars), list);
 }
 
+void    expand_dollar_sign(char **token, t_list **p_stack, t_data *data, t_list *list)
+{
+    t_list *s_stack;
+
+    s_stack = NULL;
+    if (**token == '?')
+        expand_exit_status(p_stack, data, token);
+    else if (is_num(**token))
+        (*token)++;
+    else
+        handle_expand_env_var(token, p_stack, data, list);
+}
+
+int     handle_ut_non_special(t_list **stack, char **token)
+{
+    if (**token == '\"' || **token == '\'')
+    {
+        if (*stack && ((t_stack *)((*stack)->content))->special)
+        {
+            pop(stack);
+            push(stack, **token);
+            return (0);
+        }
+        else
+            return (1);
+    }
+    else
+    {
+        if (*stack && ((t_stack *)((*stack)->content))->special)
+            pop(stack);
+        push(stack, **token);
+    }
+    return (0);
+}
+
+void    handle_ut_back_slash(t_list **stack, char **token, int *first_back_slash)
+{
+    if (!(*first_back_slash))
+    {
+        *first_back_slash = 1;
+        push(stack, **token);
+        ((t_stack *)((*stack)->content))->special = 1;
+    }
+    else if (((t_stack *)((*stack)->content))->special)
+        ((t_stack *)((*stack)->content))->special = 0;
+    else if((*stack) && !(((t_stack *)((*stack)->content))->special))
+    {
+        push(stack, **token);
+        ((t_stack *)((*stack)->content))->special = 1;
+    }
+}
+
+int     handle_ut_dollar_sign(t_list **stack, char **token, t_data *data, t_list *list)
+{
+    if ((*stack) && ((t_stack *)((*stack)->content))->special)
+    {
+        pop(stack);
+        push(stack, **token);
+        return (0);
+    }
+    else
+    {
+        (*token)++;
+        expand_dollar_sign(token, stack, data, list);
+        return (1);
+    }
+}
+
+int     ret_expand_ut(t_list **stack)
+{
+    if ((*stack) && ((t_stack *)((*stack)->content))->special)
+    {
+        ft_putstr_fd("error while parsing !\n", 2);
+        return (0);
+    }
+    return(1);
+}
+
 int     expand_unquoted_token(t_list **stack, char **token, t_data *data, t_list *list)
 {
     int         first_back_slash;
@@ -115,60 +189,75 @@ int     expand_unquoted_token(t_list **stack, char **token, t_data *data, t_list
     {
         if (**token != '$' && **token != '\\')
         {
-            if (**token == '\"' || **token == '\'')
-            {
-                if (*stack && ((t_stack *)(*stack))->special)
-                {
-                    pop(stack);
-                    push(stack, **token);
-                }
-                else
-                    break;
-            }
-            else
-            {
-                if (*stack && ((t_stack *)(*stack))->special)
-                    pop(stack);
-                push(stack, **token);
-            }
+            if (handle_ut_non_special(stack, token))
+                break;
         }
-        else if (**token == '\\' && !first_back_slash)
-        {
-            first_back_slash = 1;
-            push(stack, **token);
-            ((t_stack *)(*stack))->special = 1;
-        }
-        else if (**token == '\\' &&  (* stack) && ((t_stack *)(*stack))->special)
-            ((t_stack *)(*stack))->special = 0;
-        else if (**token == '\\' && (*stack) && !(((t_stack *)(*stack))->special))
-        {
-            push(stack, **token);
-            ((t_stack *)(*stack))->special = 1;
-        }
+        else if (**token == '\\')
+            handle_ut_back_slash(stack, token, &first_back_slash);
         else if (**token == '$')
         {
-            if ((*stack) && ((t_stack *)(*stack))->special)
-            {
-                pop(stack);
-                push(stack, **token);
-            }
-            else
-            {
-                (*token)++;
-                expand_dollar_sign(token, stack, data, list);
+            if (handle_ut_dollar_sign(stack, token, data, list))
                 continue;
-            }
         }
         if (**token == '\0')
             break;
         (*token)++;
     }
-    if ((*stack) && ((t_stack *)(*stack))->special)
+    return (ret_expand_ut(stack));
+}
+
+
+int     handle_dq_non_special(t_list **stack, char **token)
+{
+    if (**token == '\"')
     {
-        ft_putstr_fd("error while parsing hfh!", 2);
+        if (*stack && ((t_stack *)((*stack)->content))->special)
+        {
+            pop(stack);
+            push(stack, **token);
+        }
+        else
+        {
+            (*token)++;
+            return (1);
+        }
+    }
+    else
+        push(stack, **token);
+    return (0);
+}
+
+void     handle_dq_back_slack(t_list **stack, char **token, int *first_back_slash)
+{
+    if (!(*first_back_slash))
+    {
+        *first_back_slash = 1;
+        push(stack, **token);
+        ((t_stack *)((*stack)->content))->special = 1;
+    }
+    else if (((t_stack *)((*stack)->content))->special)
+        ((t_stack *)((*stack)->content))->special = 0;
+    else if (!(((t_stack *)((*stack)->content))->special))
+    {
+        push(stack, **token);
+        ((t_stack *)((*stack)->content))->special = 1;
+    } 
+}
+
+int     handle_dq_dollar_sign(t_list **stack, char **token, t_data *data)
+{
+    if ((*stack) && ((t_stack *)((*stack)->content))->special)
+    {
+        pop(stack);
+        push(stack, **token);
         return (0);
     }
-    return(1);
+    else
+    {
+        (*token)++;
+        expand_dollar_sign(token, stack, data, NULL);
+        return (1);
+    }
 }
 
 int     expand_double_quotes(t_list **stack, char **token, t_data *data)
@@ -181,48 +270,15 @@ int     expand_double_quotes(t_list **stack, char **token, t_data *data)
     {
         if (**token != '$' && **token != '\\')
         {
-            if (**token == '\"')
-            {
-                if (*stack && ((t_stack *)(*stack))->special)
-                {
-                    pop(stack);
-                    push(stack, **token);
-                }
-                else
-                {
-                    (*token)++;
-                    break;
-                }
-            }
-            else
-                push(stack, **token);
+            if (handle_dq_non_special(stack, token))
+                break;
         }
-        else if (**token == '\\' && !first_back_slash)
-        {
-            first_back_slash = 1;
-            push(stack, **token);
-            ((t_stack *)(*stack))->special = 1;
-        }
-        else if (**token == '\\' && ((t_stack *)(*stack))->special)
-            ((t_stack *)(*stack))->special = 0;
-        else if (**token == '\\' && !(((t_stack *)(*stack))->special))
-        {
-            push(stack, **token);
-            ((t_stack *)(*stack))->special = 1;
-        }
+        else if (**token == '\\')
+            handle_dq_back_slack(stack, token, &first_back_slash);
         else if (**token == '$')
         {
-            if ((*stack) && ((t_stack *)(*stack))->special)
-            {
-                pop(stack);
-                push(stack, **token);
-            }
-            else
-            {
-                (*token)++;
-                expand_dollar_sign(token, stack, data, NULL);
+            if (handle_dq_dollar_sign(stack, token, data))
                 continue;
-            }
         }
         (*token)++;
     }
@@ -250,13 +306,34 @@ int     expand_quotes(t_list **stack, char **token, t_data *data)
     return (1);
 }
 
+char    *handle_expansion(t_list **stack, int error)
+{
+    t_list      *tmp;
+    char        *expansion;
+    
+    if (error)
+    {
+        ft_lstclear(stack, free);
+        return (NULL);
+    }
+    tmp = NULL;
+    if (*stack)
+    {
+        empty_stack(stack, &tmp);
+        expansion = ft_strdup(((t_token *)(tmp->content))->tkn);
+        ft_lstclear(&tmp, free_token);
+        return (expansion);
+    }
+    return (NULL);
+}
+
 char    *expand(t_list *list, t_data *data, int *error)
 {
-    t_list        *stack = NULL;
-    t_list        *tmp;
+    t_list        *stack;
     char           **token;
     char           *tkn;
 
+    stack = NULL;
     tkn = (list->content);
     token = &tkn;
     while (**token)
@@ -265,28 +342,14 @@ char    *expand(t_list *list, t_data *data, int *error)
         if (top_stack(&stack) == '\'' || top_stack(&stack) == '\"')
         {
             if (!expand_quotes(&stack, token, data))
-            {
                 *error = 1;
-                ft_lstclear(&stack, free);
-                return (NULL);
-            }
         }
         else if (!expand_unquoted_token(&stack, token, data, list))
-        {
             *error = 1;
-            ft_lstclear(&stack, free);
-            return (NULL);
-        }
+        if (*error)
+            break;
     }
-    tmp = NULL;
-    if (stack)
-    {
-        empty_stack(&stack, &tmp);
-        tkn = ft_strdup(((t_token *)(tmp->content))->tkn);
-        ft_lstclear(&tmp, free_token);
-        return (tkn);
-    }
-    return (NULL);
+    return (handle_expansion(&stack, *error));
 }
 
 
@@ -301,12 +364,15 @@ int    expand_list(t_list *list, t_data *data)
         tmp = expand(list, data, &error);
         if (!error)
         {
+            free(list->content);
             if (!tmp)
                 list->content = ft_strdup("");
             else
                 list->content = tmp;
             return (expand_list(list->next, data));
         }
+        else
+            return (0);
     }
     return (1);
 }
@@ -325,11 +391,12 @@ int     expand_cmd(t_list *cmds, t_data *data)
         {
             return (expand_cmd(cmds->next, data));   
         }
+        return (0);
     }
     return (1);
 }
 
-void     expand_pipeline(t_pipeline *pipline, t_data *data)
+int     expand_pipeline(t_pipeline *pipline, t_data *data)
 {
-    expand_cmd(pipline->cmds, data);
+    return (expand_cmd(pipline->cmds, data));
 }

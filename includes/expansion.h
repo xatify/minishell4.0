@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 09:52:49 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/01 16:45:25 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/02 08:56:30 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ int     expand_unquoted_token(t_list **stack, char **token, t_data *data, t_list
 int	    expand_cmd(t_list *cmds, t_data *data);
 int 	expand_list(t_list *list, t_data *data);
 char	*expand(t_list *list, t_data *data, int *error);
-void     expand_pipeline(t_pipeline *pipline, t_data *data);
+int     expand_pipeline(t_pipeline *pipline, t_data *data);
 
 #endif

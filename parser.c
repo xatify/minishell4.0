@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:27:29 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/01 16:11:48 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/02 16:20:19 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int     parse_redirection(t_list **tokens, t_command *command, int redirection)
     {
         ft_lstadd_back(streams, ft_lstnew(ft_strdup(token->tkn)));
         del_token_head(tokens);
+        command->output_stream = redirection;
         return (1);
     }
     return (0);
@@ -65,8 +66,6 @@ t_command    *parse_simple_command(t_list    **tokens)
                 free_command(command);
                 return (NULL);
             }
-            else if (id == OUTPUT || id == APPEND_OUT)
-                command->output_stream = id;
         }
         else if(!parse_name_and_args(tokens, command))
         {

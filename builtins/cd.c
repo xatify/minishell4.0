@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:29:16 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/01 18:02:33 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/02 10:39:44 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int    hundle_removed_path(char *path, t_list **vars, t_data *data)
         change_env_var(vars, "OLDPWD", var_env->value);
         change_env_var(vars, "PWD", ft_strjoin(var_env->value, tmp));
     }
-    ft_putstr_fd("cd: error retrieving current directory:\n", 2);
+    ft_putstr_fd("cd: error retrieving current directory\n", 2);
     return (0);
 }
 
@@ -63,7 +63,7 @@ int     cd(char *path, t_data *data)
     else if (!pwd && !ret)
     {
         hundle_removed_path(path, &(data->env_vars), data);
-        return (0);
+        return (1);
     }
     else
     {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strings.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:01:06 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/28 11:30:48 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/02 15:10:57 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,33 @@ char 	*ft_strdup(char *str)
 	if(str)
 		ft_strcpy(dup, str);
 	return (dup);
+}
+
+char 	*ft_strnstr(const char *haystack,const char *needle, int *end_name)
+{
+	char	*str;
+	char	*sub;
+	size_t	i;
+	size_t	j;
+	
+	str = (char*)haystack;
+	sub = (char*)needle;
+	i = 0;
+	if (*sub == 0)
+		return (str);
+	while (str[i] != '\0')
+	{
+		j = 0;
+		while (str[i + j] == sub[j] && (i + j) < strlen(str))
+		{
+			j++;
+			if (sub[j] == '\0')
+			{
+				*end_name = i;
+				return (str + i + j);
+			}
+		}
+		i++;
+	}
+	return (NULL);
 }

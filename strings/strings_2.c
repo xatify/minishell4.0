@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 09:04:09 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/01 17:43:45 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/02 10:31:33 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ char    *ft_strchr(const char *str, int c)
 
 int     ft_atoi(const char *str, int *exit)
 {
-        long    res;
+        long     res;
         int             sign;
-        long    max;
+        long  max;
 
         max = 9223372036854775807;
         res = 0;

@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:14:28 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/01 17:43:01 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/02 15:08:56 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ char				*ft_strchr(const char *str, int c);
 int					ft_atoi(const char *str, int *exit);
 void				*ft_calloc(size_t count, size_t size);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
-
-
+char	            *ft_strnstr(const char *haystack, const char *needle, int *end_name);
+char	            *ft_substr(char const *s, unsigned int start, size_t len);
 #endif

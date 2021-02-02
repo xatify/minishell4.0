@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:57:13 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/01 17:31:46 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/02 15:07:50 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,16 +104,27 @@ int     export(char   **args, t_data *data)
     char    *name;
     char    *value;
     int     index;
+    int     end;
     int     return_value;
     
     return_value = 0;
     index = 1;
+    end = -1;
     if (!args[index])
         show_vars(data);
     while (args[index])
     {
-        name = get_env_name(args[index]);
-        value = get_env_value(args[index]);
+        value = ft_strnstr(args[index], "+=", &end);
+        if (value != NULL)
+        {
+            value = ft_strdup(value);
+            name = ft_substr(args[index], 0, end);
+        }
+        else
+        {
+            name = get_env_name(args[index]);
+            value = get_env_value(args[index]);
+        }
         if (name)
         {
             if (*name && is_identifier(name))
@@ -122,7 +133,7 @@ int     export(char   **args, t_data *data)
                 {
                     if (!search_var(&(data->env_vars), name))
                         if (!is_unset_var(&(data->unset_vars), name))
-                            ft_lstadd_back(&(data->unset_vars), ft_lstnew(name));
+                            ft_lstadd_back(&(data->unset_vars), ft_lstnew(ft_strdup(name)));
                 }
                 else
                 {
@@ -130,7 +141,7 @@ int     export(char   **args, t_data *data)
                          value = remove_quotes(value);
                     if (is_unset_var(&(data->unset_vars), name))
                         remove_unset_var(&(data->unset_vars), name);
-                    if (ft_strchr(args[index], '+'))
+                    if (end != -1)
                         append_env_var(&(data->env_vars), name, value);
                     else
                         change_env_var(&(data->env_vars), name, value);

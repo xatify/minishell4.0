@@ -29,27 +29,27 @@
     + modification of builtins prototypes to accepts array of arguments not a linked list of arguments
     + 6-1: echo with option -n
         + segfault if no argument is given
-    - 6-2: cd with only a relative and absolute path
+    + 6-2: cd with only a relative and absolute path
         + $PWD  must change
         + $OLDPWD must change
-        -- refactoring
+        + refactoring
 
     + 6-3: pwd
-    - 6-4: export
+    + 6-4: export
         + delete the quotes of the value of a VAR="VALUE"
         + !! needs to redirecte the error to standard error
         + testing
         + handle identifier
         + case VAR or VAR=
-        - must remove the unset var from unset_var linked list
-        - implement the += behavior (see error 3 in tests.txt)
+        + must remove the unset var from unset_var linked list
+        + implement the += behavior (see error 3 in tests.txt)
 
     + 6-5: unset without any option
     + 6-7: env
-    - 6-8: exit
+    + 6-8: exit
         + !!!!!must free everything before exiting
         + must be tested with diffrent exit status
-        - exit errors in tests.txt
+        + exit errors in tests.txt
         
 
 + 5: shell expansions
@@ -108,18 +108,16 @@
         + must rethink the showprompt to show PWD after receiving the SIG_QUIT
     + QUIT signal
 
-- 12: testing
++ 12: optimize and refactoring the code
 
-- 13: optimize and refactoring the code
+- 13: norme
 
-- 14: check for leaks
-    - error 2 in tests.txt is causing memory leaks and unavailable resources for fork ... 
+- 13: check for leaks
+    + error 2 in tests.txt is causing memory leaks and unavailable resources for fork ... 
 
-- 15: norme
-
-- 16 : testing
+- 14 : testing
 
 !!! Notes
-* before production phase, linked list must be handled so there will be no double code
++ before production phase, linked list must be handled so there will be no double code
 + must redirect the error to stderror 2
 + """WARNING: terminal is not fully functional""" error needs to be fixed
