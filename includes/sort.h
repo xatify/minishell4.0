@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 09:29:19 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/16 09:35:33 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/03 11:04:01 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@
 ** inserion sort for array of strings
 */
 
-void    sort(char **strings);
+void	sort(char **strings);
 
 #endif

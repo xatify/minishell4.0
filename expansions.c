@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/03 08:34:18 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/03 10:54:24 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/minishell.h"
 
-bool    is_single_quote_token(char *token)
+BOOL    is_single_quote_token(char *token)
 {
     return ((token[0] == '\'')? TRUE: FALSE);
 }
 
-bool    is_double_quote_token(char *token)
+BOOL    is_double_quote_token(char *token)
 {
     return ((token[0] == '"')? TRUE: FALSE);
 }
@@ -57,7 +57,7 @@ void    expand_token_list(t_list *list, t_env_var *env_var, t_list **p_stack)
             list->next = new_args;
             ft_lstlast(new_args)->next = tmp;
         }
-       
+
     }
     else
         push_str_to_stack(p_stack, env_var->value);
@@ -249,7 +249,7 @@ void     handle_dq_back_slack(t_list **stack, char **token, int *first_back_slas
     {
         push(stack, **token);
         ((t_stack *)((*stack)->content))->special = 1;
-    } 
+    }
 }
 
 int     handle_dq_dollar_sign(t_list **stack, char **token, t_data *data)
@@ -318,7 +318,7 @@ char    *handle_expansion(t_list **stack, int error)
 {
     t_list      *tmp;
     char        *expansion;
-    
+
     if (error)
     {
         ft_lstclear(stack, free);
@@ -392,12 +392,12 @@ int     expand_cmd(t_list *cmds, t_data *data)
     if (cmds)
     {
         cmd = (t_command *)(cmds->content);
-        if (expand_list(cmd->name_and_args, data) && 
+        if (expand_list(cmd->name_and_args, data) &&
             expand_list(cmd->infiles, data) &&
             expand_list(cmd->outfiles, data) &&
             expand_list(cmd->append_outfiles, data))
         {
-            return (expand_cmd(cmds->next, data));   
+            return (expand_cmd(cmds->next, data));
         }
         return (0);
     }

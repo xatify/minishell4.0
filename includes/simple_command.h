@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_command.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 09:48:49 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/01 16:30:37 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/03 11:03:47 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 ** simple command linked list methodes
 */
 
-void                free_command(void *command);
-t_command	        *new_cmd(void);
-
+void		free_command(void *command);
+t_command	*new_cmd(void);
 
 #endif

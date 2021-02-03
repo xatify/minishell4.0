@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
+#    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/02/01 18:04:28 by abbouzid         ###   ########.fr        #
+#    Updated: 2021/02/03 10:40:59 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,14 +58,14 @@ all:	$(NAME)
 
 $(NAME) : $(SRCS)
 	$(MAKE) -C get_next_line
-	$(GCC) -g  -o $(NAME) $(SRCS) gnl.a
+	$(GCC) -o $(NAME) $(SRCS) gnl.a
 
 clean:
 	rm $(NAME)
 
 fclean: clean
-	rm -rf *.dSYM minishell
+	rm -rf *.o gnl.a *.dSYM
 
-re: clean all
+re: fclean all
 
 .PHONY: clean re all

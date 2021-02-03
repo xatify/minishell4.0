@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_binary_path.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 14:59:19 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/03 10:06:37 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/03 12:00:20 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char    *search_files_inpath(char *path, char *cmd_name)
     return(NULL);
 }
 
-char    *absolute_path(char *cmd_name, char *PATH_ENV)
+char    *absolute_path(char *cmd_name, char *path_env)
 {
     char    **paths;
     char    *final_path;
@@ -39,7 +39,7 @@ char    *absolute_path(char *cmd_name, char *PATH_ENV)
 
     if (ft_strchr(cmd_name, '/'))
         return cmd_name;
-    paths = ft_split(PATH_ENV, ':');
+    paths = ft_split(path_env, ':');
     i  = 0;
     while (paths[i])
     {
