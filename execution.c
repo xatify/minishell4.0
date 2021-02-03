@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/02 16:10:23 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/03 09:44:56 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,82 +78,77 @@ int     execute_binary(t_data *data, t_command *cmd)
     return (status);
 }
 
-int    execute_simple_cmd(t_data *data, t_list *pipeline)
+void    execute_simple_cmd(t_data *data, t_pipeline *pipeline)
 {
-    t_pipeline      *pipeline_;
     t_command       *cmd;
-    int     save_std[2];
-    int     tmp_fd[2];
-    char    *name_and_args;
+    int             save_std[2];
+    int             tmp_fd[2];
+    char            *name_and_args;
 
-    pipeline_ = (t_pipeline *)(pipeline->content);
-    cmd = (t_command *)(pipeline_->cmds->content);
     save_std[0] = dup(STDIN);
     save_std[1] = dup(STDOUT);
-    if (cmd)
+    if ((cmd = (t_command *)(pipeline->cmds->content)))
     {
         if (!simple_cmd_file_redirection(cmd, save_std, tmp_fd))
-            return (0);
-        if (cmd->name_and_args)
+            return;
+        name_and_args = cmd->name_and_args->content;
+        if (name_and_args[0])
         {
-            name_and_args = cmd->name_and_args->content;
-            if (name_and_args[0])
-            {
-                cmd->built_in = is_built_in(name_and_args);
-                if (cmd->built_in != '\0')
-                    data->exit_status = execute_built_in(cmd->built_in, data, cmd);
-                else
-                    data->exit_status = execute_binary(data, cmd);
-            }
+            cmd->built_in = is_built_in(name_and_args);
+            if (cmd->built_in != '\0')
+                data->exit_status = execute_built_in(cmd->built_in, data, cmd);
+            else
+                data->exit_status = execute_binary(data, cmd);
         }
     }
     set_to_std(save_std);
-    return (1);
 }
 
-void    execute_pipeline(t_data *data, t_list *pipeline)
+// void    set_to_default(int save[2], int tmp[2])
+// {
+//     tmp[0] = dup(save[0]);
+//     tmp[1] = dupsave[1];
+// }
+
+void    execute_pipeline(t_data *data, t_list *cmds)
 {
     int                 tmp_fd[2];
     int                 save_std[2];
     int                 status;
-    t_list              *cmd;
-    t_pipeline          *ppline;
+    t_command           *cmd;
     char                *name_and_args;
 
 
     save_std[0] = dup(STDIN);
     save_std[1] = dup(STDOUT);
-
-    cmd = pipeline->content;
     tmp_fd[0] = dup(save_std[0]);
     tmp_fd[1] = dup(save_std[1]);
-    ppline= (t_pipeline *)(pipeline->content);
-    cmd = ppline->cmds;
-    while (cmd)
+    while (cmds)
     {
-        if (!pipeline_stream(cmd, save_std, tmp_fd))
+        cmd = (t_command *)(cmds->content);
+        if (!pipeline_stream(cmd, save_std, tmp_fd, cmds->next))
         {
             tmp_fd[0] = dup(save_std[0]);
             tmp_fd[1] = dup(save_std[1]);
-            cmd = cmd->next;
+            cmds = cmds->next;
             continue;
         }
-        if (((t_command *)(cmd->content))->name_and_args)
+        name_and_args = cmd->name_and_args->content;
+        if (name_and_args[0])
         {
-            name_and_args = (((t_command *)(cmd->content))->name_and_args)->content;
-            ((t_command *)(cmd->content))->built_in = is_built_in(name_and_args);
-            if (((t_command *)(cmd->content))->built_in != '\0' && ft_strcmp(name_and_args, "cd") != 0)
-                data->exit_status = execute_built_in(((t_command *)(cmd->content))->built_in, data, (t_command *)(cmd->content));
+            cmd->built_in = is_built_in(name_and_args);
+            if (cmd->built_in != '\0' && ft_strcmp(name_and_args, "cd") != 0)
+                data->exit_status = execute_built_in(cmd->built_in, data, cmd);
             else
             {
                 g_pid = fork();
                 if (g_pid == 0)
-                    execute_child(data, ((t_command *)(cmd->content)));
+                    execute_child(data, cmd);
                 else if (g_pid < 0)
                     data->exit_status = 1;
             }
         }
-        cmd = cmd->next;
+        cmds = cmds->next;
     }
     set_to_std(save_std);
     waitpid(g_pid, &status, 0);
@@ -176,9 +171,9 @@ void    execute(t_data *data)
         if (expand_pipeline(pipeline, data))
         {
             if (pipeline->cmds->next)
-                execute_pipeline(data, pipelines);
+                execute_pipeline(data, pipeline->cmds);
             else
-                execute_simple_cmd(data, pipelines);
+                execute_simple_cmd(data, pipeline);
         }
         pipelines = pipelines->next;
     }

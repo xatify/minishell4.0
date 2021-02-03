@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 09:57:53 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/02 16:15:49 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/03 08:53:09 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 
 t_data	*start_shell(int argc, char **argv, char **envp);
 void 	show_prompt(t_data *data);
+void    handl_signals_exit_status(t_data *data);
+void    set_input_cmd(t_data *data, char **holder);
+void    free_data(t_data *data);
 void    new_input(t_data *data, char **holder);
 
 #endif

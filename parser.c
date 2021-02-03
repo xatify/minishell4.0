@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:27:29 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/02 16:20:19 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/03 08:46:43 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int     parse_name_and_args(t_list **tokens, t_command *command)
 }
 
 
-t_command    *parse_simple_command(t_list    **tokens)
+t_command    *parse_command(t_list    **tokens)
 {
     t_command    *command;
     int                 id;
@@ -90,7 +90,7 @@ t_pipeline      *parse_pipe_line(t_list **tokens)
         return (NULL);
     while (*tokens && ((t_token *)((*tokens)->content))->id != SEMICOLON)
     {
-        if (!(command = parse_simple_command(tokens)))
+        if (!(command = parse_command(tokens)))
         {
             free_pipeline(pipeline);
             return (NULL);

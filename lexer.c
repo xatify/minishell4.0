@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 07:33:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/02 16:57:56 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/03 08:44:52 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,12 +193,11 @@ t_list     *lexer(char *input_cmd)
         if (top_stack(&stack) == '\'' || top_stack(&stack) == '\"')
             if (!handle_quotes(&stack, &input_cmd, &error))
                 break;
-        if (top_stack(&stack) == ' ')
+        if (top_stack(&stack) == ' ' || top_stack(&stack) == '\t')
         {
             if (!handle_space(&stack, &tokens, &error))
                 break;
-            else
-                continue;
+            continue;
         }
         if (stack && ((t_stack *)(stack->content))->meta)
         {

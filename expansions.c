@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/02 18:48:34 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/03 08:34:18 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,34 +22,42 @@ bool    is_double_quote_token(char *token)
     return ((token[0] == '"')? TRUE: FALSE);
 }
 
+void    expand_new_tokens(char *tkn, t_list **p_stack, t_list **new_args)
+{
+    int     i;
+    char    **splits;
+
+    splits = ft_split(tkn, ' ');
+    i = 0;
+    if (splits[0])
+    {
+        push_str_to_stack(p_stack, splits[0]);
+        i++;
+    }
+    while (splits[i])
+    {
+        ft_lstadd_back(new_args, ft_lstnew(ft_strdup(splits[i])));
+        i++;
+    }
+    free_argv(splits);
+}
+
 void    expand_token_list(t_list *list, t_env_var *env_var, t_list **p_stack)
 {
-    int         i;
-    char         **splits;
     t_list      *new_args;
     t_list      *tmp;
 
+    new_args = NULL;
     if (list)
     {
-        splits = ft_split(env_var->value, ' ');
-        i = 0;
-        if (env_var->value[0] != ' ')
-        {
-            push_str_to_stack(p_stack, splits[0]);
-            i = 1;
-        }
-        while (splits[i])
-        {
-            ft_lstadd_back(&new_args, ft_lstnew(ft_strdup(splits[i])));
-            i++;
-        }
+        expand_new_tokens(env_var->value, p_stack, &new_args);
         if (new_args != NULL)
         {
             tmp = list->next;
             list->next = new_args;
             ft_lstlast(new_args)->next = tmp;
         }
-        free_argv(splits);
+       
     }
     else
         push_str_to_stack(p_stack, env_var->value);
@@ -66,7 +74,7 @@ void    expand_env_var(t_list **p_stack, t_list **s_stack, t_list **vars, t_list
        {
             env_var = search_var(vars, ((t_token *)(var_name->content))->tkn);
             if (env_var)
-                expand_toke_list(list, env_var, p_stack);
+                expand_token_list(list, env_var, p_stack);
             ft_lstclear(&var_name, free_token);
        }
 }

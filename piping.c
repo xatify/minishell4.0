@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipelining.c                                       :+:      :+:    :+:   */
+/*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 09:03:59 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/01 11:32:12 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/03 09:45:09 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,11 @@ int     simple_cmd_file_redirection(t_command *cmd, int *save_std, int *tmp_fd)
     return (1);
 }
 
-int     pipeline_stream(t_list *cmd_, int *save_std, int *tmp_fd)
+int     pipeline_stream(t_command *cmd, int *save_std, int *tmp_fd, t_list *next_cmd)
 {
     int     tmp;
     int     pipe_fd[2];
-    t_command *cmd;
 
-    cmd = (t_command *)cmd_->content;
     if (!redirect_stdin(cmd, &tmp_fd[0]))
         return (0);
     dup2(tmp_fd[0], STDIN);
@@ -57,7 +55,7 @@ int     pipeline_stream(t_list *cmd_, int *save_std, int *tmp_fd)
         tmp_fd[1] = tmp;
         close(pipe_fd[1]);
     }
-    else if (!cmd_->next)
+    else if (!next_cmd)
         tmp_fd[1] = dup(save_std[1]);
     dup2(tmp_fd[1], STDOUT);
     close(tmp_fd[1]);
