@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 09:03:59 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/03 09:45:09 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/03 10:59:05 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,15 @@ void    set_to_std(int *save_std)
     close(save_std[1]);
 }
 
+void    copy_fds(int *fd1, int *fd2)
+{
+    fd1[0] = fd2[0];
+    fd1[1] = fd2[1];
+}
+
 int     simple_cmd_file_redirection(t_command *cmd, int *save_std, int *tmp_fd)
 {
-    //set to default
-    tmp_fd[1] = save_std[1];
-    tmp_fd[0] = save_std[0];
+    copy_fds(tmp_fd, save_std);
     if (!redirect_stdin(cmd, &tmp_fd[0]) || !redirect_stdout(cmd, &tmp_fd[1]))
     {
         close(save_std[0]);
@@ -35,28 +39,34 @@ int     simple_cmd_file_redirection(t_command *cmd, int *save_std, int *tmp_fd)
     return (1);
 }
 
-int     pipeline_stream(t_command *cmd, int *save_std, int *tmp_fd, t_list *next_cmd)
+int    stream_error(int *tmp_fd, int *save_std, t_list *cmds)
+{
+    copy_fds(tmp_fd, save_std);
+    cmds = cmds->next;
+    return (0);
+}
+
+int     pipeline_stream(t_command *cmd, int *save_std, int *tmp_fd, t_list *cmds)
 {
     int     tmp;
     int     pipe_fd[2];
 
     if (!redirect_stdin(cmd, &tmp_fd[0]))
-        return (0);
+        return (stream_error(tmp_fd, save_std, cmds));
     dup2(tmp_fd[0], STDIN);
     if (pipe(pipe_fd) < 0)
-        return (0);
-    tmp_fd[0] = pipe_fd[0];
-    tmp_fd[1] = pipe_fd[1];
+        return (stream_error(tmp_fd, save_std, cmds));
+    copy_fds(tmp_fd, pipe_fd);
     tmp = -1;
     if (!redirect_stdout(cmd, &tmp))
-        return (0);
+        return (stream_error(tmp_fd, save_std, cmds));
     if (tmp != -1)
     {
         tmp_fd[1] = tmp;
         close(pipe_fd[1]);
     }
-    else if (!next_cmd)
-        tmp_fd[1] = dup(save_std[1]);
+    else if (!(cmds->next))
+        tmp_fd[1] = save_std[1];
     dup2(tmp_fd[1], STDOUT);
     close(tmp_fd[1]);
     return (1);

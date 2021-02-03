@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/03 09:44:56 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/03 10:52:30 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int     execute_binary(t_data *data, t_command *cmd)
     g_pid = fork();
     if (g_pid == 0)
     {
-        exit(execute_child(data, cmd));
+        execute_child(data, cmd);
     }
     else if (g_pid < 0)
         return (1);
@@ -104,11 +104,42 @@ void    execute_simple_cmd(t_data *data, t_pipeline *pipeline)
     set_to_std(save_std);
 }
 
-// void    set_to_default(int save[2], int tmp[2])
-// {
-//     tmp[0] = dup(save[0]);
-//     tmp[1] = dupsave[1];
-// }
+void    set_fds(int save_std[2], int tmp_fd[2])
+{
+    save_std[0] = dup(STDIN);
+    save_std[1] = dup(STDOUT);
+    copy_fds(tmp_fd, save_std);
+}
+
+void     return_status(int status, t_data *data)
+{
+    if (WIFEXITED(status))
+        data->exit_status = WEXITSTATUS(status);
+    else
+        data->exit_status = status;
+}
+
+void    execute_pipe(t_command *cmd, t_data *data)
+{
+    char                *name_and_args;
+    
+    name_and_args = cmd->name_and_args->content;
+    if (name_and_args[0])
+    {
+        cmd->built_in = is_built_in(name_and_args);
+        if (cmd->built_in != '\0' && ft_strcmp(name_and_args, "cd") != 0)
+            data->exit_status = execute_built_in(cmd->built_in, data, cmd);
+        else
+        {
+            g_pid = fork();
+            if (g_pid == 0)
+                execute_child(data, cmd);
+            else if (g_pid < 0)
+                data->exit_status = 1;
+        }
+    }
+}
+
 
 void    execute_pipeline(t_data *data, t_list *cmds)
 {
@@ -116,47 +147,20 @@ void    execute_pipeline(t_data *data, t_list *cmds)
     int                 save_std[2];
     int                 status;
     t_command           *cmd;
-    char                *name_and_args;
 
-
-    save_std[0] = dup(STDIN);
-    save_std[1] = dup(STDOUT);
-    tmp_fd[0] = dup(save_std[0]);
-    tmp_fd[1] = dup(save_std[1]);
+    set_fds(save_std, tmp_fd);
     while (cmds)
     {
         cmd = (t_command *)(cmds->content);
-        if (!pipeline_stream(cmd, save_std, tmp_fd, cmds->next))
-        {
-            tmp_fd[0] = dup(save_std[0]);
-            tmp_fd[1] = dup(save_std[1]);
-            cmds = cmds->next;
+        if (!pipeline_stream(cmd, save_std, tmp_fd, cmds))
             continue;
-        }
-        name_and_args = cmd->name_and_args->content;
-        if (name_and_args[0])
-        {
-            cmd->built_in = is_built_in(name_and_args);
-            if (cmd->built_in != '\0' && ft_strcmp(name_and_args, "cd") != 0)
-                data->exit_status = execute_built_in(cmd->built_in, data, cmd);
-            else
-            {
-                g_pid = fork();
-                if (g_pid == 0)
-                    execute_child(data, cmd);
-                else if (g_pid < 0)
-                    data->exit_status = 1;
-            }
-        }
+        execute_pipe(cmd, data);
         cmds = cmds->next;
     }
     set_to_std(save_std);
     waitpid(g_pid, &status, 0);
     g_pid = -1;
-    if (WIFEXITED(status))
-        data->exit_status = WEXITSTATUS(status);
-    else
-        data->exit_status = status;
+    return_status(status, data);
 }
 
 void    execute(t_data *data)
