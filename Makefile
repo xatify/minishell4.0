@@ -6,7 +6,7 @@
 #    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/02/03 10:40:59 by keddib           ###   ########.fr        #
+#    Updated: 2021/02/03 12:15:28 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ BUILTINS		= builtins
 SRCS			= minishell.c						\
 				$(STR)/strings.c					\
 				$(STR)/strings_2.c					\
+				$(STR)/strings_3.c					\
 				$(STR)/ft_split.c					\
 				$(STR)/ft_strjoin.c					\
 				$(STR)/ft_putstr_fd.c				\

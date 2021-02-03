@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strings.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:01:06 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/02 15:10:57 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/03 12:04:33 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ void	ft_strlcpy(char *dst, char *src, int len)
 	int		index;
 
 	index = 0;
-	while(index < len)
+	while (index < len)
 	{
 		dst[index] = src[index];
 		index++;
 	}
 }
 
-int			ft_strcmp(char *str1, char *str2)
+int		ft_strcmp(char *str1, char *str2)
 {
 	int		i;
 
@@ -44,7 +44,7 @@ int			ft_strcmp(char *str1, char *str2)
 	return (str1[i] - str2[i]);
 }
 
-void		*ft_memset(void	*b, int c, size_t len)
+void	*ft_memset(void *b, int c, size_t len)
 {
 	unsigned char *ptr;
 
@@ -54,45 +54,16 @@ void		*ft_memset(void	*b, int c, size_t len)
 	return (b);
 }
 
-char 	*ft_strdup(char *str)
+char	*ft_strdup(char *str)
 {
-	int 	len;
+	int		len;
 	char	*dup;
 
 	len = ft_strlen(str);
 	if (!(dup = (char *)malloc(len + 1)))
 		return (NULL);
 	ft_memset(dup, 0, len + 1);
-	if(str)
+	if (str)
 		ft_strcpy(dup, str);
 	return (dup);
-}
-
-char 	*ft_strnstr(const char *haystack,const char *needle, int *end_name)
-{
-	char	*str;
-	char	*sub;
-	size_t	i;
-	size_t	j;
-	
-	str = (char*)haystack;
-	sub = (char*)needle;
-	i = 0;
-	if (*sub == 0)
-		return (str);
-	while (str[i] != '\0')
-	{
-		j = 0;
-		while (str[i + j] == sub[j] && (i + j) < strlen(str))
-		{
-			j++;
-			if (sub[j] == '\0')
-			{
-				*end_name = i;
-				return (str + i + j);
-			}
-		}
-		i++;
-	}
-	return (NULL);
 }
