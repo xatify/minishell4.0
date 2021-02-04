@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 10:21:32 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/28 16:46:44 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/04 10:54:04 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void    sig_int_handler(int signum)
 {
-    
+
     if (g_pid > 0)
     {
         g_exit_status = 130;

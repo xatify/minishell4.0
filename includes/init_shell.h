@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 09:57:53 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/03 08:53:09 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/04 09:31:28 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** initialise the shell
 */
 
-t_data	*start_shell(int argc, char **argv, char **envp);
+t_data	*start_shell(int argc, char **argv, char **envp, char **holder);
 void 	show_prompt(t_data *data);
 void    handl_signals_exit_status(t_data *data);
 void    set_input_cmd(t_data *data, char **holder);

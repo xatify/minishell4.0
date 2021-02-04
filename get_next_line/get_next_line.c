@@ -6,11 +6,12 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 11:51:27 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/18 09:03:21 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/04 11:46:24 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+//#include <stdio.h>
 
 void		ft_bzero(void *str, size_t n)
 {
@@ -58,6 +59,7 @@ static int	handle_rest(char **tmp, char **line, char **buff, ssize_t b_size)
 	}
 	else
 	{
+		//printf("gnl ret = %d\n", (int)b_size);
 		free(*buff);
 		free(*tmp);
 		return (-1);
@@ -88,6 +90,7 @@ int			get_next_line(int fd, char **line)
 		return (handle_rest(&tmp, line, &buff, 1));
 	while ((b_size = read(fd, buff, BUFFER_SIZE)) >= 0)
 	{
+		//printf("gnl ret = %d\n", (int)b_size);
 		buff[b_size] = '\0';
 		if (check_buff(buff) >= 0)
 		{

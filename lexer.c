@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 07:33:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/03 08:44:52 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/04 09:42:41 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int     handle_single_quote(t_list **stack, char **input_cmd)
 {
     bool second_quote;
-    
+
     second_quote = 0;
     while (**input_cmd)
     {

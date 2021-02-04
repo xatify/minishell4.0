@@ -6,19 +6,21 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:01:58 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/01 17:48:18 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/03 18:04:18 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <sys/stat.h>
 
 int     pwd(t_data *data)
 {
     char        *cwd;
     t_env_var   *var_env;
-    
+
     cwd = NULL;
     cwd = getcwd(cwd, 0);
+
     if (cwd)
     {
         ft_putstr_fd(cwd, 1);

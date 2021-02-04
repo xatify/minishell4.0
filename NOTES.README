@@ -1,9 +1,9 @@
 
 !! steps
 
-+ 1: get input
+- 1: get input
     + must handle when the input is empty
-    + get_next is integrated successfully but needs to not recompiled
+    - get_next is integrated successfully but needs to not recompiled
 
 + 2: tokenizing the input
     + must handle tokens that have metacharcters inside them
@@ -25,10 +25,11 @@
     + multiple redirections of the same type must creat the first ones  if they don't
         exist and only redirect from or to the last one.
 
-+ 6: implement built-in
+- 6: implement built-in
     + modification of builtins prototypes to accepts array of arguments not a linked list of arguments
-    + 6-1: echo with option -n
+    - 6-1: echo with option -n
         + segfault if no argument is given
+        - echo segfault no args
     + 6-2: cd with only a relative and absolute path
         + $PWD  must change
         + $OLDPWD must change
@@ -50,7 +51,7 @@
         + !!!!!must free everything before exiting
         + must be tested with diffrent exit status
         + exit errors in tests.txt
-        
+
 
 + 5: shell expansions
     + $! and $VAR of the command before performing redirection
@@ -78,7 +79,8 @@
     + THEY SHOULD WORK BEFORE ANY REDIRECTIONS SPECIFIED BY THE command
     + duplicating the stdout if it's the last cmd and no outputfile is given
 
-+ 9: redirections
+- 9: redirections
+    - refacoring the redirections linked list to be one
     + !! pipelining is performed before any redirections specified by the command
     + should handle the case if open returns -1
     + the first of (> or >>) define the output:
@@ -90,6 +92,7 @@
         + error ls -la | grep "keddib" | > a
     + redirection <
     + redirecting >>
+    - error ">> sp cat < sp"
 
 + 10: collect the exit status
     + $? of an executed cmd is the value returned by WAITPID
@@ -99,7 +102,7 @@
     + if a command fails because of an error during (expansion or redirection) $? > 0
 
 
-+ 11: handling signals
+- 11: handling signals
     ?? https://stackoverflow.com/questions/42563400/hide-c-pressing-ctrl-c-in-c
     + CTRL-D
         + if no input is given minishell should exit
@@ -113,7 +116,7 @@
 - 13: norme
 
 - 13: check for leaks
-    + error 2 in tests.txt is causing memory leaks and unavailable resources for fork ... 
+    + error 2 in tests.txt is causing memory leaks and unavailable resources for fork ...
 
 - 14 : testing
 
