@@ -6,32 +6,25 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:27:29 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/03 08:46:43 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/05 08:23:19 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "includes/minishell.h"
 
-int     parse_redirection(t_list **tokens, t_command *command, int redirection)
+int     parse_redirection(t_list **tokens, t_command *command, int stream)
 {
-    t_list        **streams;
-    t_token       *token;
+    t_token         *token;
+    t_redirection   *redirection;
 
-    
-    if (redirection == OUTPUT)
-        streams = &(command->outfiles);
-    else if (redirection == INPUT)
-        streams = &(command->infiles);
-    else
-        streams = &(command->append_outfiles);
     del_token_head(tokens);
     token = (t_token *)((*tokens)->content);
     if ((*tokens) && token->id >= WORD)
     {
-        ft_lstadd_back(streams, ft_lstnew(ft_strdup(token->tkn)));
+        redirection = new_redirection(token->tkn, stream);
+        ft_lstadd_back(&(command->redirections), ft_lstnew(redirection));
         del_token_head(tokens);
-        command->output_stream = redirection;
         return (1);
     }
     return (0);
@@ -39,10 +32,10 @@ int     parse_redirection(t_list **tokens, t_command *command, int redirection)
 
 int     parse_name_and_args(t_list **tokens, t_command *command)
 {
-    char *token;
-    
-    token = ((t_token *)((*tokens)->content))->tkn;
-    ft_lstadd_back(&(command->name_and_args), ft_lstnew(ft_strdup(token)));
+    char *namearg;
+
+    namearg = ft_strdup(((t_token *)((*tokens)->content))->tkn);
+    ft_lstadd_back(&(command->name_and_args), ft_lstnew(namearg));
     del_token_head(tokens);
     return (1);
 }

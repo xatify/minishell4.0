@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/03 14:08:04 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/05 11:25:30 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,10 @@ void    execute_simple_cmd(t_data *data, t_pipeline *pipeline)
 	if ((cmd = (t_command *)(pipeline->cmds->content)))
 	{
 		if (!simple_cmd_file_redirection(cmd, save_std, tmp_fd))
+		{
+			data->exit_status = 1;
 			return;
+		}
 		name_and_args = cmd->name_and_args->content;
 		if (name_and_args[0])
 		{
@@ -102,13 +105,6 @@ void    execute_simple_cmd(t_data *data, t_pipeline *pipeline)
 		}
 	}
 	set_to_std(save_std);
-}
-
-void    set_fds(int save_std[2], int tmp_fd[2])
-{
-	save_std[0] = dup(STDIN);
-	save_std[1] = dup(STDOUT);
-	copy_fds(tmp_fd, save_std);
 }
 
 void     return_status(int status, t_data *data)
@@ -153,7 +149,10 @@ void    execute_pipeline(t_data *data, t_list *cmds)
 	{
 		cmd = (t_command *)(cmds->content);
 		if (!pipeline_stream(cmd, save_std, tmp_fd, cmds))
+		{
+			cmds = cmds->next;
 			continue;
+		}
 		execute_pipe(cmd, data);
 		cmds = cmds->next;
 	}
@@ -179,6 +178,8 @@ void    execute(t_data *data)
 			else
 				execute_simple_cmd(data, pipeline);
 		}
+		else
+			data->exit_status = 1;
 		pipelines = pipelines->next;
 	}
 }

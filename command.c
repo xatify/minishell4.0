@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmdslistmethodes.c                                 :+:      :+:    :+:   */
+/*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:17:15 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/01 16:31:13 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/04 12:06:22 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,17 @@ t_command    *new_cmd(void)
     if (!(cmd = (t_command *)malloc(sizeof(t_command))))
         return (NULL);
     ft_memset(cmd, 0, sizeof(t_command));
-    cmd->output_stream = -1;
     return (cmd);
 }
 
 void                free_command(void *cmd)
 {
     t_command *command;
-    
+
     if (!cmd)
         return;
     command = (t_command *)cmd;
     ft_lstclear(&(command->name_and_args), free);
-    ft_lstclear(&(command->infiles), free);
-    ft_lstclear(&(command->outfiles), free);
-    ft_lstclear(&(command->append_outfiles), free);
+    ft_lstclear(&(command->redirections), free_redirections);
     free(command);
 }
