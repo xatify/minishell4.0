@@ -1,1 +1,0 @@
-ls -al ; echo hello | grep h > out
