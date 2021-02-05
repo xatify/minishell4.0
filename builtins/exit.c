@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:25:50 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/02 11:40:55 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/03 10:54:24 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-bool is_arg_alpha(char *s)
+BOOL is_arg_alpha(char *s)
 {
     int i;
-    
+
     i = 0;
     while (s[i])
     {

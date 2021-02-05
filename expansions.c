@@ -3,21 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/02/04 09:40:56 by abbouzid         ###   ########.fr       */
+=======
+/*   Updated: 2021/02/03 10:54:24 by keddib           ###   ########.fr       */
+>>>>>>> 65eda051e760484fea8635a4a891b9d10c268ba8
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/minishell.h"
 
-bool    is_single_quote_token(char *token)
+BOOL    is_single_quote_token(char *token)
 {
     return ((token[0] == '\'')? TRUE: FALSE);
 }
 
-bool    is_double_quote_token(char *token)
+BOOL    is_double_quote_token(char *token)
 {
     return ((token[0] == '"')? TRUE: FALSE);
 }

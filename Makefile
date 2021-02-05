@@ -6,7 +6,7 @@
 #    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/02/04 10:22:03 by abbouzid         ###   ########.fr        #
+#    Updated: 2021/02/05 10:57:34 by abbouzid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ BUILTINS		= builtins
 SRCS			= minishell.c						\
 				$(STR)/strings.c					\
 				$(STR)/strings_2.c					\
+				$(STR)/strings_3.c					\
 				$(STR)/ft_split.c					\
 				$(STR)/ft_strjoin.c					\
 				$(STR)/ft_putstr_fd.c				\
@@ -66,8 +67,8 @@ clean:
 	rm $(NAME)
 
 fclean: clean
-	rm -rf *.dSYM minishell
+	rm -rf *.o gnl.a *.dSYM
 
-re: clean all
+re: fclean all
 
 .PHONY: clean re all

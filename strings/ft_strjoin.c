@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:57:09 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/14 09:06:18 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/03 12:02:55 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int		ft_strlen(char *str)
 {
-	int 	len;
+	int	len;
 
 	len = 0;
 	if (str == 0)
 		return (len);
-	while(*str)
+	while (*str)
 	{
 		len++;
 		str++;

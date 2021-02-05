@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:57:13 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/02 15:07:50 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/03 10:54:24 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void      show_vars(t_data *data)
     free_argv(vars);
 }
 
-bool    is_unset_var(t_list **unset_vars, char *name)
+BOOL    is_unset_var(t_list **unset_vars, char *name)
 {
     t_list *tmp;
 
@@ -48,7 +48,7 @@ int             append_env_var(t_list **vars, char *var_name, char *new_value)
 {
     t_env_var  *var;
     char    *tmp;
-    
+
     var = search_var(vars, var_name);
     if (var)
     {
@@ -72,7 +72,7 @@ void        remove_unset_var(t_list **unset_vars, char *name)
 {
     t_list      *tmp;
     t_list      *last;
-    
+
     last = NULL;
     tmp = *(unset_vars);
     while (tmp)
@@ -106,7 +106,7 @@ int     export(char   **args, t_data *data)
     int     index;
     int     end;
     int     return_value;
-    
+
     return_value = 0;
     index = 1;
     end = -1;

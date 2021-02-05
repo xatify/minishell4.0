@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:45:21 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/29 08:57:12 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/03 10:54:24 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int     echo(char   **args)
 {
-    bool    new_line;
+    BOOL    new_line;
     int     i;
     int     argsnum;
 

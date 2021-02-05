@@ -6,12 +6,12 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 09:57:53 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/04 09:31:28 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/05 11:00:27 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INTI_SHELL_H
-# define INTI_SHELL_H
+#ifndef INIT_SHELL_H
+# define INIT_SHELL_H
 
 /*
 ** initialise the shell
