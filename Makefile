@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
+#    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/02/05 10:57:34 by abbouzid         ###   ########.fr        #
+#    Updated: 2021/02/05 16:32:07 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRCS			= minishell.c						\
 				$(BUILTINS)/env.c					\
 				$(BUILTINS)/exit.c					\
 				$(BUILTINS)/export.c				\
+				$(BUILTINS)/export_utils.c			\
 				$(BUILTINS)/pwd.c					\
 				$(BUILTINS)/unset.c					\
 				sort.c								\

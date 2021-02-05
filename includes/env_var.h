@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:16:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/03 10:45:15 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/05 16:33:08 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,9 @@ void				free_env_var(void *var);
 void				fill_envp(char **envp_i, t_env_var *var);
 char				**built_envp(t_list *vars);
 void				del_env_var(t_list **vars, char *name);
+void				show_vars(t_data *data);
+BOOL				is_unset_var(t_list **unset_vars, char *name);
+int					append_env_var(t_list **vars, char *var_name,
+				char *new_value);
 
 #endif
