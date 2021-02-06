@@ -6,7 +6,7 @@
 #    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/02/06 09:44:02 by keddib           ###   ########.fr        #
+#    Updated: 2021/02/06 18:26:03 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,18 @@ M_UTILS			= minishell_utils
 lST_M			= lst_methodes
 
 STACK			= stack
+
+PARSER			= parsing
+
+S_SH			= start_shell
+
+PP				= pipe
+
+EXPN			= expansion
+
+EXCT			= execution
+
+LEXER			= lexer
 
 SRCS			= minishell.c						\
 				$(STR)/strings.c					\
@@ -46,13 +58,21 @@ SRCS			= minishell.c						\
 				$(lST_M)/lst_methodes_2.c			\
 				$(STACK)/stack.c					\
 				$(STACK)/stack_2.c					\
-				lexer.c								\
-				parser.c							\
-				expansions.c						\
+				$(PARSER)/parser.c					\
+				$(S_SH)/start_shell.c				\
+				$(S_SH)/new_input.c					\
+				$(PP)/piping.c						\
+				$(PP)/piping_2.c					\
+				$(EXPN)/expansions.c				\
+				$(EXPN)/expan_quoted.c				\
+				$(EXPN)/expan_unquoted.c			\
+				$(EXPN)/expan_special.c				\
+				$(EXPN)/expan_token.c				\
+				$(EXCT)/execute_cmd.c				\
+				$(EXCT)/execute_pipeline.c			\
+				$(LEXER)/lexer.c					\
+				$(LEXER)/tokenizer.c				\
 				env_var.c							\
-				start_shell.c						\
-				execution.c							\
-				piping.c							\
 				$(BUILTINS)/builtin_methodes.c		\
 				$(BUILTINS)/cd.c					\
 				$(BUILTINS)/echo.c					\
