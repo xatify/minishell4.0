@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
+#    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/02/05 16:32:07 by keddib           ###   ########.fr        #
+#    Updated: 2021/02/06 09:23:21 by abbouzid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,7 @@ gnl.a:
 	$(MAKE) -C get_next_line
 
 $(NAME) : $(SRCS) gnl.a
+	$(MAKE) -C get_next_line
 	$(GCC) -g  -o $(NAME) $(SRCS) gnl.a
 
 clean:

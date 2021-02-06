@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:28:43 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/04 10:45:50 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/05 18:18:48 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_data  *start_shell(int argc, char **argv, char **envp, char **holder)
 
 	argc = 0;
 	argv = NULL;
+	g_reading = 0;
 	fstat(STDIN, &st);
 	if (!(data = (t_data *)malloc(sizeof(t_data))))
 		return (NULL);

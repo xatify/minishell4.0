@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 10:21:32 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/04 10:54:04 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/06 08:34:37 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void    sig_quit_handler(int signum)
     else
     {
         g_exit_status = 1;
-        ft_putstr_fd("\r", 1);
-        ft_putstr_fd(PROMPT, 1);
+        ft_putstr_fd("\b\b", 1);
+        //ft_putstr_fd(PROMPT, 1);
     }
     (void)signum;
     return;

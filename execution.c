@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/05 11:25:30 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/06 09:15:54 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void     return_status(int status, t_data *data)
 		data->exit_status = status;
 }
 
-void    execute_pipe(t_command *cmd, t_data *data)
+void    execute_pipe(t_command *cmd, t_data *data, int *status)
 {
 	char                *name_and_args;
 
@@ -132,6 +132,8 @@ void    execute_pipe(t_command *cmd, t_data *data)
 				execute_child(data, cmd);
 			else if (g_pid < 0)
 				data->exit_status = 1;
+			else
+				waitpid(g_pid, status, 0);
 		}
 	}
 }
@@ -153,11 +155,11 @@ void    execute_pipeline(t_data *data, t_list *cmds)
 			cmds = cmds->next;
 			continue;
 		}
-		execute_pipe(cmd, data);
+		execute_pipe(cmd, data, &status);
 		cmds = cmds->next;
 	}
 	set_to_std(save_std);
-	waitpid(g_pid, &status, 0);
+	//waitpid(g_pid, &status, 0);
 	g_pid = -1;
 	return_status(status, data);
 }

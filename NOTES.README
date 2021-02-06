@@ -25,11 +25,11 @@
     + multiple redirections of the same type must creat the first ones  if they don't
         exist and only redirect from or to the last one.
 
-- 6: implement built-in
++ 6: implement built-in
     + modification of builtins prototypes to accepts array of arguments not a linked list of arguments
-    - 6-1: echo with option -n
+    + 6-1: echo with option -n
         + segfault if no argument is given
-        - echo segfault no args
+        + echo segfault no args
     + 6-2: cd with only a relative and absolute path
         + $PWD  must change
         + $OLDPWD must change
@@ -62,7 +62,7 @@
     + multiple $VAR inside the same token
     + breaking the the token retrieved from env_var if it has ' ' (space) inside of it (see error 4 in tests.txt)
 
-+ 7: Execute the commands list
+- 7: Execute the commands list
     + build the args array from cmd->arguments !! needs testing
     + non builtin simple command working ok
     + built ins need testing ;
@@ -72,15 +72,17 @@
         the execution will not take place
     + segfault while running "make"
     + only "cd" builtin will run in a seperate process if it is inside a pipeline
-
+    + error searching  the absolute path of a file (error if the file is symlink)
+	+ zombie processes fixed
+    -
 
 + 8: piplining:
     + the priority is for redirection before the pipe ???
     + THEY SHOULD WORK BEFORE ANY REDIRECTIONS SPECIFIED BY THE command
     + duplicating the stdout if it's the last cmd and no outputfile is given
 
-- 9: redirections
-    - refacoring the redirections linked list to be one
++ 9: redirections
+    + refacoring the redirections linked list to be one
     + !! pipelining is performed before any redirections specified by the command
     + should handle the case if open returns -1
     + the first of (> or >>) define the output:
@@ -92,7 +94,7 @@
         + error ls -la | grep "keddib" | > a
     + redirection <
     + redirecting >>
-    - error ">> sp cat < sp"
+    + error ">> sp cat < sp"
 
 + 10: collect the exit status
     + $? of an executed cmd is the value returned by WAITPID
