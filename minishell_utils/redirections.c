@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 09:19:07 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/05 09:34:34 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/05 18:02:06 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
-t_redirection       *new_redirection(char *file, int type)
+t_redirection		*new_redirection(char *file, int type)
 {
-	t_redirection *redirection;
+	t_redirection	*redirection;
 
 	if (!(redirection = (t_redirection *)malloc(sizeof(t_redirection))))
 		return (NULL);
@@ -23,7 +23,7 @@ t_redirection       *new_redirection(char *file, int type)
 	return (redirection);
 }
 
-void                free_redirections(void *redirection)
+void				free_redirections(void *redirection)
 {
 	if (!redirection)
 		return;
@@ -31,7 +31,7 @@ void                free_redirections(void *redirection)
 	free(redirection);
 }
 
-int 	open_file(t_redirection *redirection)
+int					open_file(t_redirection *redirection)
 {
 	int 	fd;
 
@@ -44,7 +44,7 @@ int 	open_file(t_redirection *redirection)
 	return (fd);
 }
 
-void	set_streaming_fds(int *tmp_fd, int fd, int redirection_type)
+void				set_streaming_fds(int *tmp_fd, int fd, int redirection_type)
 {
 	if (redirection_type == INPUT)
 	{
@@ -60,7 +60,7 @@ void	set_streaming_fds(int *tmp_fd, int fd, int redirection_type)
 	}
 }
 
-int     redirect_std(t_command *cmd, int *tmp_fd)
+int					redirect_std(t_command *cmd, int *tmp_fd)
 {
 	int				fd;
 	t_list			*tmp;

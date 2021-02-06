@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   variables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 09:12:56 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/01 14:41:53 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/05 18:43:45 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
 char	*remove_quotes(char *value)
 {
@@ -34,32 +34,42 @@ int					get_vars_len(t_list *env_vars, t_list *unset_vars)
 	return (ft_lstsize(env_vars) + ft_lstsize(unset_vars));
 }
 
+int			get_env_vars(t_list *env_vars, char **holder)
+{
+	int		i;
+	char	*first;
+	char	*second;
+
+	i = 0;
+	while (env_vars != NULL)
+	{
+		first = ft_strjoin(((t_env_var *)(env_vars->content))->name, "=\"");
+		second = ft_strjoin(((t_env_var *)(env_vars->content))->value, "\"");
+		if (!(holder[i] = ft_strjoin(first, second)))
+		{
+			free_argv(holder);
+			return (-1);
+		}
+		env_vars = env_vars->next;
+		free(first);
+		free(second);
+		i++;
+	}
+	return (i);
+}
+
 
 char 				**get_all_vars(t_list *env_vars, t_list *unset_vars)
 {
 	int		len;
 	int		i;
 	char	**holder;
-	char	*first;
-	char	*second;
 
 	len = get_vars_len(env_vars, unset_vars);
 	if (!(holder = malloc((len + 1) * sizeof(char *))))
 		return (NULL);
-	i = 0;
-	while (env_vars != NULL)
-	{
-		first = ft_strjoin(((t_env_var *)(env_vars->content))->name, "=\"");
-		second = ft_strjoin(((t_env_var *)(env_vars->content))->value, "\"");
-		if (!(holder[i++] = ft_strjoin(first, second)))
-		{
-			free_argv(holder);
-			return (NULL);
-		}
-		env_vars = env_vars->next;
-		free(first);
-		free(second);
-	}
+	if ((i = get_env_vars(env_vars, holder)) == -1)
+		return (NULL);
 	while (unset_vars != NULL)
 	{
 		if (!(holder[i++] = ft_strdup(unset_vars->content)))

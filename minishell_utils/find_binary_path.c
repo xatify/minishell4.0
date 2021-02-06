@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   find_binary_path.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 14:59:19 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/05 15:37:41 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/06 09:38:27 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
 
-char    *search_files_inpath(char *path, char *cmd_name)
+char	*search_files_inpath(char *path, char *cmd_name)
 {
-	struct  dirent  *dir;
-	DIR             *d;
+	struct  dirent	*dir;
+	DIR				*d;
 
 	d = opendir(path);
 	if (d)
@@ -33,11 +33,11 @@ char    *search_files_inpath(char *path, char *cmd_name)
 	return(NULL);
 }
 
-char    *absolute_path(char *cmd_name, char *path_env)
+char	*absolute_path(char *cmd_name, char *path_env)
 {
-	char    **paths;
-	char    *final_path;
-	int     i;
+	char	**paths;
+	char	*final_path;
+	int		i;
 
 	if (ft_strchr(cmd_name, '/'))
 		return cmd_name;
@@ -49,7 +49,7 @@ char    *absolute_path(char *cmd_name, char *path_env)
 		{
 			paths[i]= ft_strjoin(paths[i], "/");
 			final_path= ft_strjoin(paths[i], cmd_name);
-			//free array
+			free_argv(paths);
 			return (final_path);
 		}
 		i++;
@@ -59,8 +59,8 @@ char    *absolute_path(char *cmd_name, char *path_env)
 
 char    *find_binary_file(t_data *data, char *cmd_name)
 {
-	char    *bins_dirs;
-	char    *path;
+	char	*bins_dirs;
+	char	*path;
 
 	bins_dirs = get_bins_path(data);
 	if (!bins_dirs)
@@ -69,9 +69,9 @@ char    *find_binary_file(t_data *data, char *cmd_name)
 	return (path);
 }
 
-char    *get_bins_path(t_data *data)
+char	*get_bins_path(t_data *data)
 {
-	t_env_var      *bins_path;
+	t_env_var	*bins_path;
 
 	bins_path = search_var(&(data->env_vars), "PATH");
 	if (!bins_path)

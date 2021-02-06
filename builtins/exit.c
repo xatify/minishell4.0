@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:25:50 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/06 09:23:00 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/05 17:30:42 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,8 @@ int		exit_(t_data *data, char **argv)
 	if (argv[1])
 	{
 		status = ft_atoi(argv[1], &ex);
-		if (ex == 1 || is_arg_alpha(argv[1]))
-		{
+		if ((ex == 1 || is_arg_alpha(argv[1])) && (status = 255))
 			ft_putstr_fd("exit\nnumeric argument required\n", 1);
-			status = 255;
-		}
 	}
 	ft_lstclear(&(data->env_vars), free_env_var);
 	ft_lstclear(&(data->unset_vars), free);

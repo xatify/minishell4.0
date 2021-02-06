@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
+#    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/02/06 09:23:21 by abbouzid         ###   ########.fr        #
+#    Updated: 2021/02/06 09:29:58 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,12 @@ STR				= strings
 
 BUILTINS		= builtins
 
+M_UTILS			= minishell_utils
+
+lST_M			= lst_methodes
+
+STACK			= stack
+
 SRCS			= minishell.c						\
 				$(STR)/strings.c					\
 				$(STR)/strings_2.c					\
@@ -27,19 +33,26 @@ SRCS			= minishell.c						\
 				$(STR)/ft_putstr_fd.c				\
 				$(STR)/ft_itoa.c					\
 				$(STR)/ft_strrchr.c					\
+				$(M_UTILS)/command.c				\
+				$(M_UTILS)/find_binary_path.c		\
+				$(M_UTILS)/arguments_array.c		\
+				$(M_UTILS)/pipeline.c				\
+				$(M_UTILS)/redirections.c			\
+				$(M_UTILS)/signals.c				\
+				$(M_UTILS)/sort.c					\
+				$(M_UTILS)/tokens.c					\
+				$(lST_M)/lst_methodes.c				\
+				$(lST_M)/lst_methodes_2.c			\
+				$(STACK)/stack.c					\
+				$(STACK)/stack_2.c					\
 				lexer.c								\
-				stack.c								\
 				parser.c							\
-				command.c							\
-				pipeline.c							\
-				tokens.c							\
 				expansions.c						\
 				env_var.c							\
 				start_shell.c						\
 				execution.c							\
-				arguments_array.c					\
-				find_binary_path.c					\
 				variables.c							\
+				piping.c							\
 				$(BUILTINS)/builtin_methodes.c		\
 				$(BUILTINS)/cd.c					\
 				$(BUILTINS)/echo.c					\
@@ -48,12 +61,7 @@ SRCS			= minishell.c						\
 				$(BUILTINS)/export.c				\
 				$(BUILTINS)/export_utils.c			\
 				$(BUILTINS)/pwd.c					\
-				$(BUILTINS)/unset.c					\
-				sort.c								\
-				redirections.c						\
-				signals.c							\
-				piping.c							\
-				lst_methodes.c
+				$(BUILTINS)/unset.c
 
 
 all:	$(NAME)
