@@ -6,7 +6,7 @@
 #    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/02/06 09:29:58 by keddib           ###   ########.fr        #
+#    Updated: 2021/02/06 09:44:02 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRCS			= minishell.c						\
 				$(M_UTILS)/signals.c				\
 				$(M_UTILS)/sort.c					\
 				$(M_UTILS)/tokens.c					\
+				$(M_UTILS)/variables.c				\
 				$(lST_M)/lst_methodes.c				\
 				$(lST_M)/lst_methodes_2.c			\
 				$(STACK)/stack.c					\
@@ -51,7 +52,6 @@ SRCS			= minishell.c						\
 				env_var.c							\
 				start_shell.c						\
 				execution.c							\
-				variables.c							\
 				piping.c							\
 				$(BUILTINS)/builtin_methodes.c		\
 				$(BUILTINS)/cd.c					\

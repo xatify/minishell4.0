@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:28:43 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/06 09:41:22 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/06 11:23:06 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_data  *start_shell(int argc, char **argv, char **envp, char **holder)
 	data->env_vars = build_env_vars(envp);
 	if (!data->env_vars)
 	{
-		free(data);
+		free_data(data);
 		exit(1);
 	}
 	*holder = ft_strdup("");
@@ -48,6 +48,7 @@ void    free_data(t_data *data)
 	ft_lstclear(&(data->parse_tree), free_pipeline);
 	if (data->input_cmd)
 		free(data->input_cmd);
+	free(data);
 }
 
 void    set_input_cmd(t_data *data, char **holder)
@@ -76,7 +77,7 @@ void    new_input(t_data *data, char **holder)
 
 	data->input_cmd = NULL;
 	if (**holder == '\0' && !data->input_from_file)
-			ft_putstr_fd(PROMPT, 1);
+		ft_putstr_fd(PROMPT, 1);
 	signal(SIGINT, sig_int_handler);
 	signal(SIGQUIT, sig_quit_handler);
 	ret = get_next_line(0, &(data->input_cmd));
@@ -99,8 +100,12 @@ void    new_input(t_data *data, char **holder)
 		if (!data->input_from_file)
 			ft_putstr_fd("exit\n", 1);
 		free_data(data);
+
 		exit(0);
 	}
 	else if (!data->input_from_file)
+	{
 		*holder = ft_strdup(data->input_cmd);
+		//free(data->input_cmd);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/06 09:37:59 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/06 11:29:22 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int     execute_built_in(char built_in, t_data *data, t_command *cmd)
 	int     ret;
 	char    **argv;
 
-argv = built_argv(cmd);
+	argv = built_argv(cmd);
 	ret = 0;
 	if (built_in == 'c')
 		ret = cd(argv[1], data);
@@ -33,6 +33,7 @@ argv = built_argv(cmd);
 		ret = pwd(data);
 	else
 		ret = exit_(data, argv);
+	free_argv(argv);
 	return (ret);
 }
 
@@ -119,6 +120,8 @@ void    execute_pipe(t_command *cmd, t_data *data, int *status)
 {
 	char                *name_and_args;
 
+	if (!cmd->name_and_args)
+		return ;
 	name_and_args = cmd->name_and_args->content;
 	if (name_and_args[0])
 	{

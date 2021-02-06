@@ -6,7 +6,7 @@
 #    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/18 09:05:19 by abbouzid          #+#    #+#              #
-#    Updated: 2021/02/03 10:38:41 by keddib           ###   ########.fr        #
+#    Updated: 2021/02/06 10:52:45 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ OBJS		= $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(SRCS)
-	gcc -D BUFFER_SIZE=$(BUFSIZE) -c $(SRCS)
+	gcc -g -D BUFFER_SIZE=$(BUFSIZE) -c $(SRCS)
 	ar rs $(NAME) $(OBJS)
 	rm -rf *.o
 
