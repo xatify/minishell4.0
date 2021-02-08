@@ -6,7 +6,7 @@
 #    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/02/08 18:30:12 by keddib           ###   ########.fr        #
+#    Updated: 2021/02/08 18:52:29 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,10 +90,10 @@ SRCS			= minishell.c						\
 
 all:	$(NAME)
 
-gnl.a:
+get_next_line/gnl.a:
 	$(MAKE) -C get_next_line
 
-$(NAME) : $(SRCS) gnl.a
+$(NAME) : $(SRCS) get_next_line/gnl.a
 	$(MAKE) -C get_next_line
 	$(GCC) -g  -o $(NAME) $(SRCS) get_next_line/gnl.a
 
