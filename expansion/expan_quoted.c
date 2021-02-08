@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansions_2.c                                     :+:      :+:    :+:   */
+/*   expan_quoted.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:08:35 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/06 17:16:31 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 15:33:54 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void		handle_dq_back_slack(t_list **stack, char **token, int *first_back_slash)
+void		handle_dq_back_slack(t_list **stack, char **token, int *f_b_slash)
 {
-	if (!(*first_back_slash))
+	if (!(*f_b_slash))
 	{
-		*first_back_slash = 1;
+		*f_b_slash = 1;
 		push(stack, **token);
 		((t_stack *)((*stack)->content))->special = 1;
 	}
@@ -56,24 +56,24 @@ int			expand_double_quotes(t_list **stack, char **token, t_data *data)
 		if (**token != '$' && **token != '\\')
 		{
 			if (handle_dq_non_special(stack, token))
-				break;
+				break ;
 		}
 		else if (**token == '\\')
 			handle_dq_back_slack(stack, token, &first_back_slash);
 		else if (**token == '$')
 		{
 			if (handle_dq_dollar_sign(stack, token, data))
-				continue;
+				continue ;
 		}
 		(*token)++;
 	}
-	return(1);
+	return (1);
 }
 
 int			expand_single_quotes(t_list **stack, char **token)
 {
 	pop(stack);
-	while(**token != '\'')
+	while (**token != '\'')
 		push(stack, *(*token)++);
 	(*token)++;
 	return (1);

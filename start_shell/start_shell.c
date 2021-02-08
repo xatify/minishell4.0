@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:28:43 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/06 15:22:56 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 17:58:30 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		free_data(t_data *data)
 t_data		*start_shell(int argc, char **argv, char **envp, char **holder)
 {
 	t_data		*data;
-	struct		stat st;
+	struct stat	st;
 
 	argc = 0;
 	argv = NULL;

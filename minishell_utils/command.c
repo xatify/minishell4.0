@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:17:15 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/05 17:47:48 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 16:55:53 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void			free_command(void *cmd)
 	t_command	*command;
 
 	if (!cmd)
-		return;
+		return ;
 	command = (t_command *)cmd;
 	ft_lstclear(&(command->name_and_args), free);
 	ft_lstclear(&(command->redirections), free_redirections);

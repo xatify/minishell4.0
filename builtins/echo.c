@@ -6,13 +6,13 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:45:21 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/05 14:29:26 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 15:19:45 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		echo(char   **args)
+int		echo(char **args)
 {
 	BOOL	new_line;
 	int		i;

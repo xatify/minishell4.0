@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansions_5.c                                     :+:      :+:    :+:   */
+/*   expan_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:11:03 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/06 17:16:40 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 15:35:53 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 BOOL		is_single_quote_token(char *token)
 {
-	return ((token[0] == '\'')? TRUE: FALSE);
+	return ((token[0] == '\'') ? TRUE : FALSE);
 }
 
 BOOL		is_double_quote_token(char *token)
 {
-	return ((token[0] == '"')? TRUE: FALSE);
+	return ((token[0] == '"') ? TRUE : FALSE);
 }
 
 void		expand_new_tokens(char *tkn, t_list **p_stack, t_list **new_args)
@@ -42,7 +42,8 @@ void		expand_new_tokens(char *tkn, t_list **p_stack, t_list **new_args)
 	free_argv(splits);
 }
 
-void		expand_token_list(t_list *list, t_env_var *env_var, t_list **p_stack)
+void		expand_token_list(t_list *list, t_env_var *env_var,
+								t_list **p_stack)
 {
 	t_list		*new_args;
 	t_list		*tmp;
@@ -57,7 +58,6 @@ void		expand_token_list(t_list *list, t_env_var *env_var, t_list **p_stack)
 			list->next = new_args;
 			ft_lstlast(new_args)->next = tmp;
 		}
-
 	}
 	else
 		push_str_to_stack(p_stack, env_var->value);

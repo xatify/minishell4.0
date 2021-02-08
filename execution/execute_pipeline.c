@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:25:28 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/06 17:25:43 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 15:31:15 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	execute_pipe(t_command *cmd, t_data *data, int *status)
 	}
 }
 
-
 void	execute_pipeline(t_data *data, t_list *cmds)
 {
 	int			tmp_fd[2];
@@ -66,7 +65,6 @@ void	execute_pipeline(t_data *data, t_list *cmds)
 		cmds = cmds->next;
 	}
 	set_to_std(save_std);
-	//waitpid(g_pid, &status, 0);
 	g_pid = -1;
 	return_status(status, data);
 }

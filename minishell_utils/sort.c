@@ -6,13 +6,13 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 09:12:22 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/05 18:02:31 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 16:58:29 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		_len(char **strings)
+int		count_len(char **strings)
 {
 	int len;
 
@@ -29,14 +29,14 @@ void	sort(char **strings)
 	char	*swap;
 	int		len;
 
-	len = _len(strings);
+	len = count_len(strings);
 	i = 1;
 	while (i < len)
 	{
 		j = i;
-		while (j > 0 && ft_strcmp(strings[j-1], strings[j]) > 0)
+		while (j > 0 && ft_strcmp(strings[j - 1], strings[j]) > 0)
 		{
-			swap = strings[j-1];
+			swap = strings[j - 1];
 			strings[j - 1] = strings[j];
 			strings[j] = swap;
 			j--;

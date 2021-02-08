@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 14:59:19 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/06 09:38:27 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 17:52:26 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*search_files_inpath(char *path, char *cmd_name)
 {
-	struct  dirent	*dir;
+	struct dirent	*dir;
 	DIR				*d;
 
 	d = opendir(path);
@@ -30,34 +30,39 @@ char	*search_files_inpath(char *path, char *cmd_name)
 		}
 		closedir(d);
 	}
-	return(NULL);
+	return (NULL);
 }
 
 char	*absolute_path(char *cmd_name, char *path_env)
 {
-	char	**paths;
-	char	*final_path;
-	int		i;
+	char		**paths;
+	char		*final_path;
+	int			i;
+	struct stat	st;
 
 	if (ft_strchr(cmd_name, '/'))
-		return cmd_name;
+	{
+		if (stat(cmd_name, &st) == -1)
+			return (NULL);
+		return (cmd_name);
+	}
 	paths = ft_split(path_env, ':');
-	i  = 0;
+	i = 0;
 	while (paths[i])
 	{
 		if (search_files_inpath(paths[i], cmd_name) != NULL)
 		{
-			paths[i]= ft_strjoin(paths[i], "/");
-			final_path= ft_strjoin(paths[i], cmd_name);
+			paths[i] = ft_strjoin(paths[i], "/");
+			final_path = ft_strjoin(paths[i], cmd_name);
 			free_argv(paths);
 			return (final_path);
 		}
 		i++;
 	}
-	return NULL;
+	return (NULL);
 }
 
-char    *find_binary_file(t_data *data, char *cmd_name)
+char	*find_binary_file(t_data *data, char *cmd_name)
 {
 	char	*bins_dirs;
 	char	*path;

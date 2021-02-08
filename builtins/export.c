@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:57:13 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/05 17:20:01 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 15:24:54 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	remove_unset_var(t_list **unset_vars, char *name)
 				last->next = NULL;
 			free(tmp->content);
 			free(tmp);
-			return;
+			return ;
 		}
 		last = tmp;
 		tmp = tmp->next;
@@ -78,7 +78,8 @@ int		hundle_var(t_data *data, char *arg, char *n, char *v, int e)
 		{
 			if (!search_var(&(data->env_vars), n))
 				if (!is_unset_var(&(data->unset_vars), n))
-					ft_lstadd_back(&(data->unset_vars), ft_lstnew(ft_strdup(n)));
+					ft_lstadd_back(&(data->unset_vars),
+									ft_lstnew(ft_strdup(n)));
 		}
 		else
 		{
@@ -97,7 +98,7 @@ int		hundle_var(t_data *data, char *arg, char *n, char *v, int e)
 	return (0);
 }
 
-int		export(char   **args, t_data *data)
+int		export(char **args, t_data *data)
 {
 	char	*name;
 	char	*value;

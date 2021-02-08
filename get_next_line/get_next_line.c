@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 11:51:27 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/06 11:01:25 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 18:31:31 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,9 @@ int			get_next_line(int fd, char **line)
 		if (check_buff(buff) >= 0)
 		{
 			(*line) = ft_strjoin_(tmp, ft_substr(buff, 0, check_buff(buff)), 1);
-			//free(tmp);
 			tmp = ft_strdup_(buff + check_buff(buff) + 1);
 			if (tmp[0] == '\0')
-			{
-				free(tmp);
-				tmp = NULL;
-			}
+				free_tmp(&tmp);
 			free(buff);
 			return (1);
 		}

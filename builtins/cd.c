@@ -6,13 +6,15 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:29:16 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/05 14:22:41 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 15:22:29 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/* change corrent directory to path if path is not null otherwise to $HOME */
+/*
+**  change corrent directory to path if path is not null otherwise to $HOME
+*/
 
 int		hundle_removed_path(char *path, t_list **vars, t_data *data)
 {
@@ -41,7 +43,7 @@ void	hundle_exicted_path(t_data *data, char *pwd)
 		change_env_var(&(data->env_vars), "OLDPWD", pwd);
 	else
 	{
-		 if ((var_env = search_var(&(data->env_vars), "PWD")))
+		if ((var_env = search_var(&(data->env_vars), "PWD")))
 			change_env_var(&(data->env_vars), "OLDPWD", var_env->value);
 	}
 	free(pwd);
@@ -58,7 +60,7 @@ int		cd(char *path, t_data *data)
 
 	if ((var_env = search_var(&(data->env_vars), "HOME")))
 		dir = var_env->value;
-	dir = (path) ? path: dir;
+	dir = (path) ? path : dir;
 	pwd = getcwd(NULL, 0);
 	ret = chdir(dir);
 	dir = NULL;

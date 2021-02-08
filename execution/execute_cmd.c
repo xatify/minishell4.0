@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/06 17:26:06 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 15:29:45 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int		execute_built_in(char built_in, t_data *data, t_command *cmd)
 	return (ret);
 }
 
-
 int		execute_child(t_data *data, t_command *cmd)
 {
 	char	*path;
@@ -61,6 +60,10 @@ int		execute_child(t_data *data, t_command *cmd)
 	exit(126);
 }
 
+/*
+**	must check status ; in line 78 waitpid.
+*/
+
 int		execute_binary(t_data *data, t_command *cmd)
 {
 	int		status;
@@ -72,7 +75,7 @@ int		execute_binary(t_data *data, t_command *cmd)
 	}
 	else if (g_pid < 0)
 		return (1);
-	waitpid(g_pid, &status, 0); // must check status
+	waitpid(g_pid, &status, 0);
 	g_pid = -1;
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
@@ -93,7 +96,7 @@ void	execute_simple_cmd(t_data *data, t_pipeline *pipeline)
 		if (!simple_cmd_file_redirection(cmd, save_std, tmp_fd))
 		{
 			data->exit_status = 1;
-			return;
+			return ;
 		}
 		name_and_args = cmd->name_and_args->content;
 		if (name_and_args[0])

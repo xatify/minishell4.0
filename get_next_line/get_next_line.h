@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 15:38:30 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/18 09:01:57 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/08 18:34:01 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ char	*ft_strjoin_(char const *s1, char const *s2, int i);
 void	*ft_calloc(size_t count, size_t size);
 void	ft_bzero(void *str, size_t n);
 size_t	ft_strlen_(const char *str);
+void	free_tmp(char **tmp);
 
 #endif

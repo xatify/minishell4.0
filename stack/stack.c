@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 17:02:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/05 18:07:36 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 17:56:34 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int			empty_stack(t_list **stack, t_list **tokens)
 BOOL		is_meta(char c)
 {
 	if (c == '|' || c == '>' || c == '<' || c == ';')
-		return(TRUE);
+		return (TRUE);
 	return (FALSE);
 }
 
@@ -54,7 +54,7 @@ void		push_str_to_stack(t_list **stack, char *str)
 	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		push(stack, str[i]);
 		i++;

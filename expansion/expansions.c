@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/06 17:12:03 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 15:38:13 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@ char		*expand(t_list *list, t_data *data, int *error)
 		else if (!expand_unquoted_token(&stack, token, data, list))
 			*error = 1;
 		if (*error)
-			break;
+			break ;
 	}
 	return (handle_expansion(&stack, *error));
 }
-
 
 int			expand_list(t_list *list, t_data *data)
 {
@@ -66,8 +65,8 @@ int			expand_redirections(t_list *redirections, t_data *data)
 {
 	t_list			*tmp_list;
 	t_redirection	*redirection;
-	int 			error;
-	char 			*tmp;
+	int				error;
+	char			*tmp;
 
 	if (redirections)
 	{

@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:01:58 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/05 16:30:07 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 15:20:17 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,11 @@
 
 int		pwd(t_data *data)
 {
-	char	*cwd;
+	char		*cwd;
 	t_env_var	*var_env;
 
 	cwd = NULL;
 	cwd = getcwd(cwd, 0);
-
 	if (cwd)
 	{
 		ft_putstr_fd(cwd, 1);

@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:57:02 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/06 17:58:11 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 16:53:42 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_list	*tokenizer(int error, t_list **tokens, t_list **stack)
 	{
 		ft_lstclear(tokens, free);
 		ft_lstclear(stack, free);
-		return(NULL);
+		return (NULL);
 	}
 	if (!(*tokens))
 	{
@@ -31,9 +31,64 @@ t_list	*tokenizer(int error, t_list **tokens, t_list **stack)
 		return (*tokens);
 	ft_lstclear(tokens, free);
 	if ((*stack))
-			ft_lstclear(stack, free);
+		ft_lstclear(stack, free);
 	ft_putstr_fd("error while parsing !\n", 1);
 	return (NULL);
+}
+
+int		handle_meta(t_list **stack, t_list **tokens, char **input_cmd)
+{
+	if (*stack && ((t_stack *)((*stack)->content))->meta)
+	{
+		if (!handle_metacharacter(stack, tokens, input_cmd))
+			return (1);
+	}
+	else if (top_stack(stack) == '\0')
+		if (handle_end_token(stack, tokens))
+			return (1);
+	return (0);
+}
+
+int		handle_space(t_list **stack, t_list **tokens, int *error)
+{
+	if (special(*stack))
+		return (1);
+	pop(stack);
+	if (top_stack(stack) != '\0' && *stack != NULL)
+	{
+		if (!empty_stack(stack, tokens))
+		{
+			*error = 1;
+			return (0);
+		}
+	}
+	*error = 0;
+	return (1);
+}
+
+int		handle_quotes(t_list **stack, char **input_cmd, int *error)
+{
+	char	quote;
+
+	*error = 0;
+	quote = top_stack(stack);
+	if (!special((*stack)))
+	{
+		if (quote == '\'')
+		{
+			if (!handle_single_quote(stack, input_cmd))
+				*error = 1;
+		}
+		else
+		{
+			if (!handle_double_quote(stack, input_cmd))
+				*error = 1;
+		}
+		if (*error)
+			return (0);
+		return (1);
+	}
+	return (1);
 }
 
 t_list	*lexer(char *input_cmd)
@@ -44,7 +99,7 @@ t_list	*lexer(char *input_cmd)
 
 	tokens = NULL;
 	stack = NULL;
-	while(TRUE)
+	while (TRUE)
 	{
 		error = 0;
 		push(&stack, *input_cmd++);

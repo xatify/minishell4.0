@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:21:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/06 15:22:47 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 17:58:10 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void		new_input(t_data *data, char **holder)
 	signal(SIGQUIT, sig_quit_handler);
 	ret = get_next_line(0, &(data->input_cmd));
 	set_input_cmd(data, holder);
-	if (ret == 1 || (ret == 0 && (data->input_cmd[0] != '\0') && data->input_from_file))
+	if (ret == 1 || (ret == 0 && (data->input_cmd[0] != '\0') &&
+					data->input_from_file))
 		hundle_input(data, holder);
 	else if (ret == 0 && (data->input_cmd[0] == '\0'))
 	{

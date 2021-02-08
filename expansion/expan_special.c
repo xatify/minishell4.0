@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansions_4.c                                     :+:      :+:    :+:   */
+/*   expan_special.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:10:21 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/06 17:12:12 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 15:35:13 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void		expand_env_var(t_list **p_stack, t_list **s_stack, t_list **vars, t_list *list)
+void		expand_env_var(t_list **p_stack, t_list **s_stack, t_list **vars,
+							t_list *list)
 {
 	t_list		*var_name;
 	t_env_var	*env_var;
 
-		var_name = NULL;
-		empty_stack(s_stack, &var_name);
-		if (var_name && *((t_token *)(var_name->content))->tkn)
-	   {
-			env_var = search_var(vars, ((t_token *)(var_name->content))->tkn);
-			if (env_var)
-				expand_token_list(list, env_var, p_stack);
-			ft_lstclear(&var_name, free_token);
+	var_name = NULL;
+	empty_stack(s_stack, &var_name);
+	if (var_name && *((t_token *)(var_name->content))->tkn)
+	{
+		env_var = search_var(vars, ((t_token *)(var_name->content))->tkn);
+		if (env_var)
+			expand_token_list(list, env_var, p_stack);
+		ft_lstclear(&var_name, free_token);
 	}
 }
 
@@ -34,7 +35,8 @@ void		expand_exit_status(t_list **p_stack, t_data *data, char **token)
 	push_str_to_stack(p_stack, ft_itoa(data->exit_status));
 }
 
-void		handle_expand_env_var(char **token, t_list **p_stack, t_data *data, t_list *list)
+void		handle_expand_env_var(char **token, t_list **p_stack, t_data *data,
+									t_list *list)
 {
 	t_list *s_stack;
 
@@ -42,7 +44,7 @@ void		handle_expand_env_var(char **token, t_list **p_stack, t_data *data, t_list
 	if (!(is_underscore(**token) || is_alpha(**token)))
 	{
 		push(p_stack, '$');
-		return;
+		return ;
 	}
 	while (**token)
 	{
@@ -52,12 +54,13 @@ void		handle_expand_env_var(char **token, t_list **p_stack, t_data *data, t_list
 			(*token)++;
 		}
 		else
-			break;
+			break ;
 	}
 	expand_env_var(p_stack, &s_stack, &(data->env_vars), list);
 }
 
-void		expand_dollar_sign(char **token, t_list **p_stack, t_data *data, t_list *list)
+void		expand_dollar_sign(char **token, t_list **p_stack, t_data *data,
+								t_list *list)
 {
 	t_list *s_stack;
 

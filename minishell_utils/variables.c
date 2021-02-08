@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 09:12:56 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/05 18:43:45 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 17:03:21 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ char	*remove_quotes(char *value)
 	return (value);
 }
 
-int					get_vars_len(t_list *env_vars, t_list *unset_vars)
+int		get_vars_len(t_list *env_vars, t_list *unset_vars)
 {
 	return (ft_lstsize(env_vars) + ft_lstsize(unset_vars));
 }
 
-int			get_env_vars(t_list *env_vars, char **holder)
+int		get_env_vars(t_list *env_vars, char **holder)
 {
 	int		i;
 	char	*first;
@@ -58,8 +58,7 @@ int			get_env_vars(t_list *env_vars, char **holder)
 	return (i);
 }
 
-
-char 				**get_all_vars(t_list *env_vars, t_list *unset_vars)
+char	**get_all_vars(t_list *env_vars, t_list *unset_vars)
 {
 	int		len;
 	int		i;

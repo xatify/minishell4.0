@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:55:39 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/05 16:30:33 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 15:22:47 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int		unset(char **args, t_list **envs)
 			ft_putstr_fd(args[index], 2);
 			ft_putstr_fd(" not a valid identifier\n", 2);
 			ret = 1;
-
 		}
 		index++;
 	}

@@ -6,11 +6,13 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:43:36 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/05 18:14:14 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 17:17:35 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+char		*g_operators[5] = {">", "<", ">>", "|", ";"};
 
 t_token		*new_token(char **str)
 {
@@ -22,7 +24,7 @@ t_token		*new_token(char **str)
 	return (token);
 }
 
-void		 del_token_head(t_list **tokens)
+void		del_token_head(t_list **tokens)
 {
 	t_list		*tmp;
 
@@ -34,15 +36,14 @@ void		 del_token_head(t_list **tokens)
 int			token_id(char *token)
 {
 	int		i;
-	char *operators[5] = {">", "<", ">>", "|", ";"};
+
 	i = 0;
 	while (i < 5)
 	{
-		if (!(ft_strcmp(operators[i], token)))
+		if (!(ft_strcmp(g_operators[i], token)))
 			return (i);
 		i++;
 	}
-
 	return (WORD);
 }
 

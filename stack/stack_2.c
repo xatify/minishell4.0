@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 18:04:31 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/05 18:07:40 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 17:57:39 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ t_stack		*new_element(char character)
 	return (new_element);
 }
 
-
-void		push(t_list **stack, char 	character)
+void		push(t_list **stack, char character)
 {
 	t_stack		*stack_element;
 	t_list		*node;

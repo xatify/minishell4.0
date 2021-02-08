@@ -6,16 +6,17 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 09:03:59 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/06 15:26:57 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 17:22:25 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		pipeline_stream(t_command *cmd, int *save_std, int *tmp_fd, t_list *cmds)
+int		pipeline_stream(t_command *cmd, int *save_std, int *tmp_fd,
+						t_list *cmds)
 {
-	int 	holder[2];
-	int 	pipe_fd[2];
+	int		holder[2];
+	int		pipe_fd[2];
 
 	holder[0] = -1;
 	holder[1] = -1;

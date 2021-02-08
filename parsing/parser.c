@@ -6,14 +6,13 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:27:29 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/06 14:57:11 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 17:21:42 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../includes/minishell.h"
 
-int 		parse_redirection(t_list **tokens, t_command *command, int stream)
+int			parse_redirection(t_list **tokens, t_command *command, int stream)
 {
 	t_token			*token;
 	t_redirection	*redirection;
@@ -40,8 +39,7 @@ int			parse_name_and_args(t_list **tokens, t_command *command)
 	return (1);
 }
 
-
-t_command	*parse_command(t_list    **tokens)
+t_command	*parse_command(t_list **tokens)
 {
 	t_command	*command;
 	int			id;
@@ -49,10 +47,10 @@ t_command	*parse_command(t_list    **tokens)
 	if (!(command = new_cmd()))
 		return (NULL);
 	while (*tokens && ((t_token *)((*tokens)->content))->id != PIPE
-				 && ((t_token *)((*tokens)->content))->id != SEMICOLON)
+			&& ((t_token *)((*tokens)->content))->id != SEMICOLON)
 	{
-		id  = ((t_token *)((*tokens)->content))->id;
-		if (id == OUTPUT || id  == INPUT || id == APPEND_OUT)
+		id = ((t_token *)((*tokens)->content))->id;
+		if (id == OUTPUT || id == INPUT || id == APPEND_OUT)
 		{
 			if (!parse_redirection(tokens, command, id))
 			{
@@ -60,7 +58,7 @@ t_command	*parse_command(t_list    **tokens)
 				return (NULL);
 			}
 		}
-		else if(!parse_name_and_args(tokens, command))
+		else if (!parse_name_and_args(tokens, command))
 		{
 			free_command(command);
 			return (NULL);
@@ -68,7 +66,6 @@ t_command	*parse_command(t_list    **tokens)
 	}
 	return (command);
 }
-
 
 t_pipeline	*parse_pipe_line(t_list **tokens)
 {
@@ -98,8 +95,7 @@ t_pipeline	*parse_pipe_line(t_list **tokens)
 	return (pipeline);
 }
 
-
-t_list		*parser(char    *input_cmd)
+t_list		*parser(char *input_cmd)
 {
 	t_list			*tokens;
 	t_list			*pipelines;

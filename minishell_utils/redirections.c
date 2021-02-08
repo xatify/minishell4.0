@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 09:19:07 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/05 18:02:06 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 17:00:14 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ t_redirection		*new_redirection(char *file, int type)
 void				free_redirections(void *redirection)
 {
 	if (!redirection)
-		return;
+		return ;
 	free(((t_redirection *)redirection)->file);
 	free(redirection);
 }
 
 int					open_file(t_redirection *redirection)
 {
-	int 	fd;
+	int		fd;
 
 	if (redirection->type == INPUT)
 		fd = open(redirection->file, O_RDONLY);

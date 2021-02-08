@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:28:31 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/05 17:59:27 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 16:55:37 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@ t_pipeline		*new_pipe_line(void)
 	return (pipeline);
 }
 
-
 void			free_pipeline(void *pipeline)
 {
 	if (!(pipeline))
-		return;
+		return ;
 	ft_lstclear(&(((t_pipeline *)pipeline)->cmds), free_command);
 	free(pipeline);
 	pipeline = NULL;

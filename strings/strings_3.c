@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 12:05:50 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/03 12:15:30 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 18:32:11 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,10 @@ char	*ft_strchr(const char *str, int c)
 	if (c == '\0')
 		return (ptr);
 	return (0);
+}
+
+void	free_tmp(char **tmp)
+{
+	free(*tmp);
+	*tmp = NULL;
 }

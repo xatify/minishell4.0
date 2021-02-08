@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:14:28 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/03 11:04:52 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 18:32:38 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ void				*ft_memcpy(void *dst, const void *src, size_t n);
 char				*ft_strnstr(const char *haystack, const char *needle,
 					int *end_name);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
+void				free_tmp(char **tmp);
 
 #endif

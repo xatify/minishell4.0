@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:26:39 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/06 15:27:00 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 17:22:05 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	set_fds(int save_std[2], int tmp_fd[2])
 
 int		simple_cmd_file_redirection(t_command *cmd, int *save_std, int *tmp_fd)
 {
-	int 	file_fd[2];
+	int		file_fd[2];
 
 	file_fd[0] = -1;
 	file_fd[1] = -1;

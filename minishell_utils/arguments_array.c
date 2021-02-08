@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 10:26:28 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/05 17:47:56 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 16:55:14 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,13 @@ void	fill_argv(char **argv, t_list *args)
 		{
 			free_argv(argv);
 			argv = NULL;
-			return;
+			return ;
 		}
 		i++;
 		args = args->next;
 	}
 	argv[i] = NULL;
 }
-
 
 char	**built_argv(t_command *cmd)
 {

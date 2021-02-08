@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 10:21:32 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/06 09:40:35 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/08 16:56:31 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	sig_int_handler(int signum)
 {
-
 	if (g_pid > 0)
 	{
 		g_exit_status = 130;
@@ -28,7 +27,7 @@ void	sig_int_handler(int signum)
 		ft_putstr_fd(PROMPT, 1);
 	}
 	(void)signum;
-	return;
+	return ;
 }
 
 void	sig_quit_handler(int signum)
@@ -41,10 +40,9 @@ void	sig_quit_handler(int signum)
 	}
 	else
 	{
-        g_exit_status = 1;
-        ft_putstr_fd("\b\b", 1);
-        //ft_putstr_fd(PROMPT, 1);
+		g_exit_status = 1;
+		ft_putstr_fd("\b\b", 1);
 	}
 	(void)signum;
-	return;
+	return ;
 }

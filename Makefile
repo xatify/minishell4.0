@@ -6,7 +6,7 @@
 #    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/02/06 18:26:03 by keddib           ###   ########.fr        #
+#    Updated: 2021/02/08 18:30:12 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,8 @@ EXPN			= expansion
 EXCT			= execution
 
 LEXER			= lexer
+
+ENV				= environment
 
 SRCS			= minishell.c						\
 				$(STR)/strings.c					\
@@ -72,7 +74,9 @@ SRCS			= minishell.c						\
 				$(EXCT)/execute_pipeline.c			\
 				$(LEXER)/lexer.c					\
 				$(LEXER)/tokenizer.c				\
-				env_var.c							\
+				$(ENV)/build_env_var.c				\
+				$(ENV)/manip_env.c					\
+				$(ENV)/get_env_var.c				\
 				$(BUILTINS)/builtin_methodes.c		\
 				$(BUILTINS)/cd.c					\
 				$(BUILTINS)/echo.c					\
@@ -91,13 +95,13 @@ gnl.a:
 
 $(NAME) : $(SRCS) gnl.a
 	$(MAKE) -C get_next_line
-	$(GCC) -g  -o $(NAME) $(SRCS) gnl.a
+	$(GCC) -g  -o $(NAME) $(SRCS) get_next_line/gnl.a
 
 clean:
 	rm $(NAME)
 
 fclean: clean
-	rm -rf *.o gnl.a *.dSYM
+	rm -rf *.o get_next_line/gnl.a *.dSYM
 
 re: fclean all
 
