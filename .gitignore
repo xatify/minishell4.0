@@ -3,3 +3,4 @@ test
 .vscode
 minishell.dSYM
 minishell
+*.README

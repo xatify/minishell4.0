@@ -1,1 +1,0 @@
-ls -la | grep jj | cd dkf; pwd "exit_status should be 0"
