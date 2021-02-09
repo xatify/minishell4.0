@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipeline.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:25:28 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/08 15:31:15 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 11:06:51 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	return_status(int status, t_data *data)
 		data->exit_status = status;
 }
 
-void	execute_pipe(t_command *cmd, t_data *data, int *status)
+void	execute_pipe(t_command *cmd, t_data *data)
 {
 	char	*name_and_args;
 
@@ -39,8 +39,6 @@ void	execute_pipe(t_command *cmd, t_data *data, int *status)
 				execute_child(data, cmd);
 			else if (g_pid < 0)
 				data->exit_status = 1;
-			else
-				waitpid(g_pid, status, 0);
 		}
 	}
 }
@@ -61,9 +59,12 @@ void	execute_pipeline(t_data *data, t_list *cmds)
 			cmds = cmds->next;
 			continue;
 		}
-		execute_pipe(cmd, data, &status);
+		execute_pipe(cmd, data);
 		cmds = cmds->next;
 	}
+	waitpid(g_pid, &status, 0);
+	while (wait(NULL) > 0)
+		;
 	set_to_std(save_std);
 	g_pid = -1;
 	return_status(status, data);

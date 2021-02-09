@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:21:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/08 17:58:10 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 08:20:29 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ void		new_input(t_data *data, char **holder)
 	data->input_cmd = NULL;
 	if (**holder == '\0' && !data->input_from_file)
 		ft_putstr_fd(PROMPT, 1);
-	signal(SIGINT, sig_int_handler);
-	signal(SIGQUIT, sig_quit_handler);
 	ret = get_next_line(0, &(data->input_cmd));
 	set_input_cmd(data, holder);
 	if (ret == 1 || (ret == 0 && (data->input_cmd[0] != '\0') &&

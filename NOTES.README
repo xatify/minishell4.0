@@ -1,9 +1,9 @@
 
 !! steps
 
-- 1: get input
++ 1: get input
     + must handle when the input is empty
-    - get_next is integrated successfully but needs to not recompiled
+    + get_next is integrated successfully but needs to not recompiled
 
 + 2: tokenizing the input
     + must handle tokens that have metacharcters inside them
@@ -62,7 +62,7 @@
     + multiple $VAR inside the same token
     + breaking the the token retrieved from env_var if it has ' ' (space) inside of it (see error 4 in tests.txt)
 
-- 7: Execute the commands list
++ 7: Execute the commands list
     + build the args array from cmd->arguments !! needs testing
     + non builtin simple command working ok
     + built ins need testing ;
@@ -74,7 +74,9 @@
     + only "cd" builtin will run in a seperate process if it is inside a pipeline
     + error searching  the absolute path of a file (error if the file is symlink)
 	+ zombie processes fixed
-    -
+    + ls > g | > g fixed (must only wait for the last cmd in pipe then
+        wait for all the other zombie processes after)
+    + free of path, argv and envp after execve fails and changing exit status accordingly
 
 + 8: piplining:
     + the priority is for redirection before the pipe ???
@@ -104,7 +106,7 @@
     + if a command fails because of an error during (expansion or redirection) $? > 0
 
 
-- 11: handling signals
++ 11: handling signals
     ?? https://stackoverflow.com/questions/42563400/hide-c-pressing-ctrl-c-in-c
     + CTRL-D
         + if no input is given minishell should exit
@@ -112,12 +114,13 @@
     + INT signal
         + must rethink the showprompt to show PWD after receiving the SIG_QUIT
     + QUIT signal
+        ? flush of terminal buffer in case of "ls^\-al" ?
 
 + 12: optimize and refactoring the code
 
-- 13: norme
++ 13: norme
 
-- 13: check for leaks
++ 13: check for leaks
     + error 2 in tests.txt is causing memory leaks and unavailable resources for fork ...
 
 - 14 : testing

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 08:18:25 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/08 17:59:47 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 08:54:00 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int		main(int argc, char **argv, char **envp)
 	t_data	*data;
 	char	*holder;
 
+	signal(SIGINT, sig_int_handler);
+	signal(SIGQUIT, sig_quit_handler);
 	data = start_shell(argc, argv, envp, &holder);
 	while (TRUE)
 	{

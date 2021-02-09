@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/08 15:29:45 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 11:45:22 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,22 @@ int		execute_child(t_data *data, t_command *cmd)
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
 	execve(path, argv, envp);
-	ft_putstr_fd("no such file or directory 2\n", 2);
-	exit(126);
+	exit(execve_error(path, argv, envp));
 }
 
-/*
-**	must check status ; in line 78 waitpid.
-*/
+int		execve_error(char *path, char **argv, char **envp)
+{
+	free(path);
+	free_argv(argv);
+	free_argv(envp);
+	if (errno == 8)
+		return (0);
+	else if (errno == 13)
+		ft_putstr_fd("minishell: Permission denied\n", 2);
+	else
+		ft_putstr_fd("no such file or directory 2\n", 2);
+	return (126);
+}
 
 int		execute_binary(t_data *data, t_command *cmd)
 {
@@ -70,9 +79,7 @@ int		execute_binary(t_data *data, t_command *cmd)
 
 	g_pid = fork();
 	if (g_pid == 0)
-	{
 		execute_child(data, cmd);
-	}
 	else if (g_pid < 0)
 		return (1);
 	waitpid(g_pid, &status, 0);

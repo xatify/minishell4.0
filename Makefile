@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
+#    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/02/08 18:52:29 by keddib           ###   ########.fr        #
+#    Updated: 2021/02/09 11:49:48 by abbouzid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ PARSER			= parsing
 
 S_SH			= start_shell
 
-PP				= pipe
+PP				= piping
 
 EXPN			= expansion
 
@@ -105,4 +105,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: clean re all
+.PHONY: clean fclean re all

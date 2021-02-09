@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 10:21:32 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/08 18:50:39 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 08:14:44 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	sig_int_handler(int signum)
 	if (g_pid > 0)
 	{
 		g_exit_status = 130;
-		ft_putstr_fd("\n", 0);
+		ft_putstr_fd("\n", 1);
 		kill(g_pid, SIGINT);
 	}
 	else
@@ -27,7 +27,6 @@ void	sig_int_handler(int signum)
 		ft_putstr_fd(PROMPT, 1);
 	}
 	(void)signum;
-	return ;
 }
 
 void	sig_quit_handler(int signum)
@@ -44,5 +43,4 @@ void	sig_quit_handler(int signum)
 		ft_putstr_fd("\b\b  \b\b", 1);
 	}
 	(void)signum;
-	return ;
 }

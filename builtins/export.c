@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:57:13 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/08 15:24:54 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 11:42:41 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,10 @@ void	remove_unset_var(t_list **unset_vars, char *name)
 	{
 		if (ft_strcmp(tmp->content, name) == 0)
 		{
-			if (tmp->next)
-			{
-				if (last == NULL)
-					(*unset_vars) = tmp->next;
-				else
-					last->next = tmp->next;
-			}
+			if (tmp->next && last == NULL)
+				(*unset_vars) = tmp->next;
+			else if (tmp->next && last)
+				last->next = tmp->next;
 			else if (last == NULL)
 				(*unset_vars) = NULL;
 			else
@@ -43,7 +40,7 @@ void	remove_unset_var(t_list **unset_vars, char *name)
 	}
 }
 
-int		get_name_value(char *arg, char **name, char **value)
+int		get_n_v(char *arg, char **name, char **value)
 {
 	int end;
 
@@ -70,27 +67,27 @@ int		not_identifier_name(char *arg)
 	return (1);
 }
 
-int		hundle_var(t_data *data, char *arg, char *n, char *v, int e)
+int		hundle_var(t_data *data, char *arg, char **n_v, int e)
 {
-	if (*n && is_identifier(n))
+	if (*n_v[0] && is_identifier(n_v[0]))
 	{
 		if (ft_strchr(arg, '=') == NULL)
 		{
-			if (!search_var(&(data->env_vars), n))
-				if (!is_unset_var(&(data->unset_vars), n))
+			if (!search_var(&(data->env_vars), n_v[0]))
+				if (!is_unset_var(&(data->unset_vars), n_v[1]))
 					ft_lstadd_back(&(data->unset_vars),
-									ft_lstnew(ft_strdup(n)));
+									ft_lstnew(ft_strdup(n_v[0])));
 		}
 		else
 		{
-			if (is_double_quote_token(v) || is_single_quote_token(v))
-				v = remove_quotes(v);
-			if (is_unset_var(&(data->unset_vars), n))
-				remove_unset_var(&(data->unset_vars), n);
+			if (is_double_quote_token(n_v[1]) || is_single_quote_token(n_v[1]))
+				n_v[1] = remove_quotes(n_v[1]);
+			if (is_unset_var(&(data->unset_vars), n_v[0]))
+				remove_unset_var(&(data->unset_vars), n_v[0]);
 			if (e != -1)
-				append_env_var(&(data->env_vars), n, v);
+				append_env_var(&(data->env_vars), n_v[0], n_v[1]);
 			else
-				change_env_var(&(data->env_vars), n, v);
+				change_env_var(&(data->env_vars), n_v[0], n_v[1]);
 		}
 	}
 	else
@@ -100,8 +97,7 @@ int		hundle_var(t_data *data, char *arg, char *n, char *v, int e)
 
 int		export(char **args, t_data *data)
 {
-	char	*name;
-	char	*value;
+	char	*n_v[2];
 	int		index;
 	int		end;
 	int		return_value;
@@ -113,14 +109,14 @@ int		export(char **args, t_data *data)
 		show_vars(data);
 	while (args[index])
 	{
-		end = get_name_value(args[index], &name, &value);
-		if (name)
+		end = get_n_v(args[index], &(n_v[0]), &(n_v[1]));
+		if (n_v[0])
 		{
-			return_value = hundle_var(data, args[index], name, value, end);
-			free(name);
+			return_value = hundle_var(data, args[index], n_v, end);
+			free(n_v[0]);
 		}
-		if (value)
-			free(value);
+		if (n_v[1])
+			free(n_v[1]);
 		index++;
 	}
 	return (return_value);

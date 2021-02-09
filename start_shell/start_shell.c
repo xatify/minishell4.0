@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_shell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:28:43 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/08 17:58:30 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 08:54:49 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ t_data		*start_shell(int argc, char **argv, char **envp, char **holder)
 
 	argc = 0;
 	argv = NULL;
-	g_reading = 0;
 	fstat(STDIN, &st);
 	if (!(data = (t_data *)malloc(sizeof(t_data))))
-		return (NULL);
+		exit(1);
 	ft_memset(data, 0, sizeof(t_data));
 	if (!S_ISCHR(st.st_mode))
 		data->input_from_file = 1;
