@@ -6,14 +6,31 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:25:28 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/09 16:38:10 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 18:53:25 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	return_status(int status, t_data *data)
+int		no_cmd(t_data *data, int *save_std)
 {
+	data->exit_status = 0;
+	set_to_std(save_std);
+	return (1);
+}
+
+void	return_status(int *save_std, t_data *data)
+{
+	int		status;
+
+	if (data->no_status_check == 0)
+		waitpid(g_pid, &status, 0);
+	else
+		status = 0;
+	while (wait(NULL) > 0)
+		;
+	set_to_std(save_std);
+	g_pid = -1;
 	if (WIFEXITED(status))
 		data->exit_status = WEXITSTATUS(status);
 	else
@@ -42,7 +59,6 @@ void	execute_pipeline(t_data *data, t_list *cmds)
 {
 	int			tmp_fd[2];
 	int			save_std[2];
-	int			status;
 	t_command	*cmd;
 
 	set_fds(save_std, tmp_fd);
@@ -54,15 +70,18 @@ void	execute_pipeline(t_data *data, t_list *cmds)
 			cmds = cmds->next;
 			continue;
 		}
-		execute_pipe(cmd, data);
+		if (!cmd->name_and_args && cmds->next)
+		{
+			cmds = cmds->next;
+			continue;
+		}
+		if (!cmd->name_and_args && !cmds->next)
+			data->no_status_check = 1;
+		else
+			execute_pipe(cmd, data);
 		cmds = cmds->next;
 	}
-	waitpid(g_pid, &status, 0);
-	while (wait(NULL) > 0)
-		;
-	set_to_std(save_std);
-	g_pid = -1;
-	return_status(status, data);
+	return_status(save_std, data);
 }
 
 void	execute(t_data *data)

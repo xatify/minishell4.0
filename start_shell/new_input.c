@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:21:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/09 15:55:40 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 18:36:34 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void		new_input(t_data *data, char **holder)
 {
 	int ret;
 
+	data->no_status_check = 0;
 	data->input_cmd = NULL;
 	if (**holder == '\0' && !data->input_from_file)
 		ft_putstr_fd(PROMPT, STDOUT);

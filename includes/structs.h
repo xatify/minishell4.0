@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:13:03 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/08 16:50:17 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 18:34:51 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct		s_data
 	t_list			*parse_tree;
 	int				exit_status;
 	int				input_from_file;
+	int				no_status_check;
 }					t_data;
 
 #endif

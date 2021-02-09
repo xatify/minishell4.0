@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/09 16:38:27 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 18:53:19 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ void	execute_simple_cmd(t_data *data, t_pipeline *pipeline)
 			data->exit_status = 1;
 			return ;
 		}
+		if (!cmd->name_and_args && no_cmd(data, save_std))
+			return ;
 		name_and_args = cmd->name_and_args->content;
 		cmd->built_in = is_built_in(name_and_args);
 		if (cmd->built_in != '\0')
