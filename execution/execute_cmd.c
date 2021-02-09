@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/09 15:52:33 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 16:38:27 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,11 @@ void	execute_simple_cmd(t_data *data, t_pipeline *pipeline)
 			return ;
 		}
 		name_and_args = cmd->name_and_args->content;
-		if (name_and_args[0])
-		{
-			cmd->built_in = is_built_in(name_and_args);
-			if (cmd->built_in != '\0')
-				data->exit_status = execute_built_in(cmd->built_in, data, cmd);
-			else
-				data->exit_status = execute_binary(data, cmd);
-		}
+		cmd->built_in = is_built_in(name_and_args);
+		if (cmd->built_in != '\0')
+			data->exit_status = execute_built_in(cmd->built_in, data, cmd);
+		else
+			data->exit_status = execute_binary(data, cmd);
 	}
 	set_to_std(save_std);
 }

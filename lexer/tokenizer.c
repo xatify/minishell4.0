@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:57:02 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/09 15:55:15 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 16:36:57 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ t_list	*tokenizer(int error, t_list **tokens, t_list **stack)
 	{
 		if ((*stack))
 			ft_lstclear(stack, free);
-		ft_putstr_fd(PARSER_ERR, STDOUT);
 		return (NULL);
 	}
 	if (identify_all_tokens(*tokens))
@@ -32,7 +31,6 @@ t_list	*tokenizer(int error, t_list **tokens, t_list **stack)
 	ft_lstclear(tokens, free);
 	if ((*stack))
 		ft_lstclear(stack, free);
-	ft_putstr_fd(PARSER_ERR, STDOUT);
 	return (NULL);
 }
 
