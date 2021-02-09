@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:01:58 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/09 15:40:29 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 16:18:11 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		pwd(t_data *data)
 		ft_putstr_fd(cwd, STDOUT);
 		ft_putchar_fd('\n', STDOUT);
 		free(cwd);
-		return (1);
+		return (0);
 	}
 	else
 	{
