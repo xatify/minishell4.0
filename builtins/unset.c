@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:55:39 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/08 15:22:47 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 15:51:27 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ int		unset(char **args, t_list **envs)
 			del_env_var(envs, args[index]);
 		else
 		{
-			ft_putstr_fd("unset: ", 2);
-			ft_putstr_fd(args[index], 2);
-			ft_putstr_fd(" not a valid identifier\n", 2);
+			ft_putstr_fd("unset: ", STDERR);
+			ft_putstr_fd(args[index], STDERR);
+			ft_putstr_fd(NOT_IDEN, STDERR);
+			ft_putchar_fd('\n', STDERR);
 			ret = 1;
 		}
 		index++;

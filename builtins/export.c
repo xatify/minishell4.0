@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:57:13 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/09 11:42:41 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/09 15:50:42 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ int		get_n_v(char *arg, char **name, char **value)
 
 int		not_identifier_name(char *arg)
 {
-	ft_putstr_fd("not a valid identifier ", 2);
-	ft_putstr_fd(arg, 1);
-	ft_putchar_fd('\n', 1);
+	ft_putstr_fd(NOT_IDEN, STDERR);
+	ft_putstr_fd(arg, STDOUT);
+	ft_putchar_fd('\n', STDOUT);
 	return (1);
 }
 

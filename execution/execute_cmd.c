@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/09 11:45:22 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/09 15:52:33 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int		execute_child(t_data *data, t_command *cmd)
 	envp = built_envp(data->env_vars);
 	if (!path)
 	{
-		ft_putstr_fd("no such file or directory : ", 2);
-		ft_putstr_fd(cmd->name_and_args->content, 2);
-		ft_putstr_fd("\n", 1);
+		ft_putstr_fd("no such file or directory : ", STDERR);
+		ft_putstr_fd(cmd->name_and_args->content, STDERR);
+		ft_putstr_fd("\n", STDERR);
 		exit(127);
 	}
 	signal(SIGQUIT, SIG_DFL);
@@ -67,9 +67,9 @@ int		execve_error(char *path, char **argv, char **envp)
 	if (errno == 8)
 		return (0);
 	else if (errno == 13)
-		ft_putstr_fd("minishell: Permission denied\n", 2);
+		ft_putstr_fd(P_DENIED, STDERR);
 	else
-		ft_putstr_fd("no such file or directory 2\n", 2);
+		ft_putstr_fd(NO_F_D, STDERR);
 	return (126);
 }
 

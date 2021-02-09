@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:21:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/09 08:20:29 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/09 15:55:40 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		hundle_input(t_data *data, char **holder)
 	if (data->input_cmd[0] != '\0')
 	{
 		if (!(data->parse_tree = parser(data->input_cmd)))
-			ft_putstr_fd("error while parsing\n", 2);
+			ft_putstr_fd(PARSER_ERR, STDERR);
 		else
 			execute(data);
 	}
@@ -51,7 +51,7 @@ void		new_input(t_data *data, char **holder)
 
 	data->input_cmd = NULL;
 	if (**holder == '\0' && !data->input_from_file)
-		ft_putstr_fd(PROMPT, 1);
+		ft_putstr_fd(PROMPT, STDOUT);
 	ret = get_next_line(0, &(data->input_cmd));
 	set_input_cmd(data, holder);
 	if (ret == 1 || (ret == 0 && (data->input_cmd[0] != '\0') &&
@@ -60,7 +60,7 @@ void		new_input(t_data *data, char **holder)
 	else if (ret == 0 && (data->input_cmd[0] == '\0'))
 	{
 		if (!data->input_from_file)
-			ft_putstr_fd("exit\n", 1);
+			ft_putstr_fd("exit\n", STDOUT);
 		free_data(data);
 		exit(0);
 	}

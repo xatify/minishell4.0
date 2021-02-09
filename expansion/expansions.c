@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/08 15:38:13 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 15:56:02 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int			expand_redirections(t_list *redirections, t_data *data)
 		if (error || !tmp || (ft_lstsize(tmp_list) > 1))
 		{
 			ft_putstr_fd(redirection->file, STDERR);
-			ft_putstr_fd(": ambiguous redirect\n", STDERR);
+			ft_putstr_fd(AMB_REDIRECT, STDERR);
 			ft_lstclear(&tmp_list, free);
 			return (0);
 		}

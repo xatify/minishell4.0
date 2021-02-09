@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:01:58 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/08 15:20:17 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 15:40:29 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int		pwd(t_data *data)
 	cwd = getcwd(cwd, 0);
 	if (cwd)
 	{
-		ft_putstr_fd(cwd, 1);
-		ft_putchar_fd('\n', 1);
+		ft_putstr_fd(cwd, STDOUT);
+		ft_putchar_fd('\n', STDOUT);
 		free(cwd);
 		return (1);
 	}
@@ -31,8 +31,8 @@ int		pwd(t_data *data)
 	{
 		if ((var_env = search_var(&(data->env_vars), "PWD")))
 		{
-			ft_putstr_fd(var_env->value, 1);
-			ft_putchar_fd('\n', 1);
+			ft_putstr_fd(var_env->value, STDOUT);
+			ft_putchar_fd('\n', STDOUT);
 		}
 	}
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 09:19:07 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/09 11:04:06 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/02/09 15:41:34 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ int					redirect_std(t_command *cmd, int *tmp_fd)
 		redirection = (t_redirection *)tmp->content;
 		if ((fd = open_file(redirection)) < 0)
 		{
-			ft_putstr_fd("no such file or directory: ", 2);
-			ft_putstr_fd(redirection->file, 2);
-			ft_putchar_fd('\n', 2);
+			ft_putstr_fd("no such file or directory: ", STDERR);
+			ft_putstr_fd(redirection->file, STDERR);
+			ft_putchar_fd('\n', STDERR);
 			return (0);
 		}
 		set_streaming_fds(tmp_fd, fd, redirection->type);

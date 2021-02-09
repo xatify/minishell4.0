@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:45:21 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/08 15:19:45 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 15:39:02 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ int		echo(char **args)
 	{
 		if (args[i][0])
 		{
-			ft_putstr_fd(args[i], 1);
+			ft_putstr_fd(args[i], STDOUT);
 			if (args[i + 1] && args[i + 1][0])
-				ft_putstr_fd(" ", 1);
+				ft_putstr_fd(" ", STDOUT);
 		}
 		i++;
 	}
 	if (new_line != 0)
-		ft_putstr_fd("\n", 1);
+		ft_putstr_fd("\n", STDOUT);
 	return (0);
 }

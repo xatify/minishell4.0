@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 16:31:47 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/08 18:36:46 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 15:40:01 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	show_vars(t_data *data)
 	i = 0;
 	while (vars[i])
 	{
-		ft_putstr_fd("declare -x ", 1);
-		ft_putstr_fd(vars[i], 1);
-		ft_putstr_fd("\n", 1);
+		ft_putstr_fd("declare -x ", STDOUT);
+		ft_putstr_fd(vars[i], STDOUT);
+		ft_putstr_fd("\n", STDOUT);
 		i++;
 	}
 	free_argv(vars);

@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:09:32 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/08 15:37:27 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 15:53:48 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int			ret_expand_ut(t_list **stack)
 {
 	if ((*stack) && ((t_stack *)((*stack)->content))->special)
 	{
-		ft_putstr_fd("error while expanding !\n", 2);
+		ft_putstr_fd(EXPAN_ERR, STDERR);
 		return (0);
 	}
 	return (1);

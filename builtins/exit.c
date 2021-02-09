@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:25:50 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/05 17:30:42 by keddib           ###   ########.fr       */
+/*   Updated: 2021/02/09 15:50:00 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ int		exit_(t_data *data, char **argv)
 	ex = 0;
 	if (argv[1] && argv[2])
 	{
-		ft_putstr_fd("exit\ntoo many arguments\n", 1);
+		ft_putstr_fd(MANY_ARGS, STDOUT);
 		return (1);
 	}
 	if (argv[1])
 	{
 		status = ft_atoi(argv[1], &ex);
 		if ((ex == 1 || is_arg_alpha(argv[1])) && (status = 255))
-			ft_putstr_fd("exit\nnumeric argument required\n", 1);
+			ft_putstr_fd(NUM_ARG_R, STDOUT);
 	}
 	ft_lstclear(&(data->env_vars), free_env_var);
 	ft_lstclear(&(data->unset_vars), free);
