@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:57:13 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/09 15:50:42 by keddib           ###   ########.fr       */
+/*   Updated: 2021/03/04 16:53:44 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,6 @@ int		hundle_var(t_data *data, char *arg, char **n_v, int e)
 		}
 		else
 		{
-			if (is_double_quote_token(n_v[1]) || is_single_quote_token(n_v[1]))
-				n_v[1] = remove_quotes(n_v[1]);
 			if (is_unset_var(&(data->unset_vars), n_v[0]))
 				remove_unset_var(&(data->unset_vars), n_v[0]);
 			if (e != -1)
