@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:21:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/09 18:36:34 by keddib           ###   ########.fr       */
+/*   Updated: 2021/03/11 14:28:20 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ void		hundle_input(t_data *data, char **holder)
 	if (data->input_cmd[0] != '\0')
 	{
 		if (!(data->parse_tree = parser(data->input_cmd)))
+		{
 			ft_putstr_fd(PARSER_ERR, STDERR);
+			data->exit_status = 258;
+		}
 		else
 			execute(data);
 	}
