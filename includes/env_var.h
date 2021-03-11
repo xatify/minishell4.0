@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:16:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/08 16:42:22 by keddib           ###   ########.fr       */
+/*   Updated: 2021/03/11 15:41:10 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ void				show_vars(t_data *data);
 BOOL				is_unset_var(t_list **unset_vars, char *name);
 int					append_env_var(t_list **vars, char *var_name,
 				char *new_value);
+BOOL				creat_env(t_list **list_head, char *envp);
 
 #endif

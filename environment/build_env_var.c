@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_env_var.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 18:04:51 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/08 18:06:47 by keddib           ###   ########.fr       */
+/*   Updated: 2021/03/11 15:41:54 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void		fill_envp(char **envp_i, t_env_var *var)
 t_list		*build_env_vars(char **envp)
 {
 	t_list		*list_head;
-	t_list		*new;
 	t_env_var	*var;
 	int			i;
 
@@ -47,20 +46,13 @@ t_list		*build_env_vars(char **envp)
 	list_head = NULL;
 	while (envp[++i])
 	{
-		if (!(var = (t_env_var *)malloc(sizeof(t_env_var))))
-		{
-			ft_lstclear(&list_head, free_env_var);
+		if (!creat_env(&list_head, envp[i]))
 			return (NULL);
-		}
-		var->name = get_env_name(envp[i]);
-		change_shlv(var, envp[i]);
-		if (!(new = ft_lstnew(var)))
-		{
-			free_env_var(var);
-			ft_lstclear(&list_head, free_env_var);
+	}
+	if (!(var = search_var(&list_head, "SHLVL")))
+	{
+		if (!creat_env(&list_head, NULL))
 			return (NULL);
-		}
-		ft_lstadd_back(&list_head, new);
 	}
 	return (list_head);
 }
@@ -92,4 +84,34 @@ char		**built_envp(t_list *vars)
 	}
 	envp[i] = NULL;
 	return (envp);
+}
+
+BOOL		creat_env(t_list **list_head, char *envp)
+{
+	t_env_var	*var;
+	t_list		*new;
+
+	if (!(var = (t_env_var *)malloc(sizeof(t_env_var))))
+	{
+		ft_lstclear(list_head, free_env_var);
+		return (0);
+	}
+	if (envp)
+	{
+		var->name = get_env_name(envp);
+		change_shlv(var, envp);
+	}
+	else
+	{
+		var->name = ft_strdup("SHLVL");
+		var->value = ft_strdup("1");
+	}
+	if (!(new = ft_lstnew(var)))
+	{
+		free_env_var(var);
+		ft_lstclear(list_head, free_env_var);
+		return (0);
+	}
+	ft_lstadd_back(list_head, new);
+	return (1);
 }
