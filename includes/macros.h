@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:16:16 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/09 15:55:04 by keddib           ###   ########.fr       */
+/*   Updated: 2021/03/13 15:36:29 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@
 # define RM_PATH		"cd: error retrieving current directory\n"
 # define NO_F_D			"no such file or directory\n"
 # define ARG_NOT_SUP	"env arg not supported yet\n"
-# define MANY_ARGS		"exit\ntoo many arguments\n"
-# define NUM_ARG_R		"exit\nnumeric argument required\n"
+# define MANY_ARGS		"exit: too many arguments\n"
+# define NUM_ARG_R		"exit: numeric argument required\n"
 # define NOT_IDEN		"not a valid identifier "
 # define P_DENIED		"minishell: Permission denied\n"
 # define EXPAN_ERR		"error while expanding !\n"

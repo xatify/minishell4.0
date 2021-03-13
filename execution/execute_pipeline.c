@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipeline.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:25:28 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/09 18:53:25 by keddib           ###   ########.fr       */
+/*   Updated: 2021/03/13 15:29:48 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,18 @@ void	execute_pipe(t_command *cmd, t_data *data)
 
 	name_and_args = cmd->name_and_args->content;
 	cmd->built_in = is_built_in(name_and_args);
-	if (cmd->built_in != '\0' && ft_strcmp(name_and_args, "cd") != 0)
+	if (cmd->built_in != '\0' && ft_strcmp(name_and_args, "cd") != 0 && ft_strcmp(name_and_args, "exit") != 0)
 		data->exit_status = execute_built_in(cmd->built_in, data, cmd);
 	else
 	{
 		g_pid = fork();
 		if (g_pid == 0)
-			execute_child(data, cmd);
+		{
+			if (ft_strcmp(name_and_args, "exit") == 0)
+				data->exit_status = execute_built_in(cmd->built_in, data, cmd);
+			else
+				execute_child(data, cmd);
+		}
 		else if (g_pid < 0)
 			data->exit_status = 1;
 	}
