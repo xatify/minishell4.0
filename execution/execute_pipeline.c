@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:25:28 by keddib            #+#    #+#             */
-/*   Updated: 2021/03/13 15:29:48 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/03/16 16:47:08 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		no_cmd(t_data *data, int *save_std)
 	return (1);
 }
 
-void	return_status(int *save_std, t_data *data)
+void	return_status(int *save_std, int *tmp_fd, t_data *data)
 {
 	int		status;
 
@@ -27,8 +27,10 @@ void	return_status(int *save_std, t_data *data)
 		waitpid(g_pid, &status, 0);
 	else
 		status = 0;
-	while (wait(NULL) > 0)
-		;
+	while (waitpid(-1, NULL, WNOHANG) > 0)
+	;
+	close(tmp_fd[0]);
+	close(tmp_fd[1]);
 	set_to_std(save_std);
 	g_pid = -1;
 	if (WIFEXITED(status))
@@ -86,7 +88,7 @@ void	execute_pipeline(t_data *data, t_list *cmds)
 			execute_pipe(cmd, data);
 		cmds = cmds->next;
 	}
-	return_status(save_std, data);
+	return_status(save_std, tmp_fd ,data);
 }
 
 void	execute(t_data *data)
