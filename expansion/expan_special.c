@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expan_special.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:10:21 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/08 15:35:13 by keddib           ###   ########.fr       */
+/*   Updated: 2021/03/29 17:06:51 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 void		expand_env_var(t_list **p_stack, t_list **s_stack, t_list **vars,
-							t_list *list)
+							t_list *list, char **token)
 {
 	t_list		*var_name;
 	t_env_var	*env_var;
@@ -24,7 +24,7 @@ void		expand_env_var(t_list **p_stack, t_list **s_stack, t_list **vars,
 	{
 		env_var = search_var(vars, ((t_token *)(var_name->content))->tkn);
 		if (env_var)
-			expand_token_list(list, env_var, p_stack);
+			expand_token_list(list, env_var, p_stack, token);
 		ft_lstclear(&var_name, free_token);
 	}
 }
@@ -56,7 +56,7 @@ void		handle_expand_env_var(char **token, t_list **p_stack, t_data *data,
 		else
 			break ;
 	}
-	expand_env_var(p_stack, &s_stack, &(data->env_vars), list);
+	expand_env_var(p_stack, &s_stack, &(data->env_vars), list, token);
 }
 
 void		expand_dollar_sign(char **token, t_list **p_stack, t_data *data,

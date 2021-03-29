@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 09:52:49 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/06 17:14:18 by keddib           ###   ########.fr       */
+/*   Updated: 2021/03/29 17:07:05 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 BOOL	is_single_quote_token(char *token);
 BOOL	is_double_quote_token(char *token);
 void	expand_new_tokens(char *tkn, t_list **p_stack, t_list **new_args);
-void	expand_token_list(t_list *list, t_env_var *env_var, t_list **p_stack);
+void	expand_token_list(t_list *list, t_env_var *env_var, t_list **p_stack, char **token);
 void	expand_env_var(t_list **p_stack, t_list **s_stack,
-		t_list **vars, t_list *list);
+		t_list **vars, t_list *list, char **token);
 void	expand_exit_status(t_list **p_stack, t_data *data, char **token);
 void	handle_expand_env_var(char **token, t_list **p_stack, t_data *data,
 		t_list *list);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expan_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:11:03 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/08 15:35:53 by keddib           ###   ########.fr       */
+/*   Updated: 2021/03/29 18:53:31 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void		expand_new_tokens(char *tkn, t_list **p_stack, t_list **new_args)
 
 	splits = ft_split(tkn, ' ');
 	i = 0;
-	if (splits[0])
+	if (splits[0] && (tkn[0] != ' ' || *p_stack == NULL))
 	{
 		push_str_to_stack(p_stack, splits[0]);
 		i++;
@@ -43,10 +43,12 @@ void		expand_new_tokens(char *tkn, t_list **p_stack, t_list **new_args)
 }
 
 void		expand_token_list(t_list *list, t_env_var *env_var,
-								t_list **p_stack)
+								t_list **p_stack, char **token)
 {
 	t_list		*new_args;
 	t_list		*tmp;
+	t_list		*tmp1;
+	char		*str;
 
 	new_args = NULL;
 	if (list)
@@ -56,7 +58,24 @@ void		expand_token_list(t_list *list, t_env_var *env_var,
 		{
 			tmp = list->next;
 			list->next = new_args;
-			ft_lstlast(new_args)->next = tmp;
+			if (**token == '\0')
+				ft_lstlast(new_args)->next = tmp;
+			else
+			{
+				if ((env_var->value)[ft_strlen(env_var->value) - 1] != ' ')
+				{
+					str = ft_strjoin(ft_lstlast(new_args)->content, *token);
+					free(ft_lstlast(new_args)->content);
+					ft_lstlast(new_args)->content = str;
+				}
+				else
+				{
+					tmp1 = ft_lstnew(ft_strdup(*token));
+					ft_lstlast(new_args)->next = tmp1;
+					tmp1->next = tmp;
+				}
+				**token = '\0';
+			}
 		}
 	}
 	else
