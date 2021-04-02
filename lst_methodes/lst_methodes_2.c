@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_methods_2.c                                    :+:      :+:    :+:   */
+/*   lst_methodes_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 17:51:17 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/05 17:51:54 by keddib           ###   ########.fr       */
+/*   Updated: 2021/04/02 19:19:16 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@ t_list	*ft_lstnew(void *content)
 {
 	struct s_list *new;
 
+	ft_memset(new, 0, sizeof(t_list));
 	new = (struct s_list *)malloc(sizeof(struct s_list));
 	if (new)
-	{
 		new->content = content;
-		new->next = NULL;
-	}
 	return (new);
 }
 

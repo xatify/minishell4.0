@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_methodes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 08:01:54 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/05 17:51:51 by keddib           ###   ########.fr       */
+/*   Updated: 2021/04/02 19:10:55 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,3 +55,4 @@ void	ft_lstadd_back(t_list **alst, t_list *new)
 	else
 		ft_lstlast((*alst))->next = new;
 }
+

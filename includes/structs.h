@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:13:03 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/09 18:34:51 by keddib           ###   ########.fr       */
+/*   Updated: 2021/04/02 19:31:50 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef	struct		s_list
 {
 	void			*content;
 	struct s_list	*next;
+	struct s_list	*previous;
 }					t_list;
 
 typedef	struct		s_command
@@ -69,6 +70,9 @@ typedef struct		s_data
 	int				exit_status;
 	int				input_from_file;
 	int				no_status_check;
+	t_list			*history_head;
+	t_list			*history_index;
 }					t_data;
+
 
 #endif

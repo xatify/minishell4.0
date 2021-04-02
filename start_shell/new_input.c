@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:21:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/03/11 14:28:20 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/02 19:42:37 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ void		new_input(t_data *data, char **holder)
 	data->no_status_check = 0;
 	data->input_cmd = NULL;
 	if (**holder == '\0' && !data->input_from_file)
+	{
 		ft_putstr_fd(PROMPT, STDOUT);
+	}
 	ret = get_next_line(0, &(data->input_cmd));
 	set_input_cmd(data, holder);
 	if (ret == 1 || (ret == 0 && (data->input_cmd[0] != '\0') &&
