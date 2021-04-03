@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:16:16 by keddib            #+#    #+#             */
-/*   Updated: 2021/03/13 15:36:29 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/03 12:30:19 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 # define EXPAN_ERR		"error while expanding !\n"
 # define PARSER_ERR		"error while parsing !\n"
 # define AMB_REDIRECT	": ambiguous redirect\n"
+
+typedef struct termios t_termios;
 
 int			g_pid;
 int			g_exit_status;

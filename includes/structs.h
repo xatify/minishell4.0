@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:13:03 by keddib            #+#    #+#             */
-/*   Updated: 2021/04/02 19:31:50 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/03 13:11:12 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ typedef struct		s_data
 	char			*input_cmd;
 	t_list			*parse_tree;
 	int				exit_status;
-	int				input_from_file;
+	int				in_terminal;
+	t_termios		origin;
+	t_termios		modified;
 	int				no_status_check;
 	t_list			*history_head;
 	t_list			*history_index;
