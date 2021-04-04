@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/09 18:53:19 by keddib           ###   ########.fr       */
+/*   Updated: 2021/04/04 16:43:33 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		execute_built_in(char built_in, t_data *data, t_command *cmd)
 	if (built_in == 'c')
 		ret = cd(argv[1], data);
 	else if (built_in == 'e')
-		ret = echo(argv);
+		ret = echo_(argv);
 	else if (built_in == 'n')
 		ret = env(argv[1], data->env_vars);
 	else if (built_in == 'u')

@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/03 12:29:12 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/04 16:43:04 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <sys/wait.h>
-# include <signal.h>
 # include <sys/stat.h>
 # include <dirent.h>
 # include <stdio.h>
 # include <string.h>
 # include <sys/errno.h>
 # include <termios.h>
+# include <term.h>
+# include <curses.h>
+
 
 # include "macros.h"
 # include "structs.h"

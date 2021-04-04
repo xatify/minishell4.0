@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:45:21 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/09 15:39:02 by keddib           ###   ########.fr       */
+/*   Updated: 2021/04/04 16:43:26 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		echo(char **args)
+int		echo_(char **args)
 {
 	BOOL	new_line;
 	int		i;

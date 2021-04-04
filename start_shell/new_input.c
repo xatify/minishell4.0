@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:21:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/04/03 19:08:24 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/04 17:20:33 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,46 +49,79 @@ void	non_canonical_mode(t_data *data, char **holder)
 		ft_memset(buffer, 0, 4);
 		tcsetattr(STDIN, TCSANOW, &data->modified);
 		i = read(STDIN, &buffer, 3);
+		/* QUIT SIG keep listening for input */
+		if (g_exit_status == -2)
+		{
+			g_exit_status = 0;
+			continue;
+		}
+		/* INT SIG throw the data */
 		if (g_exit_status == -1)
 		{
-			ft_putstr_fd("\n", STDERR);
 			free(*holder);
 			*holder = ft_strdup("");
 			break;
 		}
-		if (i == -1)
-		{
-			free_data(data);
-			free(*holder);
-			exit(1);
-		}
+		/* browse history up */
 		if (buffer[0] == 27 && buffer[1] == 91 && buffer[2] == 65)
 		{
-			ft_putstr_fd("UP ARROW KEY pressed\n", STDOUT);
-			exit(1);
+			if (data->history_index == NULL)
+				data->history_index =  data->history_head;
+			if (data->history_head && data->history_head->next == NULL)
+			{
+				free(*holder);
+				*holder = ft_strdup(data->history_head->content);
+				clear_line();
+				ft_putstr_fd(*holder, STDERR);
+			}
+			else if ((tmp = browse_history_up(&(data->history_index))))
+			{
+				free(*holder);
+				*holder = ft_strdup(tmp);
+				clear_line();
+				ft_putstr_fd(*holder, STDERR);
+				/*clear the line && print (*holder) */
+			}
 		}
+		/* browse history down */
 		else if (buffer[0] == 27 && buffer[1] == 91 && buffer[2] == 66)
 		{
-			ft_putstr_fd("DOWN ARROW KEY pressed\n", STDOUT);
-			exit(1);
+			if ((tmp = browse_history_down(&(data->history_index))))
+			{
+				free(*holder);
+				*holder = ft_strdup(tmp);
+				clear_line();
+				ft_putstr_fd(*holder, STDERR);
+				/*clear the line && print (*holder) */
+			}
+			else
+			{
+				free(*holder);
+				*holder = ft_strdup("");
+				clear_line();
+			}
 		}
-		else if (buffer[0] != '\n' && buffer[0] != '\x04')
+		/* append buffer to holder if buffer is not new line or buffer is EOF */
+		else if (buffer[0] != '\n' && buffer[0] != '\x04' && i == 1)
 		{
 			tmp = *holder;
 			*holder = ft_strjoin(*holder, buffer);
 			free(tmp);
-			write(STDOUT, buffer, 1);
+			write(STDOUT, buffer, STDERR);
 		}
+		/* EOF received */
 		else if (buffer[0] == '\x04')
 		{
 			tcsetattr(STDIN, TCSANOW, &data->origin);
 			write(STDERR, &"\n", 1);
 			exit(0);
 		}
-		else
+		/* buffer == new line*/
+		else if (buffer [0] == '\n')
 		{
 			write(STDOUT, buffer, 1);
 			data->input_cmd = ft_strdup(*holder);
+			add_history(&(data->history_head), &(data->history_index),  *holder);
 			free(*holder);
 			*holder = ft_strdup("");
 			break;

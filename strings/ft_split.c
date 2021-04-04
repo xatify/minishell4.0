@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 11:03:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/14 09:02:51 by keddib           ###   ########.fr       */
+/*   Updated: 2021/04/04 16:48:27 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,19 @@ static size_t	count_words(char const *str, char c)
 	return (j);
 }
 
-static void		alloc_mem(char **tab, size_t x, size_t l)
+static void		alloc_mem(char **tab_, size_t x, size_t l)
 {
-	tab[x] = (char *)malloc((l + 1) * sizeof(char));
-	if (!tab[x])
+	tab_[x] = (char *)malloc((l + 1) * sizeof(char));
+	if (!tab_[x])
 	{
 		while ((int)x >= 0)
-			free(tab[x--]);
-		free(tab);
-		tab = NULL;
+			free(tab_[x--]);
+		free(tab_);
+		tab_ = NULL;
 	}
 }
 
-static void		fill_tab(char **tab, const char *str, size_t count, char c)
+static void		fill_tab_(char **tab_, const char *str, size_t count, char c)
 {
 	size_t	x;
 	size_t	y;
@@ -59,30 +59,30 @@ static void		fill_tab(char **tab, const char *str, size_t count, char c)
 			str++;
 		while (str[l] != c && str[l])
 			l++;
-		alloc_mem(tab, x, l);
-		if (!tab)
+		alloc_mem(tab_, x, l);
+		if (!tab_)
 			break ;
 		y = -1;
 		while (++y < l)
-			tab[x][y] = str[y];
-		tab[x][y] = '\0';
+			tab_[x][y] = str[y];
+		tab_[x][y] = '\0';
 		str = str + l;
 	}
-	if (tab)
-		tab[x] = 0;
+	if (tab_)
+		tab_[x] = 0;
 }
 
 char			**ft_split(char const *str, char c)
 {
-	char	**tab;
+	char	**tab_;
 	size_t	count;
 
 	if (str == NULL)
 		return (NULL);
 	count = count_words(str, c);
-	tab = (char **)malloc((count + 1) * sizeof(char *));
-	if (!tab)
+	tab_ = (char **)malloc((count + 1) * sizeof(char *));
+	if (!tab_)
 		return (NULL);
-	fill_tab(tab, str, count, c);
-	return (tab);
+	fill_tab_(tab_, str, count, c);
+	return (tab_);
 }

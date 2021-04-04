@@ -6,13 +6,13 @@
 #    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/02/09 11:49:48 by abbouzid         ###   ########.fr        #
+#    Updated: 2021/04/04 16:59:50 by abbouzid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
 
-GCC				= gcc -Wall -Wextra -Werror
+GCC				= gcc -Wall -Wextra -Werror -ltermcap
 
 STR				= strings
 
@@ -38,6 +38,8 @@ LEXER			= lexer
 
 ENV				= environment
 
+HIST			= history
+
 SRCS			= minishell.c						\
 				$(STR)/strings.c					\
 				$(STR)/strings_2.c					\
@@ -47,6 +49,7 @@ SRCS			= minishell.c						\
 				$(STR)/ft_putstr_fd.c				\
 				$(STR)/ft_itoa.c					\
 				$(STR)/ft_strrchr.c					\
+				$(STR)/putchar.c					\
 				$(M_UTILS)/command.c				\
 				$(M_UTILS)/find_binary_path.c		\
 				$(M_UTILS)/arguments_array.c		\
@@ -85,7 +88,8 @@ SRCS			= minishell.c						\
 				$(BUILTINS)/export.c				\
 				$(BUILTINS)/export_utils.c			\
 				$(BUILTINS)/pwd.c					\
-				$(BUILTINS)/unset.c
+				$(BUILTINS)/unset.c					\
+				$(HIST)/history.c
 
 
 all:	$(NAME)

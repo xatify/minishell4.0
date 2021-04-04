@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:28:43 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/03 19:10:10 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/04 16:37:54 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ void		set_non_canonocal_mode(t_data *data)
 		data->modified.c_lflag &= ~(ICANON);
 		//data->origin.c_lflag &= ~(ECHOCTL);
 		data->modified.c_lflag &= ~(ECHO);
-		data->modified.c_cc[VMIN] = 1;
-		data->modified.c_cc[VTIME] = 0;
+		//ata->modified.c_lflag |= (ISIG);
+		data->modified.c_cc[VMIN] = 0;
+		data->modified.c_cc[VTIME] = 1;
 	}
 }
 
@@ -46,6 +47,12 @@ t_data		*start_shell(int argc, char **argv, char **envp, char **holder)
 	if (!(data = (t_data *)malloc(sizeof(t_data))))
 		exit(1);
 	ft_memset(data, 0, sizeof(t_data));
+	if (!(data->termtype = getenv("TERM")) || tgetent(0, data->termtype) != 1)
+	{
+		free_data(data);
+		exit(1);
+	}
+
 	set_non_canonocal_mode(data);
 	if (!(data->env_vars = build_env_vars(envp)) || !(*holder = ft_strdup("")))
 	{
