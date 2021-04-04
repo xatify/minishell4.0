@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:13:03 by keddib            #+#    #+#             */
-/*   Updated: 2021/04/04 16:25:08 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/04 19:14:12 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,16 @@ typedef struct		s_env_var
 	char			*value;
 }					t_env_var;
 
+typedef	struct		s_termc
+{
+	char			*up_key;
+	char			*down_key;
+	char			*left_key;
+	char			*right_key;
+	char			*erase;
+	char			*clear_line;
+}					t_termc;
+
 typedef struct		s_data
 {
 	t_list			*env_vars;
@@ -75,7 +85,7 @@ typedef struct		s_data
 	t_list			*history_index;
 	char			*termtype;
 	int				no_status_check;
+	t_termc			*termc;
 }					t_data;
-
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 19:08:34 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/04 17:15:55 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/04 19:16:09 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,9 @@ char	*browse_history_down(t_list **history_index)
 }
 
 
-int		clear_line (void)
+int		clear_line (t_data *data)
 {
-	char *clear_line;
-
-	if (!(clear_line = tgetstr("dl", 0)))
-		return (0);
-	tputs(clear_line, 1, putchar_2);
+	tputs(data->termc->clear_line, 1, putchar_2);
 	ft_putstr_fd(PROMPT, STDERR);
 	return (1);
 }
