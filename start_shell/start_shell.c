@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:28:43 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/04 19:33:24 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/05 17:12:55 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,30 @@ BOOL		set_non_canonocal_mode(t_data *data)
 		tcgetattr(STDIN, &data->origin);
 		tcgetattr(STDIN, &data->modified);
 		data->modified.c_lflag &= ~(ICANON);
-		//data->origin.c_lflag &= ~(ECHOCTL);
 		data->modified.c_lflag &= ~(ECHO);
-		//ata->modified.c_lflag |= (ISIG);
 		data->modified.c_cc[VMIN] = 0;
-		data->modified.c_cc[VTIME] = 1;
-		ft_memset(&(data->termc), 0, sizeof(t_termc));
+		data->modified.c_cc[VTIME] = 0;
 		if (!(data->termc = malloc(sizeof(t_termc))))
 			return (FALSE);
+		ft_memset(data->termc, 0, sizeof(t_termc));
+		char *tmp;
+
+		if (!(tmp = tgetstr("ks", 0)))
+		{
+			printf("not present");
+			exit(1);
+		}
+		tputs(tmp, 1, putchar_2);
 		if (!(data->termc->clear_line = tgetstr("dl", 0))
 			|| !(data->termc->erase = tgetstr("dc", 0))
-			|| !(data->termc->left_key = tgetstr("kl", 0))
-			|| !(data->termc->right_key = tgetstr("kr", 0))
+			|| !(data->termc->left_key = tgetstr("le", 0))
+			|| !(data->termc->right_key = tgetstr("nd", 0))
 			|| !(data->termc->up_key = tgetstr("ku", 0))
-			|| !(data->termc->down_key = tgetstr("kd", 0)))
+			|| !(data->termc->down_key = tgetstr("kd", 0))
+			|| !(data->termc->cariage_return = tgetstr("cr", 0)))
 			return (FALSE);
 
 	}
-	ft_putstr_fd(data->termc->up_key, 2);
 	return (TRUE);
 }
 

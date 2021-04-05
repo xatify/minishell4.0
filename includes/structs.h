@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:13:03 by keddib            #+#    #+#             */
-/*   Updated: 2021/04/04 19:14:12 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/05 13:42:48 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef	struct		s_termc
 	char			*left_key;
 	char			*right_key;
 	char			*erase;
+	char			*cariage_return;
 	char			*clear_line;
 }					t_termc;
 

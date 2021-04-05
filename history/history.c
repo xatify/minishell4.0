@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 19:08:34 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/04 19:16:09 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/05 15:52:57 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,10 @@ char	*browse_history_down(t_list **history_index)
 }
 
 
-int		clear_line (t_data *data)
+int		clear_line(t_data *data)
 {
 	tputs(data->termc->clear_line, 1, putchar_2);
+	tputs(data->termc->cariage_return, 1, putchar_2);
 	ft_putstr_fd(PROMPT, STDERR);
 	return (1);
 }
