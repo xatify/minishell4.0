@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:13:03 by keddib            #+#    #+#             */
-/*   Updated: 2021/04/05 13:42:48 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/06 14:41:10 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,10 @@ typedef	struct		s_termc
 {
 	char			*up_key;
 	char			*down_key;
-	char			*left_key;
-	char			*right_key;
-	char			*erase;
 	char			*cariage_return;
 	char			*clear_line;
+	char			*keyend;
+	char			*keystart;
 }					t_termc;
 
 typedef struct		s_data
@@ -84,7 +83,6 @@ typedef struct		s_data
 	t_termios		modified;
 	t_list			*history_head;
 	t_list			*history_index;
-	char			*termtype;
 	int				no_status_check;
 	t_termc			*termc;
 }					t_data;

@@ -1,0 +1,5 @@
+- exit must be modified to handle the saving of history
+- all built in functions inside pipeline must be forked
+- the structure of execution must one executor
+- $a$b expansions is not good yet
+

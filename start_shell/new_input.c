@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:21:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/04/05 17:37:37 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/06 15:29:47 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	non_canonical_mode(t_data *data, char **holder)
 	char	buffer[4];
 	int		i;
 
+	tputs(data->termc->keystart, 1, putchar_2);
 	while (TRUE)
 	{
 		ft_memset(buffer, 0, 4);
@@ -91,14 +92,5 @@ void		new_input(t_data *data, char **holder)
 		ret = get_next_line(STDIN, &data->input_cmd);
 		if (ret == 1 || (ret == 0 && (data->input_cmd[0] != '\0')))
 			hundle_input(data, holder);
-		else if (ret == 0 && (data->input_cmd[0] == '\0'))
-		{
-			if (data->in_terminal)
-				ft_putstr_fd("exit\n", STDOUT);
-			free_data(data);
-			exit(0);
-		}
-		else if (data->in_terminal)
-			*holder = ft_strdup(data->input_cmd);
 	}
 }

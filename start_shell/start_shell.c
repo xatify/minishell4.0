@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:28:43 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/05 17:12:55 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/06 14:42:39 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@ void		free_data(t_data *data)
 	ft_lstclear(&(data->env_vars), free_env_var);
 	ft_lstclear(&(data->unset_vars), free);
 	ft_lstclear(&(data->parse_tree), free_pipeline);
+	ft_lstclear(&(data->history_head), free);
+	if (data->termc)
+	{
+		free(data->termc->cariage_return);
+		free(data->termc->up_key);
+		free(data->termc->down_key);
+		free(data->termc->clear_line);
+		free(data->termc->keyend);
+	}
 	if (data->input_cmd)
 		free(data->input_cmd);
 	free(data);
@@ -24,10 +33,20 @@ void		free_data(t_data *data)
 
 BOOL		set_non_canonocal_mode(t_data *data)
 {
+	char	*termtype;
+	int i;
+
 	if(isatty(STDIN))
 	{
-		if (!(data->termtype = getenv("TERM")) || tgetent(0, data->termtype) != 1)
+		termtype = getenv("TERM");
+		// if (!termtype)
+		// 	exit(1);
+		i = tgetent(0, termtype);
+		if (i != 1)
 			return (FALSE);
+		if (!(data->termc = malloc(sizeof(t_termc))))
+			return (FALSE);
+		ft_memset((data->termc), 0, sizeof(t_termc));
 		data->in_terminal = 1;
 		tcgetattr(STDIN, &data->origin);
 		tcgetattr(STDIN, &data->modified);
@@ -35,26 +54,14 @@ BOOL		set_non_canonocal_mode(t_data *data)
 		data->modified.c_lflag &= ~(ECHO);
 		data->modified.c_cc[VMIN] = 0;
 		data->modified.c_cc[VTIME] = 0;
-		if (!(data->termc = malloc(sizeof(t_termc))))
-			return (FALSE);
-		ft_memset(data->termc, 0, sizeof(t_termc));
-		char *tmp;
-
-		if (!(tmp = tgetstr("ks", 0)))
-		{
-			printf("not present");
-			exit(1);
-		}
-		tputs(tmp, 1, putchar_2);
-		if (!(data->termc->clear_line = tgetstr("dl", 0))
-			|| !(data->termc->erase = tgetstr("dc", 0))
-			|| !(data->termc->left_key = tgetstr("le", 0))
-			|| !(data->termc->right_key = tgetstr("nd", 0))
+		if (!(data->termc->keystart = tgetstr("ks", 0))
+			|| !(data->termc->clear_line = tgetstr("dl", 0))
 			|| !(data->termc->up_key = tgetstr("ku", 0))
 			|| !(data->termc->down_key = tgetstr("kd", 0))
-			|| !(data->termc->cariage_return = tgetstr("cr", 0)))
+			|| !(data->termc->cariage_return = tgetstr("cr", 0))
+			|| !(data->termc->keyend = tgetstr("ke", 0)))
 			return (FALSE);
-
+		data->in_terminal = 1;
 	}
 	return (TRUE);
 }
@@ -70,7 +77,6 @@ t_data		*start_shell(int argc, char **argv, char **envp, char **holder)
 	ft_memset(data, 0, sizeof(t_data));
 	if (!set_non_canonocal_mode(data))
 	{
-		///// free_data needs checking for unfreed pointer
 		free_data(data);
 		exit(1);
 	}

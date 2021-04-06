@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 15:53:31 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/05 17:37:13 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/06 13:40:29 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		set_sig(char **holder, t_data *data)
 void	history_up(char **holder, t_data *data)
 {
 	char *tmp;
-	
+
 	if (data->history_index == NULL)
 		data->history_index =  data->history_head;
 	if (data->history_head && data->history_head->next == NULL)
@@ -79,7 +79,7 @@ void	end_of_file(t_data *data, char *holder)
 	{
 		ft_putstr_fd("\nexit\n", STDERR);
 		tcsetattr(STDIN, TCSANOW, &data->origin);
-		free_data(data);
+		save_history(data);
 		exit(0);
 	}
 }

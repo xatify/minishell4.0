@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 19:03:19 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/05 17:19:02 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/06 12:22:06 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,9 @@ void	delete_char(char **holder, t_data *data);
 void	end_of_file(t_data *data, char *holder);
 void	append_to_holder(char *buffer, char **holder, t_data *data);
 void	return_input(t_data *data, char *holder);
+char	*path_to_hist(void);
+void	get_history_from_file(int fd, t_data *data);
+void	build_history(t_data *data);
+void	save_history(t_data *data);
 
 #endif
