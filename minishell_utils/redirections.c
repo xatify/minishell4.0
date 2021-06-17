@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 09:19:07 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/09 15:41:34 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/09 12:06:13 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int					redirect_std(t_command *cmd, int *tmp_fd)
 	t_list			*tmp;
 	t_redirection	*redirection;
 
+	tmp_fd[0] = -1;
+	tmp_fd[1] = -1;
 	tmp = cmd->redirections;
 	while (tmp)
 	{

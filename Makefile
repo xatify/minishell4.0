@@ -6,13 +6,13 @@
 #    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/04/05 16:39:21 by abbouzid         ###   ########.fr        #
+#    Updated: 2021/06/17 15:08:40 by abbouzid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
 
-GCC				= gcc -Wall -Wextra -Werror -ltermcap
+GCC				= gcc -Wall -Wextra -Werror -ltermcap -fsanitize=address
 
 STR				= strings
 
@@ -73,8 +73,8 @@ SRCS			= minishell.c						\
 				$(EXPN)/expan_unquoted.c			\
 				$(EXPN)/expan_special.c				\
 				$(EXPN)/expan_token.c				\
-				$(EXCT)/execute_cmd.c				\
 				$(EXCT)/execute_pipeline.c			\
+				$(EXCT)/execute_cmd.c				\
 				$(LEXER)/lexer.c					\
 				$(LEXER)/tokenizer.c				\
 				$(ENV)/build_env_var.c				\
@@ -90,7 +90,7 @@ SRCS			= minishell.c						\
 				$(BUILTINS)/pwd.c					\
 				$(BUILTINS)/unset.c					\
 				$(HIST)/history.c					\
-				$(HIST)/line_editing.c
+				$(HIST)/line_editing.c				\
 
 
 all:	$(NAME)

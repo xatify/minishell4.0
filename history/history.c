@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 19:08:34 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/06 18:38:11 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/06 15:32:18 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ void	get_history_from_file(int fd, t_data *data)
 		if (ret == 0)
 			break;
 	}
-
 }
 
 void	build_history(t_data *data)
@@ -142,7 +141,6 @@ void	save_history(t_data *data)
 	fd = open(HIST_FILE, O_CREAT | O_TRUNC, 0666);
 	close(fd);
 	fd = open(HIST_FILE, O_APPEND | O_CREAT | O_RDWR, 0666);
-	printf("%d\n", fd);
 	if (fd >= 0)
 	{
 		history_tail(data);

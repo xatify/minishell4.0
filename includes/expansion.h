@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 09:52:49 by keddib            #+#    #+#             */
-/*   Updated: 2021/03/29 17:07:05 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/08 16:29:42 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 BOOL	is_single_quote_token(char *token);
 BOOL	is_double_quote_token(char *token);
-void	expand_new_tokens(char *tkn, t_list **p_stack, t_list **new_args);
+void	expand_new_tokens(char *tkn, t_list **p_stack, t_list **new_args, t_list *list);
 void	expand_token_list(t_list *list, t_env_var *env_var, t_list **p_stack, char **token);
 void	expand_env_var(t_list **p_stack, t_list **s_stack,
 		t_list **vars, t_list *list, char **token);

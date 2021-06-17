@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:25:28 by keddib            #+#    #+#             */
-/*   Updated: 2021/03/16 16:47:08 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/17 15:53:12 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,21 @@
 int		no_cmd(t_data *data, int *save_std)
 {
 	data->exit_status = 0;
-	set_to_std(save_std);
 	return (1);
 }
 
 void	return_status(int *save_std, int *tmp_fd, t_data *data)
 {
 	int		status;
+	//int ret;
 
 	if (data->no_status_check == 0)
 		waitpid(g_pid, &status, 0);
 	else
 		status = 0;
-	while (waitpid(-1, NULL, WNOHANG) > 0)
+	//while (wait(NULL) > 0)
+	//;
+	while (waitpid(-1, NULL, 0) > 0)
 	;
 	close(tmp_fd[0]);
 	close(tmp_fd[1]);

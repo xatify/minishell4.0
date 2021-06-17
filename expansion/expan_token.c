@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:11:03 by keddib            #+#    #+#             */
-/*   Updated: 2021/03/29 18:53:31 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/08 16:41:13 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ BOOL		is_double_quote_token(char *token)
 	return ((token[0] == '"') ? TRUE : FALSE);
 }
 
-void		expand_new_tokens(char *tkn, t_list **p_stack, t_list **new_args)
+void		expand_new_tokens(char *tkn, t_list **p_stack, t_list **new_args, t_list *list)
 {
 	int		i;
 	char	**splits;
+	t_list	*tmp;
+	t_list 	*tmp2;
 
 	splits = ft_split(tkn, ' ');
 	i = 0;
@@ -33,6 +35,15 @@ void		expand_new_tokens(char *tkn, t_list **p_stack, t_list **new_args)
 	{
 		push_str_to_stack(p_stack, splits[0]);
 		i++;
+	}
+	else if (splits[0] && tkn[0] == ' ' && top_stack(p_stack) != '\0')
+	{
+		tmp2 = ft_lstnew(str_from_stack(p_stack));
+		tmp = list;
+		list->previous->next = tmp2;
+		tmp2->previous = list->previous;
+		tmp2->next = list;
+		list->previous = tmp2;
 	}
 	while (splits[i])
 	{
@@ -53,7 +64,7 @@ void		expand_token_list(t_list *list, t_env_var *env_var,
 	new_args = NULL;
 	if (list)
 	{
-		expand_new_tokens(env_var->value, p_stack, &new_args);
+		expand_new_tokens(env_var->value, p_stack, &new_args, list);
 		if (new_args != NULL)
 		{
 			tmp = list->next;

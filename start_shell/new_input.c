@@ -6,25 +6,16 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:21:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/04/06 15:29:47 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/17 15:14:54 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
-void		handl_signals_exit_status(t_data *data)
-{
-	if (g_exit_status < 0)
-	{
-		data->exit_status = 1;
-		g_exit_status = 0;
-	}
-}
-
 void		hundle_input(t_data *data, char **holder)
 {
 	data->input_cmd = ft_strdup(*holder);
+	free((*holder));
 	if (data->input_cmd[0] != '\0')
 	{
 		if (!(data->parse_tree = parser(data->input_cmd)))
@@ -79,18 +70,17 @@ void		new_input(t_data *data, char **holder)
 
 	data->no_status_check = 0;
 	data->input_cmd = NULL;
-	if (data->in_terminal)
-	{
+	//if (data->in_terminal)
+	//{
 		ft_putstr_fd(PROMPT, STDERR);
-		non_canonical_mode(data, holder);
-		tcsetattr(STDIN, TCSANOW, &data->origin);
-		hundle_input(data, holder);
-		//ft_putchar_fd('\n', STDERR);
-	}
-	else
-	{
-		ret = get_next_line(STDIN, &data->input_cmd);
-		if (ret == 1 || (ret == 0 && (data->input_cmd[0] != '\0')))
+		//non_canonical_mode(data, holder);
+		//tcsetattr(STDIN, TCSANOW, &data->origin);
+		//hundle_input(data, holder);
+	// }
+	// else
+	// {
+		ret = get_next_line(0, holder);
+		if (ret == 1 || (ret == 0 && (*holder[0] != '\0')))
 			hundle_input(data, holder);
-	}
+	// }
 }

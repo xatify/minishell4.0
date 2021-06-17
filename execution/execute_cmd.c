@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/04 16:43:33 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/17 15:54:55 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int		execute_built_in(char built_in, t_data *data, t_command *cmd)
 	int		ret;
 	char	**argv;
 
+	
 	argv = built_argv(cmd);
 	ret = 0;
 	if (built_in == 'c')
@@ -92,21 +93,10 @@ int		execute_binary(t_data *data, t_command *cmd)
 void	execute_simple_cmd(t_data *data, t_pipeline *pipeline)
 {
 	t_command	*cmd;
-	int			save_std[2];
-	int			tmp_fd[2];
 	char		*name_and_args;
 
-	save_std[0] = dup(STDIN);
-	save_std[1] = dup(STDOUT);
 	if ((cmd = (t_command *)(pipeline->cmds->content)))
 	{
-		if (!simple_cmd_file_redirection(cmd, save_std, tmp_fd))
-		{
-			data->exit_status = 1;
-			return ;
-		}
-		if (!cmd->name_and_args && no_cmd(data, save_std))
-			return ;
 		name_and_args = cmd->name_and_args->content;
 		cmd->built_in = is_built_in(name_and_args);
 		if (cmd->built_in != '\0')

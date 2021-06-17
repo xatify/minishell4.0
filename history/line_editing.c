@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 15:53:31 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/06 13:40:29 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/07 12:13:52 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,12 @@ void	end_of_file(t_data *data, char *holder)
 {
 	if (*holder == '\0')
 	{
+		tputs(data->termc->keyend, 1, putchar_2);
+		free(holder);
 		ft_putstr_fd("\nexit\n", STDERR);
 		tcsetattr(STDIN, TCSANOW, &data->origin);
 		save_history(data);
+		free_data(data);
 		exit(0);
 	}
 }

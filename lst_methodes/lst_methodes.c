@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 08:01:54 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/04 14:48:46 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/08 16:35:03 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,15 @@ void	ft_lstadd_front(t_list **alst, t_list *new)
 
 void	ft_lstadd_back(t_list **alst, t_list *new)
 {
+	t_list *tmp;
+
 	if (!(*alst))
 		(*alst) = new;
 	else
-		ft_lstlast((*alst))->next = new;
+	{
+		tmp = ft_lstlast(*alst);
+		new->previous = tmp;
+		tmp->next = new;
+	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:25:50 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/06 12:29:48 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/04/07 12:11:23 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ int		exit_(t_data *data, char **argv)
 		status = ft_atoi(argv[1], &ex);
 		if ((ex == 1 || is_arg_alpha(argv[1])) && (status = 255))
 			ft_putstr_fd(NUM_ARG_R, STDERR);
+	}
+	if (data->in_terminal)
+	{
+		tputs(data->termc->keyend, 1, putchar_2);
+		save_history(data);
 	}
 	free_data(data);
 	free_argv(argv);
