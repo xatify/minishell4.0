@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:25:28 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/17 15:53:12 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/17 16:14:16 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int		no_cmd(t_data *data, int *save_std)
 {
 	data->exit_status = 0;
+	set_to_std(save_std);
 	return (1);
 }
 

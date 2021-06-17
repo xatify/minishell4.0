@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/17 15:54:55 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/17 16:17:26 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,26 @@ int		execute_built_in(char built_in, t_data *data, t_command *cmd)
 {
 	int		ret;
 	char	**argv;
+	int		fds[2];
+	int		tmp_std[2];
 
-	
+	ft_memset(tmp_std, -1, 2);
+	if (!redirect_std(cmd, fds))
+		return (1);
+	if (fds[0] != -1)
+	{
+		tmp_std[0] = dup(0);
+		close(0);
+		dup(fds[0]);
+		close(fds[0]);
+	}
+	if (fds[1] != -1)
+	{
+		tmp_std[1] = dup(1);
+		close(1);
+		dup(fds[1]);
+		close(fds[1]);
+	}
 	argv = built_argv(cmd);
 	ret = 0;
 	if (built_in == 'c')
@@ -35,6 +53,18 @@ int		execute_built_in(char built_in, t_data *data, t_command *cmd)
 	else
 		ret = exit_(data, argv);
 	free_argv(argv);
+	if (fds[0] != -1)
+	{
+		close(0);
+		dup(tmp_std[0]);
+		close(tmp_std[0]);
+	}
+	if (fds[1] != -1)
+	{
+		close(1);
+		dup(tmp_std[1]);
+		close(tmp_std[1]);
+	}
 	return (ret);
 }
 
@@ -43,7 +73,22 @@ int		execute_child(t_data *data, t_command *cmd)
 	char	*path;
 	char	**argv;
 	char	**envp;
+	int		fds[2];
 
+	if (!redirect_std(cmd, fds))
+		return (1);
+	if (fds[0] != -1)
+	{
+		close(0);
+		dup(fds[0]);
+		close(fds[0]);
+	}
+	if (fds[1] != -1)
+	{
+		close(1);
+		dup(fds[1]);
+		close(fds[1]);
+	}
 	path = find_binary_file(data, cmd->name_and_args->content);
 	argv = built_argv(cmd);
 	envp = built_envp(data->env_vars);
@@ -104,5 +149,4 @@ void	execute_simple_cmd(t_data *data, t_pipeline *pipeline)
 		else
 			data->exit_status = execute_binary(data, cmd);
 	}
-	set_to_std(save_std);
 }
