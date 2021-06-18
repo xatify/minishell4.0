@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/09 15:56:02 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 08:49:47 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ int			expand_redirections(t_list *redirections, t_data *data)
 int			expand_cmd(t_list *cmds, t_data *data)
 {
 	t_command	*cmd;
+	char		*name;
+	t_list		*tmp;
 
 	if (cmds)
 	{
@@ -100,6 +102,18 @@ int			expand_cmd(t_list *cmds, t_data *data)
 		if (expand_list(cmd->name_and_args, data) &&
 			expand_redirections(cmd->redirections, data))
 		{
+			if (cmd->name_and_args)
+			{
+				name = cmd->name_and_args->content;
+				if (name[0] == '\0')
+				{
+					tmp = cmd->name_and_args->next;
+					free(name);
+					free(cmd->name_and_args);
+					cmd->name_and_args = NULL;
+					*(&(cmd->name_and_args)) = tmp;
+				}
+			}
 			return (expand_cmd(cmds->next, data));
 		}
 		return (0);

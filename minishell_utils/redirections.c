@@ -6,7 +6,7 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 09:19:07 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/09 12:06:13 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 07:09:08 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,39 @@ int					redirect_std(t_command *cmd, int *tmp_fd)
 		tmp = tmp->next;
 	}
 	return (1);
+}
+
+int		simple_cmd_streaming(t_command *cmd, int *tmp_std)
+{
+	int		fds[2];
+	int		built_in;
+
+	if (cmd->name_and_args)
+	{
+		built_in = cmd->built_in;
+		if (tmp_std)
+		{
+			tmp_std[0] = -1;
+			tmp_std[1] = -1;
+		}
+	}
+	if (!redirect_std(cmd, fds))
+		return (1);
+	if (fds[0] != -1)
+	{
+		if (built_in)
+			tmp_std[0] = dup(0);
+		close(0);
+		dup(fds[0]);
+		close(fds[0]);
+	}
+	if (fds[1] != -1)
+	{
+		if (built_in)
+			tmp_std[1] = dup(1);
+		close(1);
+		dup(fds[1]);
+		close(fds[1]);
+	}
+	return (0);
 }

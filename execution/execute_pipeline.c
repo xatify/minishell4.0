@@ -6,92 +6,166 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:25:28 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/17 16:14:16 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 08:42:18 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		no_cmd(t_data *data, int *save_std)
+void	set_std_stream(int std, int fd)
 {
-	data->exit_status = 0;
-	set_to_std(save_std);
-	return (1);
+	close(std);
+	dup(fd);
+	close(fd);
 }
 
-void	return_status(int *save_std, int *tmp_fd, t_data *data)
+void	first_child(t_command *cmd, int *pipe_fds, int *file_fds)
+{
+	if (!redirect_std(cmd, file_fds))
+	{
+		close(pipe_fds[0]);
+		close(pipe_fds[1]);
+		exit(1);
+	}
+	if (file_fds[0] != -1)
+		set_std_stream(0, file_fds[0]);
+	if (file_fds[1] != -1)
+	{
+		set_std_stream(1, file_fds[1]);
+		close(pipe_fds[1]);
+	}
+	else
+		set_std_stream(1, pipe_fds[1]);
+	close(pipe_fds[0]);
+}
+
+void	middle_child(t_command *cmd, int *pipe_fds, int *file_fds, int in_tmp)
+{
+	if (!redirect_std(cmd, file_fds))
+	{
+		close(in_tmp);
+		close(pipe_fds[1]);
+		exit(1);
+	}
+
+	if (file_fds[0] != -1)
+	{
+		close(in_tmp);
+		set_std_stream(0, file_fds[0]);
+	}
+	else
+		set_std_stream(0, in_tmp);
+	if (file_fds[1] != -1)
+	{
+		close(pipe_fds[1]);
+		set_std_stream(1, file_fds[1]);
+	}
+	else
+		set_std_stream(1, pipe_fds[1]);
+}
+
+void	last_child(t_command *cmd, int *file_fds, int in_tmp)
+{
+	if (!redirect_std(cmd, file_fds))
+	{
+		close(in_tmp);
+		exit(1);
+	}
+	if (file_fds[0] != -1)
+	{
+		close(in_tmp);
+		set_std_stream(0, file_fds[0]);
+	}
+	else
+		set_std_stream(0, in_tmp);
+	if (file_fds[1] != -1)
+		set_std_stream(1, file_fds[1]);
+}
+
+void	piping_to_child(t_command *cmd, int *pipe_fd, t_list *cmds, int i, int in_tmp)
+{
+	int		file_fds[2];
+
+	file_fds[0] = -1;
+	file_fds[1] = -1;
+	if (i == 0)
+		first_child(cmd, pipe_fd, file_fds);
+	else if (cmds->next)
+		middle_child(cmd, pipe_fd, file_fds, in_tmp);
+	else
+		last_child(cmd, file_fds, in_tmp);
+}
+
+void	run_child_pipe(t_list *cmds, int *pipe_fds, int i, int in_tmp, t_data *data)
+{
+	t_command	*cmd;
+	char		**argv;
+	char		**envp;
+	int			ret;
+
+	cmd = (t_command *)(cmds->content);
+	piping_to_child(cmd, pipe_fds, cmds, i, in_tmp);
+	if (cmd->name_and_args)
+	{
+		cmd->built_in = is_built_in(cmd->name_and_args);
+		argv = built_argv(cmd);
+		envp = built_envp(data->env_vars);
+		if (cmd->built_in != '\0')
+			exit(run_build_in(data, argv, &ret, cmd));
+		else
+			execute_child(data, cmd, argv, envp);
+	}
+	else
+		exit(0);
+}
+
+void	wait_children(t_data *data, int i)
 {
 	int		status;
-	//int ret;
 
-	if (data->no_status_check == 0)
-		waitpid(g_pid, &status, 0);
-	else
-		status = 0;
-	//while (wait(NULL) > 0)
-	//;
-	while (waitpid(-1, NULL, 0) > 0)
-	;
-	close(tmp_fd[0]);
-	close(tmp_fd[1]);
-	set_to_std(save_std);
-	g_pid = -1;
-	if (WIFEXITED(status))
-		data->exit_status = WEXITSTATUS(status);
-	else
-		data->exit_status = status;
-}
-
-void	execute_pipe(t_command *cmd, t_data *data)
-{
-	char	*name_and_args;
-
-	name_and_args = cmd->name_and_args->content;
-	cmd->built_in = is_built_in(name_and_args);
-	if (cmd->built_in != '\0' && ft_strcmp(name_and_args, "cd") != 0 && ft_strcmp(name_and_args, "exit") != 0)
-		data->exit_status = execute_built_in(cmd->built_in, data, cmd);
-	else
+	if (waitpid(g_pid, &status, 0) > 0)
 	{
-		g_pid = fork();
-		if (g_pid == 0)
-		{
-			if (ft_strcmp(name_and_args, "exit") == 0)
-				data->exit_status = execute_built_in(cmd->built_in, data, cmd);
-			else
-				execute_child(data, cmd);
-		}
-		else if (g_pid < 0)
-			data->exit_status = 1;
+		if (WIFEXITED(status))
+			data->exit_status = WEXITSTATUS(status);
+		g_pid = 0;
+	}
+	i--;
+	while (i)
+	{
+		if (waitpid(-1, &status, 0) > 0)
+			i--;
 	}
 }
 
 void	execute_pipeline(t_data *data, t_list *cmds)
 {
-	int			tmp_fd[2];
-	int			save_std[2];
-	t_command	*cmd;
+	int			pipe_fds[2];
+	int			i;
+	int			in_tmp;
 
-	set_fds(save_std, tmp_fd);
+	i = 0;
+	in_tmp = -1;
 	while (cmds)
 	{
-		cmd = (t_command *)(cmds->content);
-		if (!pipeline_stream(cmd, save_std, tmp_fd, cmds))
+		if (cmds->next)
+			if (pipe(pipe_fds) == -1)
+				exit(1);
+		g_pid = fork();
+		if (g_pid == 0)
+			run_child_pipe(cmds, pipe_fds, i, in_tmp, data);
+		else if (g_pid > 0)
 		{
-			cmds = cmds->next;
-			continue;
+			if (in_tmp != -1)
+				close(in_tmp);
+			in_tmp = pipe_fds[0];
+			close(pipe_fds[1]);
 		}
-		if (!cmd->name_and_args && cmds->next)
-		{
-			cmds = cmds->next;
-			continue;
-		}
-		if (!cmd->name_and_args && !cmds->next)
-			data->no_status_check = 1;
 		else
-			execute_pipe(cmd, data);
+			exit(1);
 		cmds = cmds->next;
+		i++;
 	}
-	return_status(save_std, tmp_fd ,data);
+	wait_children(data, i);
 }
 
 void	execute(t_data *data)

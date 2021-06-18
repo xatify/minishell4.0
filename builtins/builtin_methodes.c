@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_methodes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 10:00:32 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/05 14:14:41 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 08:04:20 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	is_built_in(char *cmd_name)
+char	is_built_in(t_list *name_args)
 {
+	char	*cmd_name;
+
+	cmd_name = name_args->content;
 	if (!ft_strcmp("cd", cmd_name))
 		return ('c');
 	else if (!ft_strcmp("echo", cmd_name))

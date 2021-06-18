@@ -6,60 +6,51 @@
 /*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/17 16:17:26 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 08:29:56 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		execute_built_in(char built_in, t_data *data, t_command *cmd)
+int		run_build_in(t_data *data, char	**argv, int *ret, t_command *cmd)
+{
+	*ret = 0;
+	if (cmd->built_in == 'c')
+		*ret = cd(argv[1], data);
+	else if (cmd->built_in == 'e')
+		*ret = echo_(argv);
+	else if (cmd->built_in == 'n')
+		*ret = env(argv[1], data->env_vars);
+	else if (cmd->built_in == 'u')
+		*ret = unset(argv, &(data->env_vars));
+	else if (cmd->built_in == 'p')
+		*ret = export(argv, data);
+	else if (cmd->built_in == 'w')
+		*ret = pwd(data);
+	else
+		*ret = exit_(data, argv);
+	return (*ret);
+}
+
+
+int		execute_built_in(t_data *data, t_command *cmd)
 {
 	int		ret;
 	char	**argv;
-	int		fds[2];
 	int		tmp_std[2];
 
-	ft_memset(tmp_std, -1, 2);
-	if (!redirect_std(cmd, fds))
+	if (simple_cmd_streaming(cmd, tmp_std))
 		return (1);
-	if (fds[0] != -1)
-	{
-		tmp_std[0] = dup(0);
-		close(0);
-		dup(fds[0]);
-		close(fds[0]);
-	}
-	if (fds[1] != -1)
-	{
-		tmp_std[1] = dup(1);
-		close(1);
-		dup(fds[1]);
-		close(fds[1]);
-	}
 	argv = built_argv(cmd);
-	ret = 0;
-	if (built_in == 'c')
-		ret = cd(argv[1], data);
-	else if (built_in == 'e')
-		ret = echo_(argv);
-	else if (built_in == 'n')
-		ret = env(argv[1], data->env_vars);
-	else if (built_in == 'u')
-		ret = unset(argv, &(data->env_vars));
-	else if (built_in == 'p')
-		ret = export(argv, data);
-	else if (built_in == 'w')
-		ret = pwd(data);
-	else
-		ret = exit_(data, argv);
+	run_build_in(data, argv, &ret, cmd);
 	free_argv(argv);
-	if (fds[0] != -1)
+	if (tmp_std[0] != -1)
 	{
 		close(0);
 		dup(tmp_std[0]);
 		close(tmp_std[0]);
 	}
-	if (fds[1] != -1)
+	if (tmp_std[1] != -1)
 	{
 		close(1);
 		dup(tmp_std[1]);
@@ -68,30 +59,11 @@ int		execute_built_in(char built_in, t_data *data, t_command *cmd)
 	return (ret);
 }
 
-int		execute_child(t_data *data, t_command *cmd)
+int		execute_child(t_data *data, t_command *cmd, char **argv, char **envp)
 {
 	char	*path;
-	char	**argv;
-	char	**envp;
-	int		fds[2];
 
-	if (!redirect_std(cmd, fds))
-		return (1);
-	if (fds[0] != -1)
-	{
-		close(0);
-		dup(fds[0]);
-		close(fds[0]);
-	}
-	if (fds[1] != -1)
-	{
-		close(1);
-		dup(fds[1]);
-		close(fds[1]);
-	}
 	path = find_binary_file(data, cmd->name_and_args->content);
-	argv = built_argv(cmd);
-	envp = built_envp(data->env_vars);
 	if (!path)
 	{
 		ft_putstr_fd("no such file or directory : ", STDERR);
@@ -122,10 +94,18 @@ int		execve_error(char *path, char **argv, char **envp)
 int		execute_binary(t_data *data, t_command *cmd)
 {
 	int		status;
+	char	**argv;
+	char	**envp;
 
+	argv = built_argv(cmd);
+	envp = built_envp(data->env_vars);
 	g_pid = fork();
 	if (g_pid == 0)
-		execute_child(data, cmd);
+	{
+		if(simple_cmd_streaming(cmd, NULL))
+			exit(1);
+		execute_child(data, cmd, argv, envp);
+	}
 	else if (g_pid < 0)
 		return (1);
 	waitpid(g_pid, &status, 0);
@@ -138,15 +118,25 @@ int		execute_binary(t_data *data, t_command *cmd)
 void	execute_simple_cmd(t_data *data, t_pipeline *pipeline)
 {
 	t_command	*cmd;
-	char		*name_and_args;
+	int			fds[2];
 
 	if ((cmd = (t_command *)(pipeline->cmds->content)))
 	{
-		name_and_args = cmd->name_and_args->content;
-		cmd->built_in = is_built_in(name_and_args);
-		if (cmd->built_in != '\0')
-			data->exit_status = execute_built_in(cmd->built_in, data, cmd);
+		if (cmd->name_and_args)
+		{
+			cmd->built_in = is_built_in(cmd->name_and_args);
+			if (cmd->built_in != '\0')
+				data->exit_status = execute_built_in(data, cmd);
+			else
+				data->exit_status = execute_binary(data, cmd);
+		}
 		else
-			data->exit_status = execute_binary(data, cmd);
+		{
+			data->exit_status = !redirect_std(cmd, fds);
+			if (fds[0] != -1)
+				close(fds[0]);
+			if (fds[1] != -1)
+				close(fds[1]);
+		}
 	}
 }
