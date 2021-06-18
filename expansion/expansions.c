@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/18 08:49:47 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 11:31:00 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char		*expand(t_list *list, t_data *data, int *error)
+char	*expand(t_list *list, t_data *data, int *error)
 {
 	t_list			*stack;
 	char			**token;
@@ -37,7 +37,7 @@ char		*expand(t_list *list, t_data *data, int *error)
 	return (handle_expansion(&stack, *error));
 }
 
-int			expand_list(t_list *list, t_data *data)
+int	expand_list(t_list *list, t_data *data)
 {
 	int			error;
 	char		*tmp;
@@ -61,7 +61,7 @@ int			expand_list(t_list *list, t_data *data)
 	return (1);
 }
 
-int			expand_redirections(t_list *redirections, t_data *data)
+int	expand_redirections(t_list *redirections, t_data *data)
 {
 	t_list			*tmp_list;
 	t_redirection	*redirection;
@@ -90,7 +90,7 @@ int			expand_redirections(t_list *redirections, t_data *data)
 	return (1);
 }
 
-int			expand_cmd(t_list *cmds, t_data *data)
+int	expand_cmd(t_list *cmds, t_data *data)
 {
 	t_command	*cmd;
 	char		*name;
@@ -99,8 +99,8 @@ int			expand_cmd(t_list *cmds, t_data *data)
 	if (cmds)
 	{
 		cmd = (t_command *)(cmds->content);
-		if (expand_list(cmd->name_and_args, data) &&
-			expand_redirections(cmd->redirections, data))
+		if (expand_list(cmd->name_and_args, data)
+			&& expand_redirections(cmd->redirections, data))
 		{
 			if (cmd->name_and_args)
 			{
@@ -121,7 +121,7 @@ int			expand_cmd(t_list *cmds, t_data *data)
 	return (1);
 }
 
-int			expand_pipeline(t_pipeline *pipline, t_data *data)
+int	expand_pipeline(t_pipeline *pipline, t_data *data)
 {
 	return (expand_cmd(pipline->cmds, data));
 }

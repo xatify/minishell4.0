@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_methodes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 08:01:54 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/08 16:35:03 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 12:18:52 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *))
 
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	t_list *node;
-	t_list *nex;
+	t_list	*node;
+	t_list	*nex;
 
 	node = (*lst);
 	while (node && del)
@@ -50,7 +50,7 @@ void	ft_lstadd_front(t_list **alst, t_list *new)
 
 void	ft_lstadd_back(t_list **alst, t_list *new)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	if (!(*alst))
 		(*alst) = new;
@@ -61,4 +61,3 @@ void	ft_lstadd_back(t_list **alst, t_list *new)
 		tmp->next = new;
 	}
 }
-

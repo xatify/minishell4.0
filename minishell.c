@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 08:18:25 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/06 13:59:24 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 10:56:59 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int		main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
 	char	*holder;

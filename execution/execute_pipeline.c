@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipeline.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:25:28 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/18 08:42:18 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 18:30:40 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	middle_child(t_command *cmd, int *pipe_fds, int *file_fds, int in_tmp)
 		close(pipe_fds[1]);
 		exit(1);
 	}
-
 	if (file_fds[0] != -1)
 	{
 		close(in_tmp);
@@ -82,21 +81,23 @@ void	last_child(t_command *cmd, int *file_fds, int in_tmp)
 		set_std_stream(1, file_fds[1]);
 }
 
-void	piping_to_child(t_command *cmd, int *pipe_fd, t_list *cmds, int i, int in_tmp)
+void	piping_to_child(t_command *cmd, int *pipe_fd, t_list *cmds,
+		int index_in_tmp[2])
 {
 	int		file_fds[2];
 
 	file_fds[0] = -1;
 	file_fds[1] = -1;
-	if (i == 0)
+	if (index_in_tmp[0] == 0)
 		first_child(cmd, pipe_fd, file_fds);
 	else if (cmds->next)
-		middle_child(cmd, pipe_fd, file_fds, in_tmp);
+		middle_child(cmd, pipe_fd, file_fds, index_in_tmp[1]);
 	else
-		last_child(cmd, file_fds, in_tmp);
+		last_child(cmd, file_fds, index_in_tmp[1]);
 }
 
-void	run_child_pipe(t_list *cmds, int *pipe_fds, int i, int in_tmp, t_data *data)
+void	run_child_pipe(t_list *cmds, int *pipe_fds, int index_in_tmp[2],
+						t_data *data)
 {
 	t_command	*cmd;
 	char		**argv;
@@ -104,7 +105,7 @@ void	run_child_pipe(t_list *cmds, int *pipe_fds, int i, int in_tmp, t_data *data
 	int			ret;
 
 	cmd = (t_command *)(cmds->content);
-	piping_to_child(cmd, pipe_fds, cmds, i, in_tmp);
+	piping_to_child(cmd, pipe_fds, cmds, index_in_tmp);
 	if (cmd->name_and_args)
 	{
 		cmd->built_in = is_built_in(cmd->name_and_args);
@@ -140,11 +141,10 @@ void	wait_children(t_data *data, int i)
 void	execute_pipeline(t_data *data, t_list *cmds)
 {
 	int			pipe_fds[2];
-	int			i;
-	int			in_tmp;
+	int			index_in_tmp[2];
 
-	i = 0;
-	in_tmp = -1;
+	index_in_tmp[0] = 0;
+	index_in_tmp[1] = -1;
 	while (cmds)
 	{
 		if (cmds->next)
@@ -152,20 +152,20 @@ void	execute_pipeline(t_data *data, t_list *cmds)
 				exit(1);
 		g_pid = fork();
 		if (g_pid == 0)
-			run_child_pipe(cmds, pipe_fds, i, in_tmp, data);
+			run_child_pipe(cmds, pipe_fds, index_in_tmp, data);
 		else if (g_pid > 0)
 		{
-			if (in_tmp != -1)
-				close(in_tmp);
-			in_tmp = pipe_fds[0];
+			if (index_in_tmp[1] != -1)
+				close(index_in_tmp[1]);
+			index_in_tmp[1] = pipe_fds[0];
 			close(pipe_fds[1]);
 		}
 		else
 			exit(1);
 		cmds = cmds->next;
-		i++;
+		index_in_tmp[0]++;
 	}
-	wait_children(data, i);
+	wait_children(data, index_in_tmp[0]);
 }
 
 void	execute(t_data *data)

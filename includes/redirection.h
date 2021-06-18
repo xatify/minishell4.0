@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 10:25:23 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/18 06:05:20 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 12:16:46 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OUTPUT_REDIRECTION_H
-# define OUTPUT_REDIRECTION_H
+#ifndef REDIRECTION_H
+# define REDIRECTION_H
 
 /*
 ** creating output files and redirecting to the right file

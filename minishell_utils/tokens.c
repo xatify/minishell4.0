@@ -6,25 +6,26 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:43:36 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/08 17:17:35 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 12:25:54 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char		*g_operators[5] = {">", "<", ">>", "|", ";"};
+char	*g_operators[5] = {">", "<", ">>", "|", ";"};
 
-t_token		*new_token(char **str)
+t_token	*new_token(char **str)
 {
 	t_token		*token;
 
-	if (!(token = (t_token *)malloc(sizeof(t_token))))
+	token = (t_token *)malloc(sizeof(t_token));
+	if (!token)
 		return (NULL);
 	token->tkn = (*str);
 	return (token);
 }
 
-void		del_token_head(t_list **tokens)
+void	del_token_head(t_list **tokens)
 {
 	t_list		*tmp;
 
@@ -33,7 +34,7 @@ void		del_token_head(t_list **tokens)
 	(*tokens) = tmp;
 }
 
-int			token_id(char *token)
+int	token_id(char *token)
 {
 	int		i;
 
@@ -47,7 +48,7 @@ int			token_id(char *token)
 	return (WORD);
 }
 
-int			identify_all_tokens(t_list *tokens)
+int	identify_all_tokens(t_list *tokens)
 {
 	t_token		*token;
 
@@ -61,11 +62,11 @@ int			identify_all_tokens(t_list *tokens)
 				return (1);
 			if (!(tokens->next))
 				return (0);
-			if ((token->id == SEMICOLON || token->id == PIPE) &&
-				token_id(((t_token *)((tokens->next)->content))->tkn) <= 2)
+			if ((token->id == SEMICOLON || token->id == PIPE)
+				&& token_id(((t_token *)((tokens->next)->content))->tkn) <= 2)
 			{
 				tokens = tokens->next;
-				continue;
+				continue ;
 			}
 			if (token_id(((t_token *)((tokens->next)->content))->tkn) != WORD)
 				return (0);
@@ -75,7 +76,7 @@ int			identify_all_tokens(t_list *tokens)
 	return (1);
 }
 
-void		free_token(void *token)
+void	free_token(void *token)
 {
 	free(((t_token *)token)->tkn);
 	free(token);

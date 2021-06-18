@@ -3,31 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   expan_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:11:03 by keddib            #+#    #+#             */
-/*   Updated: 2021/04/08 16:41:13 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 18:45:25 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-BOOL		is_single_quote_token(char *token)
+BOOL	is_single_quote_token(char *token)
 {
-	return ((token[0] == '\'') ? TRUE : FALSE);
+	if (token[0] == '\'')
+		return (TRUE);
+	return (FALSE);
 }
 
-BOOL		is_double_quote_token(char *token)
+BOOL	is_double_quote_token(char *token)
 {
-	return ((token[0] == '"') ? TRUE : FALSE);
+	if (token[0] == '"')
+		return (TRUE);
+	return (FALSE);
 }
 
-void		expand_new_tokens(char *tkn, t_list **p_stack, t_list **new_args, t_list *list)
+void	expand_new_tokens(char *tkn, t_list **p_stack, t_list **new_args, t_list *list)
 {
 	int		i;
 	char	**splits;
 	t_list	*tmp;
-	t_list 	*tmp2;
+	t_list	*tmp2;
 
 	splits = ft_split(tkn, ' ');
 	i = 0;
@@ -53,7 +57,7 @@ void		expand_new_tokens(char *tkn, t_list **p_stack, t_list **new_args, t_list *
 	free_argv(splits);
 }
 
-void		expand_token_list(t_list *list, t_env_var *env_var,
+void	expand_token_list(t_list *list, t_env_var *env_var,
 								t_list **p_stack, char **token)
 {
 	t_list		*new_args;
@@ -93,7 +97,7 @@ void		expand_token_list(t_list *list, t_env_var *env_var,
 		push_str_to_stack(p_stack, env_var->value);
 }
 
-char		*handle_expansion(t_list **stack, int error)
+char	*handle_expansion(t_list **stack, int error)
 {
 	t_list		*tmp;
 	char		*expansion;

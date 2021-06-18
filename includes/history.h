@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 19:03:19 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/06 12:22:06 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 12:09:47 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	add_history(t_list **hist_head, t_list **hist_index, char *command);
 char	*browse_history_up(t_list **history_index);
 char	*browse_history_down(t_list **history_index);
 int		clear_line (t_data *data);
-int		set_sig(char **holder, t_data  *data);
+int		set_sig(char **holder, t_data *data);
 void	history_up(char **holder, t_data *data);
 void	history_down(char **holder, t_data *data);
 void	delete_char(char **holder, t_data *data);
@@ -28,5 +28,6 @@ char	*path_to_hist(void);
 void	get_history_from_file(int fd, t_data *data);
 void	build_history(t_data *data);
 void	save_history(t_data *data);
+void	history_tail(t_data *data);
 
 #endif

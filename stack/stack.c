@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   stack.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 17:02:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/08 16:37:14 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 13:12:51 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char 	*str_from_stack(t_list **stack)
+char	*str_from_stack(t_list **stack)
 {
 	int		len;
 	char	*str;
 
 	len = ft_lstsize(*stack);
-	if (!(str = (char *)malloc(len + 1)))
+	str = (char *)malloc(len + 1);
+	if (!str)
 		return (str);
 	str[len] = '\0';
 	while (--len >= 0)
@@ -26,19 +27,21 @@ char 	*str_from_stack(t_list **stack)
 	return (str);
 }
 
-int			empty_stack(t_list **stack, t_list **tokens)
+int	empty_stack(t_list **stack, t_list **tokens)
 {
 	int		len;
 	char	*str;
 	t_token	*tkn;
 
 	len = ft_lstsize((*stack));
-	if (!(str = (char *)malloc(len + 1)))
+	str = (char *)malloc(len + 1);
+	if (!str)
 		return (0);
 	str[len] = '\0';
 	while (--len >= 0)
 		str[len] = pop(stack);
-	if (!(tkn = new_token(&str)))
+	tkn = new_token(&str);
+	if (!tkn)
 	{
 		free(str);
 		return (0);
@@ -47,14 +50,14 @@ int			empty_stack(t_list **stack, t_list **tokens)
 	return (1);
 }
 
-BOOL		is_meta(char c)
+BOOL	is_meta(char c)
 {
 	if (c == '|' || c == '>' || c == '<' || c == ';')
 		return (TRUE);
 	return (FALSE);
 }
 
-void		is_metacharacter(t_list **stack)
+void	is_metacharacter(t_list **stack)
 {
 	char	top;
 
@@ -63,7 +66,7 @@ void		is_metacharacter(t_list **stack)
 		((t_stack *)((*stack)->content))->meta = 1;
 }
 
-void		push_str_to_stack(t_list **stack, char *str)
+void	push_str_to_stack(t_list **stack, char *str)
 {
 	int	i;
 

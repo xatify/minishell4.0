@@ -6,13 +6,13 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 11:14:24 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/09 15:46:51 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 11:04:20 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		env(char *arg0, t_list *env_vars)
+int	env(char *arg0, t_list *env_vars)
 {
 	if (arg0)
 	{

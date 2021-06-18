@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   piping.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 09:03:59 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/03/16 15:36:31 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 13:11:31 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		pipeline_stream(t_command *cmd, int *save_std, int *tmp_fd,
+int	pipeline_stream(t_command *cmd, int *save_std, int *tmp_fd,
 						t_list *cmds)
 {
 	int		holder[2];

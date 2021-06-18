@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:57:13 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/03/04 16:53:44 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 11:07:23 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	remove_unset_var(t_list **unset_vars, char *name)
 	}
 }
 
-int		get_n_v(char *arg, char **name, char **value)
+int	get_n_v(char *arg, char **name, char **value)
 {
-	int end;
+	int	end;
 
 	end = -1;
 	*value = ft_strnstr(arg, "+=", &end);
@@ -59,7 +59,7 @@ int		get_n_v(char *arg, char **name, char **value)
 	return (end);
 }
 
-int		not_identifier_name(char *arg)
+int	not_identifier_name(char *arg)
 {
 	ft_putstr_fd(NOT_IDEN, STDERR);
 	ft_putstr_fd(arg, STDOUT);
@@ -67,7 +67,7 @@ int		not_identifier_name(char *arg)
 	return (1);
 }
 
-int		hundle_var(t_data *data, char *arg, char **n_v, int e)
+int	hundle_var(t_data *data, char *arg, char **n_v, int e)
 {
 	if (*n_v[0] && is_identifier(n_v[0]))
 	{
@@ -76,7 +76,7 @@ int		hundle_var(t_data *data, char *arg, char **n_v, int e)
 			if (!search_var(&(data->env_vars), n_v[0]))
 				if (!is_unset_var(&(data->unset_vars), n_v[1]))
 					ft_lstadd_back(&(data->unset_vars),
-									ft_lstnew(ft_strdup(n_v[0])));
+						ft_lstnew(ft_strdup(n_v[0])));
 		}
 		else
 		{
@@ -93,7 +93,7 @@ int		hundle_var(t_data *data, char *arg, char **n_v, int e)
 	return (0);
 }
 
-int		export(char **args, t_data *data)
+int	export(char **args, t_data *data)
 {
 	char	*n_v[2];
 	int		index;

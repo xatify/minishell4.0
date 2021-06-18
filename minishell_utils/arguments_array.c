@@ -6,13 +6,13 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 10:26:28 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/08 16:55:14 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 12:20:34 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		count_argv(t_list *list)
+int	count_argv(t_list *list)
 {
 	if (list)
 	{
@@ -26,7 +26,7 @@ int		count_argv(t_list *list)
 
 void	free_argv(char **argv)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (argv[i])
@@ -46,7 +46,8 @@ void	fill_argv(char **argv, t_list *args)
 	{
 		while (!(args->content))
 			args = args->next;
-		if (!(argv[i] = ft_strdup(args->content)))
+		argv[i] = ft_strdup(args->content);
+		if (!argv[i])
 		{
 			free_argv(argv);
 			argv = NULL;
@@ -64,16 +65,17 @@ char	**built_argv(t_command *cmd)
 	int		argc;
 
 	argc = 1 + count_argv(cmd->name_and_args);
-	if (!(argv = (char **)malloc(argc * sizeof(char *))))
+	argv = (char **)malloc(argc * sizeof(char *));
+	if (!argv)
 		return (NULL);
 	ft_memset(argv, 0, argc * sizeof(char *));
 	fill_argv(argv, cmd->name_and_args);
 	return (argv);
 }
 
-int		args_num(char **args)
+int	args_num(char **args)
 {
-	int num;
+	int	num;
 
 	num = 0;
 	if (!args)

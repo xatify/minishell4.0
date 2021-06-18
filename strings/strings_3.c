@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 12:05:50 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/08 18:32:11 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 18:04:08 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ BOOL	is_num(char c)
 	return (FALSE);
 }
 
-int		ft_atoi(const char *str, int *exit)
+int	ft_atoi(const char *str, int *exit)
 {
 	long	res;
 	int		sign;
@@ -31,7 +31,8 @@ int		ft_atoi(const char *str, int *exit)
 	while (*str == ' ' || (*str >= 9 && *str <= 13))
 		str++;
 	if (*str == '-' || *str == '+')
-		sign = (*str++ == '-') ? -1 : 1;
+		if (*str++ == '-')
+			sign = -1;
 	while (is_num(*str))
 	{
 		if (res <= (max - (*str - '0')) / 10)
@@ -40,7 +41,10 @@ int		ft_atoi(const char *str, int *exit)
 		{
 			if (exit)
 				*exit = 1;
-			res = (sign == -1) ? 0 : -1;
+			if (sign == -1)
+				res = 0;
+			else
+				res = -1;
 			break ;
 		}
 	}
@@ -49,7 +53,7 @@ int		ft_atoi(const char *str, int *exit)
 
 char	*ft_strchr(const char *str, int c)
 {
-	char *ptr;
+	char	*ptr;
 
 	ptr = (char *)str;
 	while (*ptr != '\0')

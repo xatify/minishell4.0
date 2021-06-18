@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:29:16 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/09 15:45:11 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 11:03:32 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 **  change corrent directory to path if path is not null otherwise to $HOME
 */
 
-int		hundle_removed_path(char *path, t_list **vars, t_data *data)
+int	hundle_removed_path(char *path, t_list **vars, t_data *data)
 {
 	t_env_var	*var_env;
 	char		*tmp;
@@ -25,9 +25,12 @@ int		hundle_removed_path(char *path, t_list **vars, t_data *data)
 	i = 0;
 	while (path[i])
 		i++;
-	if ((var_env = search_var(&(data->env_vars), "PWD")))
+	var_env = search_var(&(data->env_vars), "PWD");
+	if (var_env)
 	{
-		tmp = (path[--i] != '/') ? ft_strjoin("/", path) : path;
+		tmp = path;
+		if (path[--i] != '/')
+			tmp = ft_strjoin("/", path);
 		change_env_var(vars, "OLDPWD", var_env->value);
 		change_env_var(vars, "PWD", ft_strjoin(var_env->value, tmp));
 	}
@@ -43,7 +46,8 @@ void	hundle_exicted_path(t_data *data, char *pwd)
 		change_env_var(&(data->env_vars), "OLDPWD", pwd);
 	else
 	{
-		if ((var_env = search_var(&(data->env_vars), "PWD")))
+		var_env = search_var(&(data->env_vars), "PWD");
+		if (var_env)
 			change_env_var(&(data->env_vars), "OLDPWD", var_env->value);
 	}
 	free(pwd);
@@ -51,16 +55,18 @@ void	hundle_exicted_path(t_data *data, char *pwd)
 	change_env_var(&(data->env_vars), "PWD", pwd);
 }
 
-int		cd(char *path, t_data *data)
+int	cd(char *path, t_data *data)
 {
 	char		*dir;
 	int			ret;
 	char		*pwd;
 	t_env_var	*var_env;
 
-	if ((var_env = search_var(&(data->env_vars), "HOME")))
+	var_env = search_var(&(data->env_vars), "HOME");
+	if (var_env)
 		dir = var_env->value;
-	dir = (path) ? path : dir;
+	if (path)
+		dir = path;
 	pwd = getcwd(NULL, 0);
 	ret = chdir(dir);
 	dir = NULL;

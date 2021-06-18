@@ -3,42 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   expan_special.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:10:21 by keddib            #+#    #+#             */
-/*   Updated: 2021/03/29 17:06:51 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 18:54:53 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void		expand_env_var(t_list **p_stack, t_list **s_stack, t_list **vars,
+void	expand_env_var(t_list **tmp[2], t_list **vars,
 							t_list *list, char **token)
 {
 	t_list		*var_name;
 	t_env_var	*env_var;
 
 	var_name = NULL;
-	empty_stack(s_stack, &var_name);
+	empty_stack(tmp[1], &var_name);
 	if (var_name && *((t_token *)(var_name->content))->tkn)
 	{
 		env_var = search_var(vars, ((t_token *)(var_name->content))->tkn);
 		if (env_var)
-			expand_token_list(list, env_var, p_stack, token);
+			expand_token_list(list, env_var, tmp[0], token);
 		ft_lstclear(&var_name, free_token);
 	}
 }
 
-void		expand_exit_status(t_list **p_stack, t_data *data, char **token)
+void	expand_exit_status(t_list **p_stack, t_data *data, char **token)
 {
 	(*token)++;
 	push_str_to_stack(p_stack, ft_itoa(data->exit_status));
 }
 
-void		handle_expand_env_var(char **token, t_list **p_stack, t_data *data,
+void	handle_expand_env_var(char **token, t_list **p_stack, t_data *data,
 									t_list *list)
 {
-	t_list *s_stack;
+	t_list	*s_stack;
+	t_list 	**tmp[2];
 
 	s_stack = NULL;
 	if (!(is_underscore(**token) || is_alpha(**token)))
@@ -56,13 +57,15 @@ void		handle_expand_env_var(char **token, t_list **p_stack, t_data *data,
 		else
 			break ;
 	}
-	expand_env_var(p_stack, &s_stack, &(data->env_vars), list, token);
+	tmp[0] = p_stack;
+	tmp[1] = &s_stack;
+	expand_env_var(tmp, &(data->env_vars), list, token);
 }
 
-void		expand_dollar_sign(char **token, t_list **p_stack, t_data *data,
+void	expand_dollar_sign(char **token, t_list **p_stack, t_data *data,
 								t_list *list)
 {
-	t_list *s_stack;
+	t_list	*s_stack;
 
 	s_stack = NULL;
 	if (**token == '?')
@@ -73,7 +76,7 @@ void		expand_dollar_sign(char **token, t_list **p_stack, t_data *data,
 		handle_expand_env_var(token, p_stack, data, list);
 }
 
-int			handle_ut_non_special(t_list **stack, char **token)
+int	handle_ut_non_special(t_list **stack, char **token)
 {
 	if (**token == '\"' || **token == '\'')
 	{

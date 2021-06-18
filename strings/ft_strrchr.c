@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 09:14:27 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/03 12:05:17 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 13:28:24 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ char	*ft_strrchr(const char *str, int c)
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	size_t i;
+	size_t	i;
 
 	if (!src && !dst)
 		return (NULL);
 	i = 0;
 	while (i < n)
 	{
-		*((char*)dst + i) = *((char*)src + i);
+		*((char *)dst + i) = *((char *)src + i);
 		i++;
 	}
 	return (dst);
@@ -52,8 +52,8 @@ char	*ft_strnstr(const char *haystack, const char *needle, int *end_name)
 	size_t	i;
 	size_t	j;
 
-	str = (char*)haystack;
-	sub = (char*)needle;
+	str = (char *)haystack;
+	sub = (char *)needle;
 	i = 0;
 	if (*sub == 0)
 		return (str);

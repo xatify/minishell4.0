@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 15:26:58 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/14 09:02:44 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 13:27:00 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_putchar_fd(char c, int fd)
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (s != NULL)

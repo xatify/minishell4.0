@@ -6,13 +6,13 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:27:29 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/08 17:21:42 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 13:02:47 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int			parse_redirection(t_list **tokens, t_command *command, int stream)
+int	parse_redirection(t_list **tokens, t_command *command, int stream)
 {
 	t_token			*token;
 	t_redirection	*redirection;
@@ -29,7 +29,7 @@ int			parse_redirection(t_list **tokens, t_command *command, int stream)
 	return (0);
 }
 
-int			parse_name_and_args(t_list **tokens, t_command *command)
+int	parse_name_and_args(t_list **tokens, t_command *command)
 {
 	char	*namearg;
 
@@ -44,7 +44,8 @@ t_command	*parse_command(t_list **tokens)
 	t_command	*command;
 	int			id;
 
-	if (!(command = new_cmd()))
+	command = new_cmd();
+	if (!command)
 		return (NULL);
 	while (*tokens && ((t_token *)((*tokens)->content))->id != PIPE
 			&& ((t_token *)((*tokens)->content))->id != SEMICOLON)
@@ -76,11 +77,13 @@ t_pipeline	*parse_pipe_line(t_list **tokens)
 	tkn = (t_token *)((*tokens)->content);
 	if (tkn->id == SEMICOLON || tkn->id == PIPE)
 		return (NULL);
-	if (!(pipeline = new_pipe_line()))
+	pipeline = new_pipe_line();
+	if (!pipeline)
 		return (NULL);
 	while (*tokens && ((t_token *)((*tokens)->content))->id != SEMICOLON)
 	{
-		if (!(command = parse_command(tokens)))
+		command = parse_command(tokens);
+		if (!command)
 		{
 			free_pipeline(pipeline);
 			return (NULL);
@@ -89,13 +92,13 @@ t_pipeline	*parse_pipe_line(t_list **tokens)
 		if ((*tokens) && ((t_token *)((*tokens)->content))->id == PIPE)
 		{
 			del_token_head(tokens);
-			continue;
+			continue ;
 		}
 	}
 	return (pipeline);
 }
 
-t_list		*parser(char *input_cmd)
+t_list	*parser(char *input_cmd)
 {
 	t_list			*tokens;
 	t_list			*pipelines;
@@ -105,7 +108,8 @@ t_list		*parser(char *input_cmd)
 	pipelines = NULL;
 	while (tokens)
 	{
-		if (!(tmp = parse_pipe_line(&tokens)))
+		tmp = parse_pipe_line(&tokens);
+		if (!tmp)
 		{
 			ft_lstclear(&pipelines, free_pipeline);
 			ft_lstclear(&tokens, free);
@@ -115,7 +119,7 @@ t_list		*parser(char *input_cmd)
 		if (tokens && ((t_token *)((tokens)->content))->id == SEMICOLON)
 		{
 			del_token_head(&tokens);
-			continue;
+			continue ;
 		}
 	}
 	return (pipelines);

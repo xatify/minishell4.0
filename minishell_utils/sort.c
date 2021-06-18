@@ -6,15 +6,15 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 09:12:22 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/08 16:58:29 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 12:24:39 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		count_len(char **strings)
+int	count_len(char **strings)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	while (strings[len])

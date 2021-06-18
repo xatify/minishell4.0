@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 10:21:32 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/16 16:46:29 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 12:24:23 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,3 @@ void	sig_quit_handler(int signum)
 	}
 	(void)signum;
 }
-
-
-

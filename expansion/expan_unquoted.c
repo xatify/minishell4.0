@@ -6,13 +6,13 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:09:32 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/09 15:53:48 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 11:30:19 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void		handle_ut_back_slash(t_list **stack, char **token, int *f_b_slash)
+void	handle_ut_back_slash(t_list **stack, char **token, int *f_b_slash)
 {
 	if (!(*f_b_slash))
 	{
@@ -29,7 +29,7 @@ void		handle_ut_back_slash(t_list **stack, char **token, int *f_b_slash)
 	}
 }
 
-int			handle_ut_dollar_sign(t_list **stack, char **token, t_data *data,
+int	handle_ut_dollar_sign(t_list **stack, char **token, t_data *data,
 									t_list *list)
 {
 	if ((*stack) && ((t_stack *)((*stack)->content))->special)
@@ -46,7 +46,7 @@ int			handle_ut_dollar_sign(t_list **stack, char **token, t_data *data,
 	}
 }
 
-int			ret_expand_ut(t_list **stack)
+int	ret_expand_ut(t_list **stack)
 {
 	if ((*stack) && ((t_stack *)((*stack)->content))->special)
 	{
@@ -56,7 +56,7 @@ int			ret_expand_ut(t_list **stack)
 	return (1);
 }
 
-int			expand_unquoted_token(t_list **stack, char **token, t_data *data,
+int	expand_unquoted_token(t_list **stack, char **token, t_data *data,
 									t_list *list)
 {
 	int		first_back_slash;
@@ -85,7 +85,7 @@ int			expand_unquoted_token(t_list **stack, char **token, t_data *data,
 	return (ret_expand_ut(stack));
 }
 
-int			handle_dq_non_special(t_list **stack, char **token)
+int	handle_dq_non_special(t_list **stack, char **token)
 {
 	if (**token == '\"')
 	{

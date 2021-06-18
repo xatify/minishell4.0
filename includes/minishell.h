@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/04 16:43:04 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 12:12:30 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 # include <termios.h>
 # include <term.h>
 # include <curses.h>
-
 
 # include "macros.h"
 # include "structs.h"
@@ -54,6 +53,5 @@
 # include "pipelining.h"
 # include "history.h"
 # include "lst_methods.h"
-
 
 #endif

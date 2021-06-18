@@ -6,13 +6,13 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 07:33:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/08 16:53:36 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 18:06:09 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		handle_single_quote(t_list **stack, char **input_cmd)
+int	handle_single_quote(t_list **stack, char **input_cmd)
 {
 	BOOL	second_quote;
 
@@ -33,7 +33,7 @@ int		handle_single_quote(t_list **stack, char **input_cmd)
 	return (1);
 }
 
-int		handle_double_quote(t_list **stack, char **input_cmd)
+int	handle_double_quote(t_list **stack, char **input_cmd)
 {
 	while (**input_cmd)
 	{
@@ -51,7 +51,7 @@ int		handle_double_quote(t_list **stack, char **input_cmd)
 	return (0);
 }
 
-int		special(t_list *stack)
+int	special(t_list *stack)
 {
 	int		special;
 
@@ -70,7 +70,7 @@ int		special(t_list *stack)
 	return (special % 2);
 }
 
-int		handle_metacharacter(t_list **stack, t_list **tokens, char **input_cmd)
+int	handle_metacharacter(t_list **stack, t_list **tokens, char **input_cmd)
 {
 	char		top;
 	int			append;
@@ -81,8 +81,11 @@ int		handle_metacharacter(t_list **stack, t_list **tokens, char **input_cmd)
 	if ((*stack) && !empty_stack(stack, tokens))
 		return (0);
 	push(stack, top);
-	if ((top == '>' && **input_cmd == '>') && (append = 1))
+	if ((top == '>' && **input_cmd == '>'))
+	{
+		append = 1;
 		push(stack, *(*input_cmd)++);
+	}
 	else if (is_meta(**input_cmd))
 	{
 		ft_lstclear(stack, free);
@@ -97,7 +100,7 @@ int		handle_metacharacter(t_list **stack, t_list **tokens, char **input_cmd)
 	return (1);
 }
 
-int		handle_end_token(t_list **stack, t_list **tokens)
+int	handle_end_token(t_list **stack, t_list **tokens)
 {
 	if (*stack != NULL)
 	{

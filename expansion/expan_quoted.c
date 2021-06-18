@@ -6,13 +6,13 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:08:35 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/08 15:33:54 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 11:27:04 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void		handle_dq_back_slack(t_list **stack, char **token, int *f_b_slash)
+void	handle_dq_back_slack(t_list **stack, char **token, int *f_b_slash)
 {
 	if (!(*f_b_slash))
 	{
@@ -29,7 +29,7 @@ void		handle_dq_back_slack(t_list **stack, char **token, int *f_b_slash)
 	}
 }
 
-int			handle_dq_dollar_sign(t_list **stack, char **token, t_data *data)
+int	handle_dq_dollar_sign(t_list **stack, char **token, t_data *data)
 {
 	if ((*stack) && ((t_stack *)((*stack)->content))->special)
 	{
@@ -45,7 +45,7 @@ int			handle_dq_dollar_sign(t_list **stack, char **token, t_data *data)
 	}
 }
 
-int			expand_double_quotes(t_list **stack, char **token, t_data *data)
+int	expand_double_quotes(t_list **stack, char **token, t_data *data)
 {
 	int		first_back_slash;
 
@@ -70,7 +70,7 @@ int			expand_double_quotes(t_list **stack, char **token, t_data *data)
 	return (1);
 }
 
-int			expand_single_quotes(t_list **stack, char **token)
+int	expand_single_quotes(t_list **stack, char **token)
 {
 	pop(stack);
 	while (**token != '\'')
@@ -79,7 +79,7 @@ int			expand_single_quotes(t_list **stack, char **token)
 	return (1);
 }
 
-int			expand_quotes(t_list **stack, char **token, t_data *data)
+int	expand_quotes(t_list **stack, char **token, t_data *data)
 {
 	if (top_stack(stack) == '\'')
 	{

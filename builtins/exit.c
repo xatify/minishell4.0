@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:25:50 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/07 12:11:23 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 11:12:51 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 BOOL	is_arg_alpha(char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i])
@@ -22,7 +22,7 @@ BOOL	is_arg_alpha(char *s)
 		if (i == 0 && s[i] == '-')
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		if (i > 0 && s[i] == '-')
 			return (TRUE);
@@ -33,11 +33,20 @@ BOOL	is_arg_alpha(char *s)
 	return (FALSE);
 }
 
-int		exit_(t_data *data, char **argv)
+void	exit_one_arg(char *argv, int *ex, int *status)
+{
+	*status = ft_atoi(argv, ex);
+	if (*ex == 1 || is_arg_alpha(argv))
+	{
+		*status = 255;
+		ft_putstr_fd(NUM_ARG_R, STDERR);
+	}
+}
+
+int	exit_(t_data *data, char **argv)
 {
 	int		status;
 	int		ex;
-
 
 	status = 0;
 	ex = 0;
@@ -47,11 +56,7 @@ int		exit_(t_data *data, char **argv)
 		return (1);
 	}
 	if (argv[1])
-	{
-		status = ft_atoi(argv[1], &ex);
-		if ((ex == 1 || is_arg_alpha(argv[1])) && (status = 255))
-			ft_putstr_fd(NUM_ARG_R, STDERR);
-	}
+		exit_one_arg(argv[1], &ex, &status);
 	if (data->in_terminal)
 	{
 		tputs(data->termc->keyend, 1, putchar_2);

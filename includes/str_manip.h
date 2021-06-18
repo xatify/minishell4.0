@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_manip.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:14:28 by keddib            #+#    #+#             */
-/*   Updated: 2021/04/05 16:39:53 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 12:14:29 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int					ft_atoi(const char *str, int *exit);
 void				*ft_calloc(size_t count, size_t size);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
 char				*ft_strnstr(const char *haystack, const char *needle,
-					int *end_name);
+						int *end_name);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 void				free_tmp(char **tmp);
 int					putchar_2(int c);

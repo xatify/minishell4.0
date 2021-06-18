@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 09:04:09 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/03 12:11:41 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 18:01:37 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ BOOL	is_alpha(char c)
 
 BOOL	is_underscore(char c)
 {
-	return ((c == '_') ? TRUE : FALSE);
+	if (c == '_')
+		return (TRUE);
+	return (FALSE);
 }
 
 BOOL	is_identifier(char *str)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (str[++i])
@@ -42,10 +44,14 @@ BOOL	is_identifier(char *str)
 				break ;
 		}
 	}
-	return ((str[i] == '\0') ? TRUE : FALSE);
+	if (str[i] == '\0')
+		return (TRUE);
+	return (FALSE);
 }
 
 BOOL	is_white_character(char c)
 {
-	return ((c == ' ' || c == '\t') ? TRUE : FALSE);
+	if (c == ' ' || c == '\t')
+		return (TRUE);
+	return (FALSE);
 }

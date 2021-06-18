@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 14:59:19 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/08 17:52:26 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 12:22:02 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@ char	*search_files_inpath(char *path, char *cmd_name)
 	d = opendir(path);
 	if (d)
 	{
-		while ((dir = readdir(d)) != NULL)
+		dir = readdir(d);
+		while (dir != NULL)
 		{
 			if (ft_strcmp(dir->d_name, cmd_name) == 0)
 			{
 				closedir(d);
 				return (path);
 			}
+			dir = readdir(d);
 		}
 		closedir(d);
 	}

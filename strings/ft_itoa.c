@@ -6,13 +6,13 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 01:28:50 by keddib            #+#    #+#             */
-/*   Updated: 2021/01/28 11:07:38 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 13:26:43 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static char		*ft_strrev(char *str)
+static char	*ft_strrev(char *str)
 {
 	int		i;
 	int		l;
@@ -34,7 +34,7 @@ static char		*ft_strrev(char *str)
 	return (str);
 }
 
-static int		ft_neg(int i)
+static int	ft_neg(int i)
 {
 	int	negative;
 
@@ -44,7 +44,7 @@ static int		ft_neg(int i)
 	return (negative);
 }
 
-static char		*ft_str(char *s, int n, int neg)
+static char	*ft_str(char *s, int n, int neg)
 {
 	int		i;
 	int		rep;
@@ -65,9 +65,9 @@ static char		*ft_str(char *s, int n, int neg)
 	return (s);
 }
 
-static int		ft_len(int n)
+static int	ft_len(int n)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (n > 0)
@@ -78,7 +78,7 @@ static int		ft_len(int n)
 	return (i);
 }
 
-char			*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	int		i;
 	int		neg;

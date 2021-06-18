@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 10:01:06 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/03 12:04:33 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 13:31:00 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_strlcpy(char *dst, char *src, int len)
 	}
 }
 
-int		ft_strcmp(char *str1, char *str2)
+int	ft_strcmp(char *str1, char *str2)
 {
 	int		i;
 
@@ -46,7 +46,7 @@ int		ft_strcmp(char *str1, char *str2)
 
 void	*ft_memset(void *b, int c, size_t len)
 {
-	unsigned char *ptr;
+	unsigned char	*ptr;
 
 	ptr = (unsigned char *)b;
 	while (len--)
@@ -60,7 +60,8 @@ char	*ft_strdup(char *str)
 	char	*dup;
 
 	len = ft_strlen(str);
-	if (!(dup = (char *)malloc(len + 1)))
+	dup = (char *)malloc(len + 1);
+	if (!dup)
 		return (NULL);
 	ft_memset(dup, 0, len + 1);
 	if (str)

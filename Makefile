@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
+#    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/06/17 15:08:40 by abbouzid         ###   ########.fr        #
+#    Updated: 2021/06/18 11:53:18 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
 
-GCC				= gcc -Wall -Wextra -Werror -ltermcap -fsanitize=address
+GCC				= gcc -Wall -Wextra -Werror -ltermcap
 
 STR				= strings
 
@@ -73,6 +73,7 @@ SRCS			= minishell.c						\
 				$(EXPN)/expan_unquoted.c			\
 				$(EXPN)/expan_special.c				\
 				$(EXPN)/expan_token.c				\
+				$(EXCT)/execute_builtins.c			\
 				$(EXCT)/execute_pipeline.c			\
 				$(EXCT)/execute_cmd.c				\
 				$(LEXER)/lexer.c					\
@@ -90,6 +91,7 @@ SRCS			= minishell.c						\
 				$(BUILTINS)/pwd.c					\
 				$(BUILTINS)/unset.c					\
 				$(HIST)/history.c					\
+				$(HIST)/brows_history.c				\
 				$(HIST)/line_editing.c				\
 
 
@@ -100,13 +102,13 @@ get_next_line/gnl.a:
 
 $(NAME) : $(SRCS) get_next_line/gnl.a
 	$(MAKE) -C get_next_line
-	$(GCC) -g  -o $(NAME) $(SRCS) get_next_line/gnl.a
+	$(GCC) -o $(NAME) $(SRCS) get_next_line/gnl.a
 
 clean:
-	rm $(NAME)
+	rm -rf *.o get_next_line/gnl.a
 
 fclean: clean
-	rm -rf *.o get_next_line/gnl.a *.dSYM
+	rm -rf $(NAME)
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:26:39 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/08 17:22:05 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 13:03:27 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	set_fds(int save_std[2], int tmp_fd[2])
 	copy_fds(tmp_fd, save_std);
 }
 
-int		simple_cmd_file_redirection(t_command *cmd, int *save_std, int *tmp_fd)
+int	simple_cmd_file_redirection(t_command *cmd, int *save_std, int *tmp_fd)
 {
 	int		file_fd[2];
 
@@ -54,7 +54,7 @@ int		simple_cmd_file_redirection(t_command *cmd, int *save_std, int *tmp_fd)
 	return (1);
 }
 
-int		stream_error(int *tmp_fd, int *save_std, t_list *cmds)
+int	stream_error(int *tmp_fd, int *save_std, t_list *cmds)
 {
 	copy_fds(tmp_fd, save_std);
 	cmds = cmds->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 11:03:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/04 16:48:27 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 13:27:29 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static size_t	count_words(char const *str, char c)
 {
-	size_t i;
-	size_t j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	j = 0;
@@ -33,7 +33,7 @@ static size_t	count_words(char const *str, char c)
 	return (j);
 }
 
-static void		alloc_mem(char **tab_, size_t x, size_t l)
+static void	alloc_mem(char **tab_, size_t x, size_t l)
 {
 	tab_[x] = (char *)malloc((l + 1) * sizeof(char));
 	if (!tab_[x])
@@ -45,7 +45,7 @@ static void		alloc_mem(char **tab_, size_t x, size_t l)
 	}
 }
 
-static void		fill_tab_(char **tab_, const char *str, size_t count, char c)
+static void	fill_tab_(char **tab_, const char *str, size_t count, char c)
 {
 	size_t	x;
 	size_t	y;
@@ -72,7 +72,7 @@ static void		fill_tab_(char **tab_, const char *str, size_t count, char c)
 		tab_[x] = 0;
 }
 
-char			**ft_split(char const *str, char c)
+char	**ft_split(char const *str, char c)
 {
 	char	**tab_;
 	size_t	count;

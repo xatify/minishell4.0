@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:16:16 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/16 17:53:16 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 19:01:33 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@
 # define HIST_FILE		"./.minishell_history"
 # define HIST_SIZE		20
 
-typedef struct termios t_termios;
-int			g_pid;
-int			g_exit_status;
+typedef struct termios	t_termios;
+int						g_pid;
+int						g_exit_status;
 
 #endif

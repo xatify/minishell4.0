@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 16:31:47 by keddib            #+#    #+#             */
-/*   Updated: 2021/02/09 15:40:01 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 11:07:55 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ BOOL	is_unset_var(t_list **unset_vars, char *name)
 	return (FALSE);
 }
 
-int		append_env_var(t_list **vars, char *var_name, char *new_value)
+int	append_env_var(t_list **vars, char *var_name, char *new_value)
 {
 	t_env_var	*var;
 	char		*tmp;
@@ -52,7 +52,8 @@ int		append_env_var(t_list **vars, char *var_name, char *new_value)
 	var = search_var(vars, var_name);
 	if (var)
 	{
-		if (!(tmp = ft_strjoin(var->value, new_value)))
+		tmp = ft_strjoin(var->value, new_value);
+		if (!tmp)
 			return (0);
 		free(var->value);
 		var->value = tmp;

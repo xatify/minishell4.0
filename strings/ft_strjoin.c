@@ -6,13 +6,13 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:57:09 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/02/03 12:02:55 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 13:27:42 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
 	int	len;
 

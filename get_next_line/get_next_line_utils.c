@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 13:34:29 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/01/18 09:04:45 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 11:47:28 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*ft_strjoin_(char const *s1, char const *s2, int d)
 
 size_t	ft_strlen_(const char *str)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (str[i] != '\0')

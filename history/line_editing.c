@@ -3,24 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   line_editing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 15:53:31 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/04/07 12:13:52 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/18 12:07:00 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/* QUIT and INT SIG while in listening for input */
-int		set_sig(char **holder, t_data *data)
+/*
+** QUIT and INT SIG while in listening for input
+*/
+
+int	set_sig(char **holder, t_data *data)
 {
 	int		brk;
 
 	brk = 0;
-	if (g_exit_status == -2)  /* QUIT SIG */
+	if (g_exit_status == -2)
 		g_exit_status = 0;
-	if (g_exit_status == -1) /* INT SIG */
+	if (g_exit_status == -1)
 	{
 		data->exit_status = 1;
 		g_exit_status = 0;
@@ -33,10 +36,11 @@ int		set_sig(char **holder, t_data *data)
 
 void	history_up(char **holder, t_data *data)
 {
-	char *tmp;
+	char	*tmp;
 
+	tmp = browse_history_up(&(data->history_index));
 	if (data->history_index == NULL)
-		data->history_index =  data->history_head;
+		data->history_index = data->history_head;
 	if (data->history_head && data->history_head->next == NULL)
 	{
 		free(*holder);
@@ -44,7 +48,7 @@ void	history_up(char **holder, t_data *data)
 		clear_line(data);
 		ft_putstr_fd(*holder, STDERR);
 	}
-	else if ((tmp = browse_history_up(&(data->history_index))))
+	else if (tmp)
 	{
 		free(*holder);
 		*holder = ft_strdup(tmp);
@@ -59,7 +63,9 @@ void	history_down(char **holder, t_data *data)
 
 	tmp = browse_history_down(&(data->history_index));
 	free(*holder);
-	*holder = (tmp)? ft_strdup(tmp): ft_strdup("");
+	*holder = ft_strdup("");
+	if (tmp)
+		*holder = ft_strdup(tmp);
 	clear_line(data);
 	if (tmp)
 		ft_putstr_fd(*holder, STDERR);
@@ -89,7 +95,7 @@ void	end_of_file(t_data *data, char *holder)
 
 void	append_to_holder(char *buffer, char **holder, t_data *data)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = *holder;
 	*holder = ft_strjoin(*holder, buffer);
