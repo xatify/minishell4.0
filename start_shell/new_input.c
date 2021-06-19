@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:21:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/19 12:22:55 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/19 13:46:07 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,15 @@ void	hundle_input(t_data *data, char **holder)
 
 int	rawmode(t_data *data, char **holder, char buffer[4])
 {
+	static int	up;
+
 	if (!ft_strcmp(buffer, data->termc->up_key))
+	{
 		history_up(holder, data);
+		up = 1;
+	}
 	else if (!ft_strcmp(data->termc->down_key, buffer))
-		history_down(holder, data);
+		history_down(holder, data, &up);
 	else if (buffer[0] == '\x04')
 		end_of_file(data, *holder);
 	else if (buffer[0] == 127)
@@ -49,6 +54,7 @@ int	rawmode(t_data *data, char **holder, char buffer[4])
 	else if (buffer[0] == '\n' || buffer[0] == '\r')
 	{
 		return_input(data, *holder);
+		up = 0;
 		return (2);
 	}
 	return (0);

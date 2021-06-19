@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history_updown.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 12:53:16 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/19 12:53:27 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/19 13:49:13 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ void	history_up(char **holder, t_data *data)
 	}
 }
 
-void	history_down(char **holder, t_data *data)
+void	history_down(char **holder, t_data *data, int *up)
 {
 	char	*tmp;
 
-	tmp = browse_history_down(&(data->history_index));
+	tmp = browse_history_down(&(data->history_index), up);
 	free(*holder);
 	*holder = ft_strdup("");
 	if (tmp)

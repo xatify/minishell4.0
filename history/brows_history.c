@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   brows_history.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 11:51:37 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/19 12:43:31 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/19 13:59:09 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,24 @@ char	*browse_history_up(t_list **history_index)
 	return (NULL);
 }
 
-char	*browse_history_down(t_list **history_index)
+char	*browse_history_down(t_list **history_index, int *up)
 {
 	char	*tmp;
 
 	if ((*history_index))
 	{
-		tmp = (*history_index)->content;
-		(*history_index) = (*history_index)->previous;
+		if (up && *up && (*history_index) && (*history_index)->previous)
+		{
+			(*up) = 0;
+			(*history_index) = (*history_index)->previous;
+			(*history_index) = (*history_index)->previous;
+			tmp = (*history_index)->content;
+		}
+		else
+		{
+			tmp = (*history_index)->content;
+			(*history_index) = (*history_index)->previous;
+		}
 		return (tmp);
 	}
 	return (NULL);
