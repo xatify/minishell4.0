@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
+#    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/06/18 11:53:18 by keddib           ###   ########.fr        #
+#    Updated: 2021/06/19 09:39:29 by abbouzid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
 
-GCC				= gcc -Wall -Wextra -Werror -ltermcap
+GCC				= gcc -g -Wall -Wextra -Werror -ltermcap
 
 STR				= strings
 
