@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line_editing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 15:53:31 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/18 12:07:00 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/19 08:43:19 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,18 @@ int	set_sig(char **holder, t_data *data)
 	int		brk;
 
 	brk = 0;
-	if (g_exit_status == -2)
-		g_exit_status = 0;
-	if (g_exit_status == -1)
+	if (g_pid == -130 || g_pid == -131)
 	{
+		data->exit_status = -g_pid;
+		g_pid = 0;
+	}
+	if (g_pid == -2)
+		g_pid = 0;
+	if (g_pid == -1)
+	{
+		ft_putstr_fd("\n", STDERR);
+		g_pid = 0;
 		data->exit_status = 1;
-		g_exit_status = 0;
 		free(*holder);
 		*holder = ft_strdup("");
 		brk = 1;

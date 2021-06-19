@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/18 11:23:49 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/19 08:35:18 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	execute_binary(t_data *data, t_command *cmd)
 	else if (g_pid < 0)
 		return (1);
 	waitpid(g_pid, &status, 0);
-	g_pid = -1;
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (status);

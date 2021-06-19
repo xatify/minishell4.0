@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 08:18:25 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/18 10:56:59 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/19 08:22:12 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ int	main(int argc, char **argv, char **envp)
 		build_history(data);
 	while (TRUE)
 	{
+		if (g_pid == -130 || g_pid == -131)
+		{
+			data->exit_status = -g_pid;
+			g_pid = 0;
+		}
 		new_input(data, &holder);
 		ft_lstclear(&(data->parse_tree), free_pipeline);
 	}
