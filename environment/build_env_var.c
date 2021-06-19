@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 18:04:51 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/18 18:09:29 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 19:21:29 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ char	**built_envp(t_list *vars)
 {
 	char		**envp;
 	int			vars_num;
-	t_env_var	*var;
 	int			i;
 
 	vars_num = ft_lstsize(vars) + 1;
@@ -73,15 +72,8 @@ char	**built_envp(t_list *vars)
 	i = 0;
 	while (vars)
 	{
-		var = (t_env_var *)(vars->content);
-		envp[i] = (char *)malloc(ft_strlen(var->name)
-				+ ft_strlen(var->value) + 2);
-		if (!envp[i])
-		{
-			free_argv(envp);
+		if (!create_envp(vars, envp, i))
 			return (NULL);
-		}
-		fill_envp(&(envp[i]), var);
 		vars = vars->next;
 		i++;
 	}
@@ -100,16 +92,7 @@ BOOL	creat_env(t_list **list_head, char *envp)
 		ft_lstclear(list_head, free_env_var);
 		return (0);
 	}
-	if (envp)
-	{
-		var->name = get_env_name(envp);
-		change_shlv(var, envp);
-	}
-	else
-	{
-		var->name = ft_strdup("SHLVL");
-		var->value = ft_strdup("1");
-	}
+	check_envp(envp, &var);
 	new = ft_lstnew(var);
 	if (!new)
 	{

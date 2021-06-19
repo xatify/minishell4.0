@@ -3,50 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:45:21 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/19 09:55:14 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/19 12:32:09 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+void	check_param(char **args, int *i, int *new_line)
+{
+	int		j;
+
+	while (args[++(*i)])
+	{
+		j = 0;
+		if (args[*i][j++] == '-')
+		{
+			while (args[*i][j])
+			{
+				if (args[*i][j] == 'n')
+					j++;
+				else
+				{
+					*new_line = 1;
+					j = -1;
+					break ;
+				}
+			}
+			if (j == -1)
+				break ;
+			*new_line = 0;
+		}
+		else
+			break ;
+	}
+}
+
 int	echo_(char **args)
 {
 	BOOL	new_line;
 	int		i;
-	int		j;
-	int		brk;
 
 	new_line = 1;
-	i = 1;
-	brk = 0;
-	while (args[i])
-	{
-		j = 0;
-		if (args[i][j] == '-')
-		{
-			j++;
-			while (args[i][j])
-			{
-				if (args[i][j] == 'n')
-					j++;
-				else
-				{
-					new_line = 1;
-					brk = 1;
-					break ;
-				}
-			}
-			if (brk == 1)
-				break ;
-			new_line = 0;
-		}
-		else
-			break;
-		i++;
-	}
+	i = 0;
+	check_param(args, &i, &new_line);
 	while (args[i])
 	{
 		if (args[i][0])

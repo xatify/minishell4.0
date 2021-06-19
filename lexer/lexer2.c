@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   lexer2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/12 16:18:12 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/19 11:58:45 by keddib           ###   ########.fr       */
+/*   Created: 2021/06/19 12:08:45 by keddib            #+#    #+#             */
+/*   Updated: 2021/06/19 12:09:15 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "../includes/minishell.h"
 
-/*
-** parser functions
-*/
+int	special(t_list *stack)
+{
+	int		special;
 
-t_list			*parser(char *input_cmd);
-int				parse_redirection(t_list **tokens, t_command *command, int red);
-int				parse_name_and_args(t_list **tokens, t_command *command);
-t_command		*parse_command(t_list **tokens);
-t_pipeline		*parse_pipe_line(t_list **tokens);
-t_pipeline		*new_pipline(t_list **tokens);
-
-#endif
+	special = 0;
+	stack = stack->next;
+	while (stack)
+	{
+		if (((t_stack *)(stack->content))->character == 0x5c)
+		{
+			special++;
+			stack = stack->next;
+		}
+		else
+			break ;
+	}
+	return (special % 2);
+}

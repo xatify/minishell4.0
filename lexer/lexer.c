@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 07:33:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/18 18:06:09 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/19 12:09:18 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,23 +51,14 @@ int	handle_double_quote(t_list **stack, char **input_cmd)
 	return (0);
 }
 
-int	special(t_list *stack)
+int	ret_hundle_meta(t_list **stack, t_list **tokens, int append)
 {
-	int		special;
-
-	special = 0;
-	stack = stack->next;
-	while (stack)
-	{
-		if (((t_stack *)(stack->content))->character == 0x5c)
-		{
-			special++;
-			stack = stack->next;
-		}
-		else
-			break ;
-	}
-	return (special % 2);
+	if (!empty_stack(stack, tokens))
+		return (0);
+	pop(stack);
+	if (append)
+		pop(stack);
+	return (1);
 }
 
 int	handle_metacharacter(t_list **stack, t_list **tokens, char **input_cmd)
@@ -92,12 +83,7 @@ int	handle_metacharacter(t_list **stack, t_list **tokens, char **input_cmd)
 		ft_lstclear(tokens, free_token);
 		return (0);
 	}
-	if (!empty_stack(stack, tokens))
-		return (0);
-	pop(stack);
-	if (append)
-		pop(stack);
-	return (1);
+	return (ret_hundle_meta(stack, tokens, append));
 }
 
 int	handle_end_token(t_list **stack, t_list **tokens)

@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:10:21 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/18 18:54:53 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 19:32:54 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	handle_expand_env_var(char **token, t_list **p_stack, t_data *data,
 									t_list *list)
 {
 	t_list	*s_stack;
-	t_list 	**tmp[2];
+	t_list	**tmp[2];
 
 	s_stack = NULL;
 	if (!(is_underscore(**token) || is_alpha(**token)))

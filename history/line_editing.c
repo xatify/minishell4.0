@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line_editing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 15:53:31 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/19 08:43:19 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/19 12:53:06 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,67 +15,6 @@
 /*
 ** QUIT and INT SIG while in listening for input
 */
-
-int	set_sig(char **holder, t_data *data)
-{
-	int		brk;
-
-	brk = 0;
-	if (g_pid == -130 || g_pid == -131)
-	{
-		data->exit_status = -g_pid;
-		g_pid = 0;
-	}
-	if (g_pid == -2)
-		g_pid = 0;
-	if (g_pid == -1)
-	{
-		ft_putstr_fd("\n", STDERR);
-		g_pid = 0;
-		data->exit_status = 1;
-		free(*holder);
-		*holder = ft_strdup("");
-		brk = 1;
-	}
-	return (brk);
-}
-
-void	history_up(char **holder, t_data *data)
-{
-	char	*tmp;
-
-	tmp = browse_history_up(&(data->history_index));
-	if (data->history_index == NULL)
-		data->history_index = data->history_head;
-	if (data->history_head && data->history_head->next == NULL)
-	{
-		free(*holder);
-		*holder = ft_strdup(data->history_head->content);
-		clear_line(data);
-		ft_putstr_fd(*holder, STDERR);
-	}
-	else if (tmp)
-	{
-		free(*holder);
-		*holder = ft_strdup(tmp);
-		clear_line(data);
-		ft_putstr_fd(*holder, STDERR);
-	}
-}
-
-void	history_down(char **holder, t_data *data)
-{
-	char	*tmp;
-
-	tmp = browse_history_down(&(data->history_index));
-	free(*holder);
-	*holder = ft_strdup("");
-	if (tmp)
-		*holder = ft_strdup(tmp);
-	clear_line(data);
-	if (tmp)
-		ft_putstr_fd(*holder, STDERR);
-}
 
 void	delete_char(char **holder, t_data *data)
 {

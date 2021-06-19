@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:27:29 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/18 13:02:47 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/19 11:59:10 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,8 @@ t_pipeline	*parse_pipe_line(t_list **tokens)
 {
 	t_pipeline		*pipeline;
 	t_command		*command;
-	t_token			*tkn;
 
-	tkn = (t_token *)((*tokens)->content);
-	if (tkn->id == SEMICOLON || tkn->id == PIPE)
-		return (NULL);
-	pipeline = new_pipe_line();
+	pipeline = new_pipline(tokens);
 	if (!pipeline)
 		return (NULL);
 	while (*tokens && ((t_token *)((*tokens)->content))->id != SEMICOLON)

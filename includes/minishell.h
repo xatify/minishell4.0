@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 22:49:46 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/18 12:12:30 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/19 12:03:02 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@
 # include "redirection.h"
 # include "arguments_array.h"
 # include "sig_handling.h"
-# include "pipelining.h"
 # include "history.h"
 # include "lst_methods.h"
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_shell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:28:43 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/19 09:56:23 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/19 12:22:36 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,14 @@ BOOL	check_termc(t_data *data)
 	return (TRUE);
 }
 
+void	set_rawmode(t_data *data)
+{
+	data->modified.c_lflag &= ~(ICANON);
+	data->modified.c_lflag &= ~(ECHO);
+	data->modified.c_cc[VMIN] = 0;
+	data->modified.c_cc[VTIME] = 0;
+}
+
 BOOL	set_non_canonocal_mode(t_data *data)
 {
 	char	*termtype;
@@ -66,10 +74,7 @@ BOOL	set_non_canonocal_mode(t_data *data)
 		data->in_terminal = 1;
 		tcgetattr(STDIN, &data->origin);
 		tcgetattr(STDIN, &data->modified);
-		data->modified.c_lflag &= ~(ICANON);
-		data->modified.c_lflag &= ~(ECHO);
-		data->modified.c_cc[VMIN] = 0;
-		data->modified.c_cc[VTIME] = 0;
+		set_rawmode(data);
 		if (!check_termc(data))
 			return (FALSE);
 		data->in_terminal = 1;

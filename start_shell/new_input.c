@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:21:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/19 09:56:16 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/19 12:22:55 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,29 @@ void	hundle_input(t_data *data, char **holder)
 	*holder = ft_strdup("");
 }
 
+int	rawmode(t_data *data, char **holder, char buffer[4])
+{
+	if (!ft_strcmp(buffer, data->termc->up_key))
+		history_up(holder, data);
+	else if (!ft_strcmp(data->termc->down_key, buffer))
+		history_down(holder, data);
+	else if (buffer[0] == '\x04')
+		end_of_file(data, *holder);
+	else if (buffer[0] == 127)
+	{
+		delete_char(holder, data);
+		return (1);
+	}
+	else if (is_print(buffer[0]) && buffer[1] == '\0')
+		append_to_holder(buffer, holder, data);
+	else if (buffer[0] == '\n' || buffer[0] == '\r')
+	{
+		return_input(data, *holder);
+		return (2);
+	}
+	return (0);
+}
+
 void	non_canonical_mode(t_data *data, char **holder)
 {
 	char	buffer[4];
@@ -44,30 +67,14 @@ void	non_canonical_mode(t_data *data, char **holder)
 		i = read(STDIN, &buffer, 3);
 		if (set_sig(holder, data))
 			break ;
-		if (!ft_strcmp(buffer, data->termc->up_key))
-			history_up(holder, data);
-		else if (!ft_strcmp(data->termc->down_key, buffer))
-			history_down(holder, data);
-		else if (buffer[0] == '\x04')
-			end_of_file(data, *holder);
-		else if (buffer[0] == 127)
-		{
-			delete_char(holder, data);
-			continue ;
-		}
-		else if (is_print(buffer[0]) && buffer[1] == '\0')
-			append_to_holder(buffer, holder, data);
-		else if (buffer[0] == '\n' || buffer[0] == '\r')
-		{
-			return_input(data, *holder);
+		if (rawmode(data, holder, buffer) == 2)
 			break ;
-		}
 	}
 }
 
-void		new_input(t_data *data, char **holder)
+void	new_input(t_data *data, char **holder)
 {
-	int ret;
+	int	ret;
 
 	data->input_cmd = NULL;
 	if (data->in_terminal)

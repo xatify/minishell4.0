@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/12 16:18:12 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/19 11:58:45 by keddib           ###   ########.fr       */
+/*   Created: 2021/06/19 12:19:39 by keddib            #+#    #+#             */
+/*   Updated: 2021/06/19 12:19:50 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "get_next_line.h"
 
-/*
-** parser functions
-*/
+void	ft_bzero(void *str, size_t n)
+{
+	int	i;
 
-t_list			*parser(char *input_cmd);
-int				parse_redirection(t_list **tokens, t_command *command, int red);
-int				parse_name_and_args(t_list **tokens, t_command *command);
-t_command		*parse_command(t_list **tokens);
-t_pipeline		*parse_pipe_line(t_list **tokens);
-t_pipeline		*new_pipline(t_list **tokens);
-
-#endif
+	i = -1;
+	while (++i < (int)n)
+		((unsigned char *)str)[i] = 0;
+}

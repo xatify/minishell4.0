@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:16:16 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/19 08:29:19 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/19 12:47:26 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@
 # define HIST_FILE		"./.minishell_history"
 # define HIST_SIZE		20
 
-typedef struct termios	t_termios;
-
-volatile sig_atomic_t g_pid;
+volatile sig_atomic_t	g_pid;
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:13:03 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/19 08:21:18 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/19 12:24:03 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ typedef struct s_data
 	t_list			*parse_tree;
 	int				exit_status;
 	int				in_terminal;
-	t_termios		origin;
-	t_termios		modified;
+	struct termios	origin;
+	struct termios	modified;
 	t_list			*history_head;
 	t_list			*history_index;
 	t_termc			*termc;

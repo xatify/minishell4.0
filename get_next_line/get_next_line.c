@@ -6,20 +6,11 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 11:51:27 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/18 11:46:54 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/19 12:19:18 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-void	ft_bzero(void *str, size_t n)
-{
-	int	i;
-
-	i = -1;
-	while (++i < (int)n)
-		((unsigned char *)str)[i] = 0;
-}
 
 static int	check_buff(char *buff)
 {
@@ -78,6 +69,15 @@ static int	check_for_error(char **tmp, int fd, char **line, char **buff)
 	return (0);
 }
 
+void	get_line(char **tmp, char **line, char *buff)
+{
+	(*line) = ft_strjoin_(*tmp, ft_substr(buff, 0, check_buff(buff)), 1);
+	*tmp = ft_strdup_(buff + check_buff(buff) + 1);
+	if (*tmp[0] == '\0')
+		free_tmp(tmp);
+	free(buff);
+}
+
 int	get_next_line(int fd, char **line)
 {
 	static char	*tmp;
@@ -94,11 +94,7 @@ int	get_next_line(int fd, char **line)
 		buff[b_size] = '\0';
 		if (check_buff(buff) >= 0)
 		{
-			(*line) = ft_strjoin_(tmp, ft_substr(buff, 0, check_buff(buff)), 1);
-			tmp = ft_strdup_(buff + check_buff(buff) + 1);
-			if (tmp[0] == '\0')
-				free_tmp(&tmp);
-			free(buff);
+			get_line(&tmp, line, buff);
 			return (1);
 		}
 		tmp = ft_strjoin_(tmp, buff, 0);

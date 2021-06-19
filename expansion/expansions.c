@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/18 11:31:00 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/19 12:14:46 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int	expand_cmd(t_list *cmds, t_data *data)
 {
 	t_command	*cmd;
 	char		*name;
-	t_list		*tmp;
 
 	if (cmds)
 	{
@@ -106,13 +105,7 @@ int	expand_cmd(t_list *cmds, t_data *data)
 			{
 				name = cmd->name_and_args->content;
 				if (name[0] == '\0')
-				{
-					tmp = cmd->name_and_args->next;
-					free(name);
-					free(cmd->name_and_args);
-					cmd->name_and_args = NULL;
-					*(&(cmd->name_and_args)) = tmp;
-				}
+					set_cmd_name(name, cmd);
 			}
 			return (expand_cmd(cmds->next, data));
 		}

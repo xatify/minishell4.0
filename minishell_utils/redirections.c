@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 09:19:07 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/18 12:23:59 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/19 11:42:16 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,17 +107,13 @@ int	simple_cmd_streaming(t_command *cmd, int *tmp_std)
 	{
 		if (built_in)
 			tmp_std[0] = dup(0);
-		close(0);
-		dup(fds[0]);
-		close(fds[0]);
+		set_std_stream(0, fds[0]);
 	}
 	if (fds[1] != -1)
 	{
 		if (built_in)
 			tmp_std[1] = dup(1);
-		close(1);
-		dup(fds[1]);
-		close(fds[1]);
+		set_std_stream(1, fds[1]);
 	}
 	return (0);
 }

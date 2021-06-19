@@ -6,27 +6,24 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:11:03 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/18 18:45:25 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 19:48:40 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-BOOL	is_single_quote_token(char *token)
+void	new_tokens(t_list **tmp2, t_list **tmp, t_list **list, t_list **p_stack)
 {
-	if (token[0] == '\'')
-		return (TRUE);
-	return (FALSE);
+	*tmp2 = ft_lstnew(str_from_stack(p_stack));
+	*tmp = *list;
+	(*list)->previous->next = *tmp2;
+	(*tmp2)->previous = (*list)->previous;
+	(*tmp2)->next = *list;
+	(*list)->previous = *tmp2;
 }
 
-BOOL	is_double_quote_token(char *token)
-{
-	if (token[0] == '"')
-		return (TRUE);
-	return (FALSE);
-}
-
-void	expand_new_tokens(char *tkn, t_list **p_stack, t_list **new_args, t_list *list)
+void	expand_new_tokens(char *tkn, t_list **p_stack, t_list **new_args,
+							t_list *list)
 {
 	int		i;
 	char	**splits;
@@ -41,14 +38,7 @@ void	expand_new_tokens(char *tkn, t_list **p_stack, t_list **new_args, t_list *l
 		i++;
 	}
 	else if (splits[0] && tkn[0] == ' ' && top_stack(p_stack) != '\0')
-	{
-		tmp2 = ft_lstnew(str_from_stack(p_stack));
-		tmp = list;
-		list->previous->next = tmp2;
-		tmp2->previous = list->previous;
-		tmp2->next = list;
-		list->previous = tmp2;
-	}
+		new_tokens(&tmp2, &tmp, &list, p_stack);
 	while (splits[i])
 	{
 		ft_lstadd_back(new_args, ft_lstnew(ft_strdup(splits[i])));
@@ -57,13 +47,31 @@ void	expand_new_tokens(char *tkn, t_list **p_stack, t_list **new_args, t_list *l
 	free_argv(splits);
 }
 
+void	expan_token_item(t_env_var *env_var, char **token, t_list **new_args,
+							t_list *tmp)
+{
+	char		*str;
+	t_list		*tmp1;
+
+	if ((env_var->value)[ft_strlen(env_var->value) - 1] != ' ')
+	{
+		str = ft_strjoin(ft_lstlast(*new_args)->content, *token);
+		free(ft_lstlast(*new_args)->content);
+		ft_lstlast(*new_args)->content = str;
+	}
+	else
+	{
+		tmp1 = ft_lstnew(ft_strdup(*token));
+		ft_lstlast(*new_args)->next = tmp1;
+		tmp1->next = tmp;
+	}
+}
+
 void	expand_token_list(t_list *list, t_env_var *env_var,
 								t_list **p_stack, char **token)
 {
 	t_list		*new_args;
 	t_list		*tmp;
-	t_list		*tmp1;
-	char		*str;
 
 	new_args = NULL;
 	if (list)
@@ -77,18 +85,7 @@ void	expand_token_list(t_list *list, t_env_var *env_var,
 				ft_lstlast(new_args)->next = tmp;
 			else
 			{
-				if ((env_var->value)[ft_strlen(env_var->value) - 1] != ' ')
-				{
-					str = ft_strjoin(ft_lstlast(new_args)->content, *token);
-					free(ft_lstlast(new_args)->content);
-					ft_lstlast(new_args)->content = str;
-				}
-				else
-				{
-					tmp1 = ft_lstnew(ft_strdup(*token));
-					ft_lstlast(new_args)->next = tmp1;
-					tmp1->next = tmp;
-				}
+				expan_token_item(env_var, token, &new_args, tmp);
 				**token = '\0';
 			}
 		}

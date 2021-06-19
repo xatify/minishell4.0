@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 11:51:37 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/18 11:52:55 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/19 12:43:31 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,28 @@ void	history_tail(t_data *data)
 		data->history_index = data->history_index->next;
 		i++;
 	}
+}
+
+int	set_sig(char **holder, t_data *data)
+{
+	int		brk;
+
+	brk = 0;
+	if (g_pid == -130 || g_pid == -131)
+	{
+		data->exit_status = -g_pid;
+		g_pid = 0;
+	}
+	if (g_pid == -2)
+		g_pid = 0;
+	if (g_pid == -1)
+	{
+		ft_putstr_fd("\n", STDERR);
+		g_pid = 0;
+		data->exit_status = 1;
+		free(*holder);
+		*holder = ft_strdup("");
+		brk = 1;
+	}
+	return (brk);
 }

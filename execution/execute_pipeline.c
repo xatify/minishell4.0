@@ -6,95 +6,11 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:25:28 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/18 18:30:40 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/18 19:32:03 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	set_std_stream(int std, int fd)
-{
-	close(std);
-	dup(fd);
-	close(fd);
-}
-
-void	first_child(t_command *cmd, int *pipe_fds, int *file_fds)
-{
-	if (!redirect_std(cmd, file_fds))
-	{
-		close(pipe_fds[0]);
-		close(pipe_fds[1]);
-		exit(1);
-	}
-	if (file_fds[0] != -1)
-		set_std_stream(0, file_fds[0]);
-	if (file_fds[1] != -1)
-	{
-		set_std_stream(1, file_fds[1]);
-		close(pipe_fds[1]);
-	}
-	else
-		set_std_stream(1, pipe_fds[1]);
-	close(pipe_fds[0]);
-}
-
-void	middle_child(t_command *cmd, int *pipe_fds, int *file_fds, int in_tmp)
-{
-	if (!redirect_std(cmd, file_fds))
-	{
-		close(in_tmp);
-		close(pipe_fds[1]);
-		exit(1);
-	}
-	if (file_fds[0] != -1)
-	{
-		close(in_tmp);
-		set_std_stream(0, file_fds[0]);
-	}
-	else
-		set_std_stream(0, in_tmp);
-	if (file_fds[1] != -1)
-	{
-		close(pipe_fds[1]);
-		set_std_stream(1, file_fds[1]);
-	}
-	else
-		set_std_stream(1, pipe_fds[1]);
-}
-
-void	last_child(t_command *cmd, int *file_fds, int in_tmp)
-{
-	if (!redirect_std(cmd, file_fds))
-	{
-		close(in_tmp);
-		exit(1);
-	}
-	if (file_fds[0] != -1)
-	{
-		close(in_tmp);
-		set_std_stream(0, file_fds[0]);
-	}
-	else
-		set_std_stream(0, in_tmp);
-	if (file_fds[1] != -1)
-		set_std_stream(1, file_fds[1]);
-}
-
-void	piping_to_child(t_command *cmd, int *pipe_fd, t_list *cmds,
-		int index_in_tmp[2])
-{
-	int		file_fds[2];
-
-	file_fds[0] = -1;
-	file_fds[1] = -1;
-	if (index_in_tmp[0] == 0)
-		first_child(cmd, pipe_fd, file_fds);
-	else if (cmds->next)
-		middle_child(cmd, pipe_fd, file_fds, index_in_tmp[1]);
-	else
-		last_child(cmd, file_fds, index_in_tmp[1]);
-}
 
 void	run_child_pipe(t_list *cmds, int *pipe_fds, int index_in_tmp[2],
 						t_data *data)
@@ -138,6 +54,13 @@ void	wait_children(t_data *data, int i)
 	}
 }
 
+void	check_next_cmds(t_list *cmds, int pipe_fds[2])
+{
+	if (cmds->next)
+		if (pipe(pipe_fds) == -1)
+			exit(1);
+}
+
 void	execute_pipeline(t_data *data, t_list *cmds)
 {
 	int			pipe_fds[2];
@@ -147,9 +70,7 @@ void	execute_pipeline(t_data *data, t_list *cmds)
 	index_in_tmp[1] = -1;
 	while (cmds)
 	{
-		if (cmds->next)
-			if (pipe(pipe_fds) == -1)
-				exit(1);
+		check_next_cmds(cmds, pipe_fds);
 		g_pid = fork();
 		if (g_pid == 0)
 			run_child_pipe(cmds, pipe_fds, index_in_tmp, data);

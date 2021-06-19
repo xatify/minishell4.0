@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
+#    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/06/19 09:39:29 by abbouzid         ###   ########.fr        #
+#    Updated: 2021/06/19 12:53:54 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,6 @@ STACK			= stack
 PARSER			= parsing
 
 S_SH			= start_shell
-
-PP				= piping
 
 EXPN			= expansion
 
@@ -66,19 +64,21 @@ SRCS			= minishell.c						\
 				$(PARSER)/parser.c					\
 				$(S_SH)/start_shell.c				\
 				$(S_SH)/new_input.c					\
-				$(PP)/piping.c						\
-				$(PP)/piping_2.c					\
 				$(EXPN)/expansions.c				\
 				$(EXPN)/expan_quoted.c				\
 				$(EXPN)/expan_unquoted.c			\
 				$(EXPN)/expan_special.c				\
 				$(EXPN)/expan_token.c				\
+				$(EXPN)/expan_token2.c				\
 				$(EXCT)/execute_builtins.c			\
 				$(EXCT)/execute_pipeline.c			\
+				$(EXCT)/execute_pipeline2.c			\
 				$(EXCT)/execute_cmd.c				\
 				$(LEXER)/lexer.c					\
+				$(LEXER)/lexer2.c					\
 				$(LEXER)/tokenizer.c				\
 				$(ENV)/build_env_var.c				\
+				$(ENV)/build_env_var2.c				\
 				$(ENV)/manip_env.c					\
 				$(ENV)/get_env_var.c				\
 				$(BUILTINS)/builtin_methodes.c		\
@@ -93,6 +93,7 @@ SRCS			= minishell.c						\
 				$(HIST)/history.c					\
 				$(HIST)/brows_history.c				\
 				$(HIST)/line_editing.c				\
+				$(HIST)/history_updown.c			
 
 
 all:	$(NAME)

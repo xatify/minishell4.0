@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 09:52:49 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/18 18:54:34 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/19 12:15:10 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ char	*expand(t_list *list, t_data *data, int *error);
 int		expand_list(t_list *list, t_data *data);
 int		expand_cmd(t_list *cmds, t_data *data);
 int		expand_pipeline(t_pipeline *pipline, t_data *data);
+void	set_cmd_name(char *name, t_command *cmd);
 
 #endif
