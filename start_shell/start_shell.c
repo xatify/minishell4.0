@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:28:43 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/19 12:22:36 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/19 14:13:14 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,11 @@ t_data	*start_shell(int argc, char **argv, char **envp, char **holder)
 	if (!data)
 		exit(1);
 	ft_memset(data, 0, sizeof(t_data));
-	if (!set_non_canonocal_mode(data))
-	{
-		free_data(data);
-		exit(1);
-	}
+	// if (!set_non_canonocal_mode(data))
+	// {
+	// 	free_data(data);
+	// 	exit(1);
+	// }
 	data->env_vars = build_env_vars(envp);
 	*holder = ft_strdup("");
 	if (!data->env_vars || !*holder)

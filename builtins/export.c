@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:57:13 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/18 11:07:23 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/19 13:37:57 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int	get_n_v(char *arg, char **name, char **value)
 int	not_identifier_name(char *arg)
 {
 	ft_putstr_fd(NOT_IDEN, STDERR);
-	ft_putstr_fd(arg, STDOUT);
-	ft_putchar_fd('\n', STDOUT);
+	ft_putstr_fd(arg, STDERR);
+	ft_putchar_fd('\n', STDERR);
 	return (1);
 }
 
