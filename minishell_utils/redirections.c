@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 09:19:07 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/19 11:42:16 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/23 17:37:12 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,19 @@ void	free_redirections(void *redirection)
 int	open_file(t_redirection *redirection)
 {
 	int		fd;
-
+	char	*tmp;
+	
 	if (redirection->type == INPUT)
 		fd = open(redirection->file, O_RDONLY);
 	else if (redirection->type == OUTPUT)
 		fd = open(redirection->file, O_TRUNC | O_CREAT | O_RDWR, 0666);
-	else
+	else if (redirection->type == APPEND_OUT)
 		fd = open(redirection->file, O_APPEND | O_CREAT | O_RDWR, 0666);
+	else
+	{
+		
+		fd 	
+	}
 	return (fd);
 }
 

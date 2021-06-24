@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 17:02:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/18 13:12:51 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/23 17:15:14 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	empty_stack(t_list **stack, t_list **tokens)
 	return (1);
 }
 
-BOOL	is_meta(char c)
+int	is_meta(char c)
 {
 	if (c == '|' || c == '>' || c == '<' || c == ';')
 		return (TRUE);

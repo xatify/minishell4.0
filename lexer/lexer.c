@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 07:33:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/19 12:09:18 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/23 17:15:14 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	handle_single_quote(t_list **stack, char **input_cmd)
 {
-	BOOL	second_quote;
+	int	second_quote;
 
 	second_quote = 0;
 	while (**input_cmd)
@@ -75,6 +75,11 @@ int	handle_metacharacter(t_list **stack, t_list **tokens, char **input_cmd)
 	if ((top == '>' && **input_cmd == '>'))
 	{
 		append = 1;
+		push(stack, *(*input_cmd)++);
+	}
+	else if (top == '<' && **input_cmd == '<')
+	{
+		append = 2;
 		push(stack, *(*input_cmd)++);
 	}
 	else if (is_meta(**input_cmd))

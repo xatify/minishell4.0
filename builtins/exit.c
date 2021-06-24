@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:25:50 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/18 11:12:51 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/23 17:15:14 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-BOOL	is_arg_alpha(char *s)
+int	is_arg_alpha(char *s)
 {
 	int	i;
 
@@ -57,11 +57,6 @@ int	exit_(t_data *data, char **argv)
 	}
 	if (argv[1])
 		exit_one_arg(argv[1], &ex, &status);
-	if (data->in_terminal)
-	{
-		tputs(data->termc->keyend, 1, putchar_2);
-		save_history(data);
-	}
 	free_data(data);
 	free_argv(argv);
 	exit(status);

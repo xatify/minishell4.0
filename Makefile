@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
+#    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/06/19 12:53:54 by keddib           ###   ########.fr        #
+#    Updated: 2021/06/23 16:41:05 by abbouzid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
 
-GCC				= gcc -g -Wall -Wextra -Werror -ltermcap
+GCC				= gcc -g -Wall -Wextra -Werror
 
 STR				= strings
 
@@ -35,8 +35,6 @@ EXCT			= execution
 LEXER			= lexer
 
 ENV				= environment
-
-HIST			= history
 
 SRCS			= minishell.c						\
 				$(STR)/strings.c					\
@@ -90,10 +88,6 @@ SRCS			= minishell.c						\
 				$(BUILTINS)/export_utils.c			\
 				$(BUILTINS)/pwd.c					\
 				$(BUILTINS)/unset.c					\
-				$(HIST)/history.c					\
-				$(HIST)/brows_history.c				\
-				$(HIST)/line_editing.c				\
-				$(HIST)/history_updown.c			
 
 
 all:	$(NAME)

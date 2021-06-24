@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:16:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/18 19:26:11 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/23 17:15:14 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void				fill_envp(char **envp_i, t_env_var *var);
 char				**built_envp(t_list *vars);
 void				del_env_var(t_list **vars, char *name);
 void				show_vars(t_data *data);
-BOOL				is_unset_var(t_list **unset_vars, char *name);
+int				is_unset_var(t_list **unset_vars, char *name);
 int					append_env_var(t_list **vars, char *var_name,
 						char *new_value);
-BOOL				creat_env(t_list **list_head, char *envp);
+int				creat_env(t_list **list_head, char *envp);
 int					create_envp(t_list *vars, char **envp, int i);
 void				check_envp(char *envp, t_env_var **var);
 void				change_shlv(t_env_var *var, char *envp);

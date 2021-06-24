@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   strings_3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 12:05:50 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/19 12:09:44 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/23 17:15:14 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-BOOL	is_num(char c)
+int	is_num(char c)
 {
 	if (c >= 0x30 && c <= 0x39)
 		return (TRUE);

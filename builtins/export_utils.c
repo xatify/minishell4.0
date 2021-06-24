@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 16:31:47 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/18 11:07:55 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/23 17:15:14 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	show_vars(t_data *data)
 	free_argv(vars);
 }
 
-BOOL	is_unset_var(t_list **unset_vars, char *name)
+int	is_unset_var(t_list **unset_vars, char *name)
 {
 	t_list		*tmp;
 

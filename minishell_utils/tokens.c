@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:43:36 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/18 12:25:54 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/23 17:25:12 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*g_operators[5] = {">", "<", ">>", "|", ";"};
+char	*g_operators[6] = {">", "<", ">>", "<<", "|", ";"};
 
 t_token	*new_token(char **str)
 {
@@ -39,7 +39,7 @@ int	token_id(char *token)
 	int		i;
 
 	i = 0;
-	while (i < 5)
+	while (i < 6)
 	{
 		if (!(ft_strcmp(g_operators[i], token)))
 			return (i);
@@ -63,7 +63,7 @@ int	identify_all_tokens(t_list *tokens)
 			if (!(tokens->next))
 				return (0);
 			if ((token->id == SEMICOLON || token->id == PIPE)
-				&& token_id(((t_token *)((tokens->next)->content))->tkn) <= 2)
+				&& token_id(((t_token *)((tokens->next)->content))->tkn) <= 3)
 			{
 				tokens = tokens->next;
 				continue ;

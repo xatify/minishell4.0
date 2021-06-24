@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   expan_token2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 19:47:37 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/19 12:14:59 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/23 17:15:14 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-BOOL	is_single_quote_token(char *token)
+int	is_single_quote_token(char *token)
 {
 	if (token[0] == '\'')
 		return (TRUE);
 	return (FALSE);
 }
 
-BOOL	is_double_quote_token(char *token)
+int	is_double_quote_token(char *token)
 {
 	if (token[0] == '"')
 		return (TRUE);

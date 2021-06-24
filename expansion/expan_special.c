@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expan_special.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:10:21 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/18 19:32:54 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/23 17:05:37 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,6 @@ void	handle_expand_env_var(char **token, t_list **p_stack, t_data *data,
 void	expand_dollar_sign(char **token, t_list **p_stack, t_data *data,
 								t_list *list)
 {
-	t_list	*s_stack;
-
-	s_stack = NULL;
 	if (**token == '?')
 		expand_exit_status(p_stack, data, token);
 	else if (is_num(**token))

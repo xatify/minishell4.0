@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:27:29 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/19 11:59:10 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/23 17:10:08 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_command	*parse_command(t_list **tokens)
 			&& ((t_token *)((*tokens)->content))->id != SEMICOLON)
 	{
 		id = ((t_token *)((*tokens)->content))->id;
-		if (id == OUTPUT || id == INPUT || id == APPEND_OUT)
+		if (id == OUTPUT || id == INPUT || id == APPEND_OUT || id == HEREDOC)
 		{
 			if (!parse_redirection(tokens, command, id))
 			{

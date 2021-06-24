@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:13:03 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/19 12:24:03 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/23 17:36:59 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,29 +61,14 @@ typedef struct s_env_var
 	char			*value;
 }					t_env_var;
 
-typedef struct s_termc
-{
-	char			*up_key;
-	char			*down_key;
-	char			*cariage_return;
-	char			*clear_line;
-	char			*keyend;
-	char			*keystart;
-}					t_termc;
-
 typedef struct s_data
 {
 	t_list			*env_vars;
 	t_list			*unset_vars;
 	char			*input_cmd;
 	t_list			*parse_tree;
+	t_list			*tmp_files;
 	int				exit_status;
-	int				in_terminal;
-	struct termios	origin;
-	struct termios	modified;
-	t_list			*history_head;
-	t_list			*history_index;
-	t_termc			*termc;
 }					t_data;
 
 #endif

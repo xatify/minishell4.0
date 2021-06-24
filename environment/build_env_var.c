@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_env_var.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 18:04:51 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/18 19:21:29 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/23 17:15:14 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	**built_envp(t_list *vars)
 	return (envp);
 }
 
-BOOL	creat_env(t_list **list_head, char *envp)
+int	creat_env(t_list **list_head, char *envp)
 {
 	t_env_var	*var;
 	t_list		*new;

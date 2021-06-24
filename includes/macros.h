@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:16:16 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/19 12:47:26 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/23 17:17:56 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@
 # define OUTPUT			0
 # define INPUT			1
 # define APPEND_OUT		2
-# define PIPE			3
-# define SEMICOLON		4
-# define WORD			5
-# define BOOL			int
+# define HEREDOC		3
+# define PIPE			4
+# define SEMICOLON		5
+# define WORD			6
 # define RM_PATH		"cd: error retrieving current directory\n"
 # define NO_F_D			"no such file or directory\n"
 # define ARG_NOT_SUP	"env arg not supported yet\n"
@@ -41,8 +41,6 @@
 # define EXPAN_ERR		"error while expanding !\n"
 # define PARSER_ERR		"error while parsing !\n"
 # define AMB_REDIRECT	": ambiguous redirect\n"
-# define HIST_FILE		"./.minishell_history"
-# define HIST_SIZE		20
 
 volatile sig_atomic_t	g_pid;
 

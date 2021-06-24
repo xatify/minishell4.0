@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   strings_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 09:04:09 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/18 18:01:37 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/23 17:15:14 by abbouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-BOOL	is_alpha(char c)
+int	is_alpha(char c)
 {
 	if ((c >= 0x41 && c <= 0x5a) || (c >= 0x61 && c <= 0x7a))
 		return (TRUE);
 	return (FALSE);
 }
 
-BOOL	is_underscore(char c)
+int	is_underscore(char c)
 {
 	if (c == '_')
 		return (TRUE);
 	return (FALSE);
 }
 
-BOOL	is_identifier(char *str)
+int	is_identifier(char *str)
 {
 	int	i;
 
@@ -49,7 +49,7 @@ BOOL	is_identifier(char *str)
 	return (FALSE);
 }
 
-BOOL	is_white_character(char c)
+int	is_white_character(char c)
 {
 	if (c == ' ' || c == '\t')
 		return (TRUE);
