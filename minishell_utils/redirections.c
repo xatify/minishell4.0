@@ -12,15 +12,41 @@
 
 #include "../includes/minishell.h"
 
-t_redirection	*new_redirection(char *file, int type)
+t_redirection	*new_redirection(char *file, int type, t_command *command)
 {
 	t_redirection	*redirection;
+	char		str[10];
+	char		*s = &str[0];
+	int			fd;
 
 	redirection = (t_redirection *)malloc(sizeof(t_redirection));
 	if (!redirection)
 		return (NULL);
-	redirection->file = ft_strdup(file);
-	redirection->type = type;
+	if (type == HEREDOC)
+	{
+		LCG(&s, 9);
+		fd = open(str, O_CREAT | O_APPEND | O_WRONLY, 0666);
+		if (fd >= 0)
+		{
+			ft_lstadd_back(&(command->tmp_files), ft_lstnew(ft_strdup(str)));
+			s = readline("> ");
+			while (s && ft_strcmp(s, file))
+			{
+				ft_putstr_fd(s, fd);
+				ft_putchar_fd('\n', fd);
+				free(s);
+				s = readline("> ");
+			}
+			close(fd);
+			redirection->file = ft_strdup(str);
+			redirection->type = INPUT;
+		}
+	}
+	else
+	{
+		redirection->file = ft_strdup(file);
+		redirection->type = type;
+	}
 	return (redirection);
 }
 
@@ -32,28 +58,28 @@ void	free_redirections(void *redirection)
 	free(redirection);
 }
 
+void	free_tmp_files(void *tmp_file)
+{
+	unlink(tmp_file);
+	free(tmp_file);
+}
+
 int	open_file(t_redirection *redirection)
 {
 	int		fd;
-	char	*tmp;
-	
+
 	if (redirection->type == INPUT)
 		fd = open(redirection->file, O_RDONLY);
 	else if (redirection->type == OUTPUT)
 		fd = open(redirection->file, O_TRUNC | O_CREAT | O_RDWR, 0666);
-	else if (redirection->type == APPEND_OUT)
-		fd = open(redirection->file, O_APPEND | O_CREAT | O_RDWR, 0666);
 	else
-	{
-		
-		fd 	
-	}
+		fd = open(redirection->file, O_APPEND | O_CREAT | O_RDWR, 0666);
 	return (fd);
 }
 
 void	set_streaming_fds(int *tmp_fd, int fd, int redirection_type)
 {
-	if (redirection_type == INPUT)
+	if (redirection_type == INPUT || redirection_type == HEREDOC)
 	{
 		if (tmp_fd[0] >= 0)
 			close(tmp_fd[0]);
@@ -114,6 +140,7 @@ int	simple_cmd_streaming(t_command *cmd, int *tmp_std)
 		if (built_in)
 			tmp_std[0] = dup(0);
 		set_std_stream(0, fds[0]);
+		ft_lstclear(&(cmd->tmp_files), free_tmp_files);
 	}
 	if (fds[1] != -1)
 	{

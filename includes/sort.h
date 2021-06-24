@@ -18,5 +18,6 @@
 */
 
 void	sort(char **strings);
+void	LCG(char *str[], int len);
 
 #endif

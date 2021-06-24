@@ -88,4 +88,5 @@ void	piping_to_child(t_command *cmd, int *pipe_fd, t_list *cmds,
 		middle_child(cmd, pipe_fd, file_fds, index_in_tmp[1]);
 	else
 		last_child(cmd, file_fds, index_in_tmp[1]);
+	ft_lstclear(&(cmd->tmp_files), free_tmp_files);
 }

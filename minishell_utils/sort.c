@@ -44,3 +44,22 @@ void	sort(char **strings)
 		i++;
 	}
 }
+
+void	LCG(char *str[], int len)
+{
+	int i;
+	static int		seed;
+	static int		m = (1 << 31);
+
+	i = 0;
+	while (i < len)
+	{
+		seed = (1103515245 * seed + 12345) % m;
+		if (seed < 0)
+			(*str)[i] = (char )((-seed % 24) + 'a');
+		else
+			(*str)[i] = (char)((seed % 24) + 'a');
+		i++;
+	}
+	(*str)[len] = '\0';
+}

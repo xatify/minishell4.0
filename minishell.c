@@ -16,8 +16,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
-	argc += 1;
-	argv = argv;
+	argc = 0;
+	argv = NULL;
 	signal(SIGINT, sig_int_handler);
 	signal(SIGQUIT, sig_quit_handler);
 	start_shell(&data, envp);

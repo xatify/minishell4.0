@@ -20,6 +20,7 @@ void	run_child_pipe(t_list *cmds, int *pipe_fds, int index_in_tmp[2],
 	char		**envp;
 	int			ret;
 
+
 	cmd = (t_command *)(cmds->content);
 	piping_to_child(cmd, pipe_fds, cmds, index_in_tmp);
 	if (cmd->name_and_args)

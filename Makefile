@@ -12,7 +12,7 @@
 
 NAME			= minishell
 
-GCC				= gcc -g -Wall -Wextra -Werror
+GCC				= gcc -g -Wall -Wextra -Werror -lreadline
 
 STR				= strings
 

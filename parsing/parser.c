@@ -21,7 +21,7 @@ int	parse_redirection(t_list **tokens, t_command *command, int stream)
 	token = (t_token *)((*tokens)->content);
 	if ((*tokens) && token->id >= WORD)
 	{
-		redirection = new_redirection(token->tkn, stream);
+		redirection = new_redirection(token->tkn, stream, command);
 		ft_lstadd_back(&(command->redirections), ft_lstnew(redirection));
 		del_token_head(tokens);
 		return (1);

@@ -17,8 +17,9 @@
 ** creating output files and redirecting to the right file
 */
 
-t_redirection	*new_redirection(char *file, int type);
+t_redirection	*new_redirection(char *file, int type, t_command *cmd);
 void			free_redirections(void *redirection);
+void            free_tmp_files(void *tmp_file);
 int				open_file(t_redirection *redirection);
 void			set_streaming_fds(int *tmp_fd, int fd, int redirection_type);
 int				redirect_std(t_command *cmd, int *tmp_fd);

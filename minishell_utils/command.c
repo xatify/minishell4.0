@@ -32,5 +32,6 @@ void	free_command(void *cmd)
 	command = (t_command *)cmd;
 	ft_lstclear(&(command->name_and_args), free);
 	ft_lstclear(&(command->redirections), free_redirections);
+	ft_lstclear(&(command->tmp_files), free_tmp_files);
 	free(command);
 }

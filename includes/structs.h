@@ -28,6 +28,7 @@ typedef struct s_command
 {
 	t_list			*name_and_args;
 	t_list			*redirections;
+	t_list			*tmp_files;
 	char			built_in;
 }					t_command;
 
@@ -67,7 +68,6 @@ typedef struct s_data
 	t_list			*unset_vars;
 	char			*input_cmd;
 	t_list			*parse_tree;
-	t_list			*tmp_files;
 	int				exit_status;
 }					t_data;
 
