@@ -99,15 +99,15 @@ void	execute(t_data *data)
 	while (pipelines)
 	{
 		pipeline = (t_pipeline *)(pipelines->content);
-		//if (expand_pipeline(pipeline, data))
-		//{
+		if (expand_pipeline(pipeline, data))
+		{
 			if (pipeline->cmds->next)
 				execute_pipeline(data, pipeline->cmds);
 			else
 				execute_simple_cmd(data, pipeline);
-		//}
-		///else
-			//data->exit_status = 1;
+		}
+		else
+			data->exit_status = 1;
 		pipelines = pipelines->next;
 	}
 }

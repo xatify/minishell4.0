@@ -63,11 +63,8 @@ SRCS			= minishell.c						\
 				$(S_SH)/start_shell.c				\
 				$(S_SH)/new_input.c					\
 				$(EXPN)/expansions.c				\
-				$(EXPN)/expan_quoted.c				\
-				$(EXPN)/expan_unquoted.c			\
-				$(EXPN)/expan_special.c				\
-				$(EXPN)/expan_token.c				\
-				$(EXPN)/expan_token2.c				\
+				$(EXPN)/expan_env.c					\
+				$(EXPN)/expan_quotes.c				\
 				$(EXCT)/execute_builtins.c			\
 				$(EXCT)/execute_pipeline.c			\
 				$(EXCT)/execute_pipeline2.c			\

@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-char	*expand(t_list *list, t_data *data, int *error)
+char	*expand(t_list *list, t_data *data)
 {
 	t_list			*stack;
 	char			**token;
@@ -25,72 +25,72 @@ char	*expand(t_list *list, t_data *data, int *error)
 	{
 		push(&stack, *(*token)++);
 		if (top_stack(&stack) == '\'' || top_stack(&stack) == '\"')
-		{
-			if (!expand_quotes(&stack, token, data))
-				*error = 1;
-		}
-		else if (!expand_unquoted_token(&stack, token, data, list))
-			*error = 1;
-		if (*error)
-			break ;
+			expand_quotes(&stack, token, data);
+		else
+			expand_unquoted_token(&stack, token, data);
 	}
-	return (handle_expansion(&stack, *error));
+	return (str_from_stack(&stack));
 }
 
-int	expand_list(t_list *list, t_data *data)
+void	expand_list(t_list *list, t_data *data)
 {
+	t_list		*tokens;
 	int			error;
-	char		*tmp;
+	t_list		*next;
+	t_list		*new_list;
 
 	error = 0;
+	tokens = NULL;
 	if (list)
 	{
-		tmp = expand(list, data, &error);
-		if (!error)
+		tokens = lexer(expand(list, data), &error);
+		new_list = rm_quotes(tokens);
+		next = list->next;
+		ft_lstadd_back(&(new_list), next);
+		if (new_list)
 		{
 			free(list->content);
-			if (!tmp)
-				list->content = ft_strdup("");
-			else
-				list->content = tmp;
-			return (expand_list(list->next, data));
+			list->content = new_list->content;
+			list->next = new_list->next;
+			free(new_list);
 		}
-		else
-			return (0);
+		list = next;
+		expand_list(list, data);
 	}
-	return (1);
 }
 
-int	expand_redirections(t_list *redirections, t_data *data)
+int		expand_redirections(t_list *redirections, t_data *data)
 {
-	t_list			*tmp_list;
+	t_list			*tokens;
 	t_redirection	*redirection;
 	int				error;
-	char			*tmp;
+	t_list			*list;
 
 	if (redirections)
 	{
-		error = 0;
-		tmp_list = NULL;
+		list = NULL;
 		redirection = (t_redirection *)redirections->content;
-		ft_lstadd_back(&tmp_list, ft_lstnew(ft_strdup(redirection->file)));
-		tmp = expand(tmp_list, data, &error);
-		if (error || !tmp || (ft_lstsize(tmp_list) > 1))
+		ft_lstadd_back(&list, ft_lstnew(ft_strdup(redirection->file)));
+		tokens = lexer(expand(list, data), &error);
+		if (ft_lstsize(tokens) > 1)
 		{
 			ft_putstr_fd(redirection->file, STDERR);
 			ft_putstr_fd(AMB_REDIRECT, STDERR);
-			ft_lstclear(&tmp_list, free);
+			ft_lstclear(&list, free);
+			ft_lstclear(&tokens, free_token);
 			return (0);
 		}
 		free(redirection->file);
-		redirection->file = tmp;
-		ft_lstclear(&tmp_list, free);
+		rmq(((t_token *)(tokens->content))->tkn);
+		redirection->file = ft_strdup(((t_token *)(tokens->content))->tkn);
+		ft_lstclear(&tokens, free_token);
+		ft_lstclear(&list, free);
 		return (expand_redirections(redirections->next, data));
 	}
 	return (1);
 }
 
-int	expand_cmd(t_list *cmds, t_data *data)
+int 	expand_cmd(t_list *cmds, t_data *data)
 {
 	t_command	*cmd;
 	char		*name;
@@ -98,23 +98,21 @@ int	expand_cmd(t_list *cmds, t_data *data)
 	if (cmds)
 	{
 		cmd = (t_command *)(cmds->content);
-		if (expand_list(cmd->name_and_args, data)
-			&& expand_redirections(cmd->redirections, data))
+		expand_list(cmd->name_and_args, data);
+		if (!expand_redirections(cmd->redirections, data))
+			return (0);
+		if (cmd->name_and_args)
 		{
-			if (cmd->name_and_args)
-			{
-				name = cmd->name_and_args->content;
-				if (name[0] == '\0')
-					set_cmd_name(name, cmd);
-			}
-			return (expand_cmd(cmds->next, data));
+			name = cmd->name_and_args->content;
+			if (name[0] == '\0')
+				set_cmd_name(name, cmd);
 		}
-		return (0);
+		expand_cmd(cmds->next, data);
 	}
 	return (1);
 }
 
-int	expand_pipeline(t_pipeline *pipline, t_data *data)
+int		expand_pipeline(t_pipeline *pipline, t_data *data)
 {
 	return (expand_cmd(pipline->cmds, data));
 }
