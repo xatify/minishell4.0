@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 17:02:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/23 17:15:14 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/25 14:38:04 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	is_metacharacter(t_list **stack)
 	char	top;
 
 	top = top_stack(stack);
-	if (is_meta(top) && !special((*stack)))
+	if (is_meta(top))
 		((t_stack *)((*stack)->content))->meta = 1;
 }
 

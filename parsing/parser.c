@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:27:29 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/23 17:10:08 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/25 14:14:40 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,13 @@ t_pipeline	*parse_pipe_line(t_list **tokens)
 	return (pipeline);
 }
 
-t_list	*parser(char *input_cmd)
+t_list	*parser(char *input_cmd, int *error)
 {
 	t_list			*tokens;
 	t_list			*pipelines;
 	t_pipeline		*tmp;
 
-	tokens = lexer(input_cmd);
+	tokens = lexer(input_cmd, error);
 	pipelines = NULL;
 	while (tokens)
 	{

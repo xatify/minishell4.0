@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:21:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/23 17:19:44 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/25 14:27:02 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,24 @@
 
 void	new_input(t_data *data)
 {
-	int	ret;
-	
+	int error;
+
+	error = 0;
 	data->input_cmd = NULL;
-	ft_putstr_fd(PROMPT, 2);
-	ret = get_next_line(0, &(data->input_cmd));
-	if (ret >= 0 && (data->input_cmd[0]))
+	data->input_cmd = readline(PROMPT);
+	if (!data->input_cmd)
+		return;
+	if (data->input_cmd[0])
 	{
-		data->parse_tree = parser(data->input_cmd);
-		if (!data->parse_tree)
+		data->parse_tree = parser(data->input_cmd, &error);
+		if (!data->parse_tree && error)
 		{
 			ft_putstr_fd(PARSER_ERR, STDERR);
 			data->exit_status = 258;
 		}
 		else
 			execute(data);
+		add_history(data->input_cmd);
 	}
 	free(data->input_cmd);
 }

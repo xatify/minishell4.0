@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+         #
+#    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/06/23 16:41:05 by abbouzid         ###   ########.fr        #
+#    Updated: 2021/06/25 14:37:30 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,6 @@ SRCS			= minishell.c						\
 				$(EXCT)/execute_pipeline2.c			\
 				$(EXCT)/execute_cmd.c				\
 				$(LEXER)/lexer.c					\
-				$(LEXER)/lexer2.c					\
 				$(LEXER)/tokenizer.c				\
 				$(ENV)/build_env_var.c				\
 				$(ENV)/build_env_var2.c				\

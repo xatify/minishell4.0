@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:25:28 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/19 13:44:07 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/25 14:39:01 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,15 +99,15 @@ void	execute(t_data *data)
 	while (pipelines)
 	{
 		pipeline = (t_pipeline *)(pipelines->content);
-		if (expand_pipeline(pipeline, data))
-		{
+		//if (expand_pipeline(pipeline, data))
+		//{
 			if (pipeline->cmds->next)
 				execute_pipeline(data, pipeline->cmds);
 			else
 				execute_simple_cmd(data, pipeline);
-		}
-		else
-			data->exit_status = 1;
+		//}
+		///else
+			//data->exit_status = 1;
 		pipelines = pipelines->next;
 	}
 }

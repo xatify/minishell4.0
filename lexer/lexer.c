@@ -3,53 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 07:33:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/23 17:15:14 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/25 14:37:06 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	handle_single_quote(t_list **stack, char **input_cmd)
-{
-	int	second_quote;
-
-	second_quote = 0;
-	while (**input_cmd)
-	{
-		push(stack, *(*input_cmd)++);
-		if (top_stack(stack) == 0x27)
-		{
-			second_quote = 1;
-			break ;
-		}
-	}
-	if (!second_quote)
-		return (0);
-	if (**input_cmd == '\0' && top_stack(stack) != 0x27)
-		return (0);
-	return (1);
-}
-
-int	handle_double_quote(t_list **stack, char **input_cmd)
-{
-	while (**input_cmd)
-	{
-		push(stack, *(*input_cmd)++);
-		if (top_stack(stack) != '"')
-			continue ;
-		else
-		{
-			if (special(*stack))
-				continue ;
-			else
-				return (1);
-		}
-	}
-	return (0);
-}
 
 int	ret_hundle_meta(t_list **stack, t_list **tokens, int append)
 {
