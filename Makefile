@@ -12,7 +12,7 @@
 
 NAME			= minishell
 
-GCC				= gcc -g -Wall -Wextra -Werror -lreadline -L /goinfre/abbouzid/abbouzid/homebrew/opt/readline/lib -I /goinfre/abbouzid/abbouzid/homebrew/opt/readline/include
+GCC				= gcc -g -Wall -Wextra -Werror -fsanitize=leak -lreadline -L /goinfre/abbouzid/abbouzid/homebrew/opt/readline/lib -I /goinfre/abbouzid/abbouzid/homebrew/opt/readline/include
 
 STR				= strings
 

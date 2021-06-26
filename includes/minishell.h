@@ -26,6 +26,7 @@
 # include <string.h>
 # include <sys/errno.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 
 # include "macros.h"
 # include "structs.h"

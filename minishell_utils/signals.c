@@ -33,7 +33,6 @@ void	sig_int_handler(int signum)
 
 void	sig_quit_handler(int signum)
 {
-	//printf("%d\n", g_pid);
 	if (g_pid > 0)
 	{
 		g_pid = -131;

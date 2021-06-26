@@ -46,13 +46,21 @@ void	expand_list(t_list *list, t_data *data)
 		tokens = lexer(expand(list, data), &error);
 		new_list = rm_quotes(tokens);
 		next = list->next;
-		ft_lstadd_back(&(new_list), next);
 		if (new_list)
 		{
+			ft_lstadd_back(&(new_list), next);
+			if (new_list)
+			{
+				free(list->content);
+				list->content = new_list->content;
+				list->next = new_list->next;
+				free(new_list);
+			}
+		}
+		else
+		{
 			free(list->content);
-			list->content = new_list->content;
-			list->next = new_list->next;
-			free(new_list);
+			list->content = ft_strdup("");
 		}
 		list = next;
 		expand_list(list, data);
