@@ -43,5 +43,6 @@
 # define AMB_REDIRECT	": ambiguous redirect\n"
 
 volatile sig_atomic_t	g_pid;
+//extern int rl_catch_signals;
 
 #endif

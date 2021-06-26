@@ -25,6 +25,7 @@ void	start_shell(t_data *data, char **envp)
 
 	ft_memset(data, 0, sizeof(t_data));
 	data->env_vars = build_env_vars(envp);
+	//rl_catch_signals = 0;
 	if (!data->env_vars)
 	{
 		free_data(data);

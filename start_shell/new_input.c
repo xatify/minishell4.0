@@ -19,8 +19,16 @@ void	new_input(t_data *data)
 	error = 0;
 	data->input_cmd = NULL;
 	data->input_cmd = readline(PROMPT);
+	if (g_pid == -1)
+	{
+		data->exit_status = 1;
+		g_pid = 0;
+	}
 	if (!data->input_cmd)
-		return;
+	{
+		free_data(data);
+		exit(0);
+	}
 	if (data->input_cmd[0])
 	{
 		data->parse_tree = parser(data->input_cmd, &error);

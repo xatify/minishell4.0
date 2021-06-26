@@ -21,12 +21,19 @@ void	sig_int_handler(int signum)
 		kill(g_pid, SIGINT);
 	}
 	else
+	{
+		ft_putchar_fd('\n', STDERR);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 		g_pid = -1;
+	}
 	(void)signum;
 }
 
 void	sig_quit_handler(int signum)
 {
+	//printf("%d\n", g_pid);
 	if (g_pid > 0)
 	{
 		g_pid = -131;
@@ -34,6 +41,9 @@ void	sig_quit_handler(int signum)
 		kill(g_pid, SIGQUIT);
 	}
 	else
-		g_pid = -2;
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
 	(void)signum;
 }
