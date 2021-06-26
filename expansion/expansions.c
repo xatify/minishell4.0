@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/19 12:14:46 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/26 18:33:10 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,15 @@ void	expand_list(t_list *list, t_data *data)
 	int			error;
 	t_list		*next;
 	t_list		*new_list;
+	char		*str;
 
 	error = 0;
 	tokens = NULL;
 	if (list)
 	{
-		tokens = lexer(expand(list, data), &error);
+		str = expand(list, data);
+		tokens = lexer(str, &error);
+		free(str);
 		new_list = rm_quotes(tokens);
 		next = list->next;
 		if (new_list)
@@ -73,13 +76,16 @@ int		expand_redirections(t_list *redirections, t_data *data)
 	t_redirection	*redirection;
 	int				error;
 	t_list			*list;
+	char *tmp;
 
 	if (redirections)
 	{
 		list = NULL;
 		redirection = (t_redirection *)redirections->content;
 		ft_lstadd_back(&list, ft_lstnew(ft_strdup(redirection->file)));
-		tokens = lexer(expand(list, data), &error);
+		tmp = expand(list, data);
+		tokens = lexer(tmp, &error);
+		free(tmp);
 		if (ft_lstsize(tokens) > 1)
 		{
 			ft_putstr_fd(redirection->file, STDERR);

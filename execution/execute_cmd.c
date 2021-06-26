@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/19 08:35:18 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/26 18:20:54 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,12 @@ int	execute_binary(t_data *data, t_command *cmd)
 	char	**argv;
 	char	**envp;
 
-	argv = built_argv(cmd);
-	envp = built_envp(data->env_vars);
+
 	g_pid = fork();
 	if (g_pid == 0)
 	{
+		argv = built_argv(cmd);
+		envp = built_envp(data->env_vars);
 		if (simple_cmd_streaming(cmd, NULL))
 			exit(1);
 		execute_child(data, cmd, argv, envp);

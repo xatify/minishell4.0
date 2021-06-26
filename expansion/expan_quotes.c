@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expan_quoted.c                                     :+:      :+:    :+:   */
+/*   expan_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:08:35 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/18 11:27:04 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/26 17:52:42 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,10 @@ t_list		*rm_quotes(t_list *tokens)
 {
 	t_list	*list;
 	char	*str;
+	t_list *tmp;
 
 	list = NULL;
+	tmp = tokens;
 	while (tokens)
 	{
 		str = ((t_token *)(tokens->content))->tkn;
@@ -98,6 +100,6 @@ t_list		*rm_quotes(t_list *tokens)
 		ft_lstadd_back(&list, ft_lstnew(ft_strdup(str)));
 		tokens = tokens->next;
 	}
-	ft_lstclear(&(tokens), free_token);
+	ft_lstclear(&(tmp), free_token);
 	return (list);
 }

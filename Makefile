@@ -6,13 +6,14 @@
 #    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/06/25 14:37:30 by keddib           ###   ########.fr        #
+#    Updated: 2021/06/26 18:11:36 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
 
-GCC				= gcc -g -Wall -Wextra -Werror -fsanitize=leak -lreadline -L /goinfre/abbouzid/abbouzid/homebrew/opt/readline/lib -I /goinfre/abbouzid/abbouzid/homebrew/opt/readline/include
+
+GCC				= gcc -g -Wall -Wextra -Werror -lreadline -L /goinfre/keddib/brew/opt/readline/lib -I /goinfre/keddib/brew/opt/readline/include
 
 STR				= strings
 

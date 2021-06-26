@@ -1,0 +1,5 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory `/goinfre/keddib/42/minishell4.0'
+make: Nothing to be done for `all'.
+make: Leaving directory `/goinfre/keddib/42/minishell4.0'
+ 

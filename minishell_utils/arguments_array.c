@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 10:26:28 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/18 12:20:34 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/26 18:18:07 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	free_argv(char **argv)
 		free(argv[i]);
 		i++;
 	}
+	free(argv[i]);
 	free(argv);
 }
 

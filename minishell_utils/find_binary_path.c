@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 14:59:19 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/18 12:22:02 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/26 19:16:12 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char	*find_binary_file(t_data *data, char *cmd_name)
 	if (!bins_dirs)
 		return (NULL);
 	path = absolute_path(cmd_name, bins_dirs);
+	free(bins_dirs);
 	return (path);
 }
 

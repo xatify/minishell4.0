@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 09:19:07 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/23 17:37:12 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/26 19:11:36 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_redirection	*new_redirection(char *file, int type, t_command *command)
 				free(s);
 				s = readline("> ");
 			}
+			free(s);
 			close(fd);
 			redirection->file = ft_strdup(str);
 			redirection->type = INPUT;
