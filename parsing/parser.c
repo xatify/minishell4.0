@@ -108,7 +108,8 @@ t_list	*parser(char *input_cmd, int *error)
 		if (!tmp)
 		{
 			ft_lstclear(&pipelines, free_pipeline);
-			ft_lstclear(&tokens, free);
+			ft_lstclear(&tokens, free_token);
+			*error = 1;
 			return (NULL);
 		}
 		ft_lstadd_back(&pipelines, ft_lstnew(tmp));

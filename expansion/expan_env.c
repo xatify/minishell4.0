@@ -70,13 +70,25 @@ void	expand_dollar_sign(char **token, t_list **p_stack, t_data *data)
 		handle_expand_env_var(token, p_stack, data);
 }
 
-void	set_cmd_name(char *name, t_command *cmd)
+void	set_cmd_name(t_command *cmd)
 {
 	t_list		*tmp;
+	char		*arg;
+	t_list		*tmp2;
 
-	tmp = cmd->name_and_args->next;
-	free(name);
-	free(cmd->name_and_args);
-	cmd->name_and_args = NULL;
-	*(&(cmd->name_and_args)) = tmp;
+	tmp = cmd->name_and_args;
+	while (tmp)
+	{
+		arg = tmp->content;
+		if (arg && arg[0] == '\0')
+		{
+			tmp2 = tmp;
+			free(tmp->content);
+			free(tmp);
+			tmp = tmp2->next;
+		}
+		else
+			break ;
+	}
+	cmd->name_and_args = tmp;
 }

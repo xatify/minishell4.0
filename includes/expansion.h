@@ -24,7 +24,7 @@ void	expand_dollar_sign(char **token, t_list **p_stack, t_data *data);
 void	handle_expand_env_var(char **token, t_list **p_stack, t_data *data);
 void	expand_exit_status(t_list **p_stack, t_data *data, char **token);
 void	expand_env_var(t_list **tmp[2], t_list **vars);
-void	set_cmd_name(char *name, t_command *cmd);
+void	set_cmd_name(t_command *cmd);
 char	*expand(t_list *list, t_data *data);
 void	expand_list(t_list *list, t_data *data);
 int		expand_redirections(t_list *redirections, t_data *data);

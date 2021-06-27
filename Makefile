@@ -13,7 +13,7 @@
 NAME			= minishell
 
 
-GCC				= gcc -g -Wall -Wextra -Werror -lreadline -L /goinfre/keddib/brew/opt/readline/lib -I /goinfre/keddib/brew/opt/readline/include
+GCC				= gcc -g -Wall -Wextra -Werror -lreadline -L /goinfre/abbouzid/abbouzid/homebrew/opt/readline/lib -I /goinfre/abbouzid/abbouzid/homebrew/opt/readline/include
 
 STR				= strings
 

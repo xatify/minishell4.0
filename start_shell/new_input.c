@@ -32,7 +32,7 @@ void	new_input(t_data *data)
 	if (data->input_cmd[0])
 	{
 		data->parse_tree = parser(data->input_cmd, &error);
-		if (!data->parse_tree && error)
+		if (!data->parse_tree || error)
 		{
 			ft_putstr_fd(PARSER_ERR, STDERR);
 			data->exit_status = 258;

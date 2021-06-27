@@ -76,7 +76,7 @@ int		expand_redirections(t_list *redirections, t_data *data)
 	t_redirection	*redirection;
 	int				error;
 	t_list			*list;
-	char *tmp;
+	char			*tmp;
 
 	if (redirections)
 	{
@@ -107,7 +107,6 @@ int		expand_redirections(t_list *redirections, t_data *data)
 int 	expand_cmd(t_list *cmds, t_data *data)
 {
 	t_command	*cmd;
-	char		*name;
 
 	if (cmds)
 	{
@@ -115,12 +114,7 @@ int 	expand_cmd(t_list *cmds, t_data *data)
 		expand_list(cmd->name_and_args, data);
 		if (!expand_redirections(cmd->redirections, data))
 			return (0);
-		if (cmd->name_and_args)
-		{
-			name = cmd->name_and_args->content;
-			if (name[0] == '\0')
-				set_cmd_name(name, cmd);
-		}
+		set_cmd_name(cmd);
 		expand_cmd(cmds->next, data);
 	}
 	return (1);
