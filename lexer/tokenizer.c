@@ -16,7 +16,7 @@ t_list	*tokenizer(int error, t_list **tokens, t_list **stack)
 {
 	if (error)
 	{
-		ft_lstclear(tokens, free);
+		ft_lstclear(tokens, free_token);
 		ft_lstclear(stack, free);
 		return (NULL);
 	}

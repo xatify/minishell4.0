@@ -62,13 +62,16 @@ int	cd(char *path, t_data *data)
 	char		*pwd;
 	t_env_var	*var_env;
 
-	var_env = search_var(&(data->env_vars), "HOME");
-	if (var_env)
-		dir = var_env->value;
 	if (path)
-		dir = path;
+		dir = ft_strdup(path);
+	else
+	{
+		var_env = search_var(&(data->env_vars), "HOME");
+		dir = ft_strdup(var_env->value);
+	}
 	pwd = getcwd(NULL, 0);
 	ret = chdir(dir);
+	free(dir);
 	dir = NULL;
 	dir = getcwd(NULL, 0);
 	if (!ret && (pwd || dir))
@@ -77,8 +80,12 @@ int	cd(char *path, t_data *data)
 		return (hundle_removed_path(path, &(data->env_vars), data));
 	else
 	{
+		free(pwd);
+		free(dir);
 		ft_putstr_fd(NO_F_D, STDERR);
 		return (1);
 	}
+	free(pwd);
+	free(dir);
 	return (ret);
 }
