@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:25:28 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/25 14:39:01 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/27 15:37:37 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	run_child_pipe(t_list *cmds, int *pipe_fds, int index_in_tmp[2],
 	char		**argv;
 	char		**envp;
 	int			ret;
-
 
 	cmd = (t_command *)(cmds->content);
 	piping_to_child(cmd, pipe_fds, cmds, index_in_tmp);

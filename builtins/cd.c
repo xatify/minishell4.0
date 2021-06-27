@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:29:16 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/18 11:03:32 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/27 16:23:13 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,35 +55,43 @@ void	hundle_exicted_path(t_data *data, char *pwd)
 	change_env_var(&(data->env_vars), "PWD", pwd);
 }
 
+int	cd_pwd(char *path, char **pwd, char **dir, t_data *data)
+{
+	int			ret;
+	t_env_var	*var_env;
+
+	var_env = search_var(&(data->env_vars), "HOME");
+	if (var_env)
+		*dir = ft_strdup(var_env->value);
+	if (path)
+	{
+		free(*dir);
+		*dir = ft_strdup(path);
+	}
+	*pwd = getcwd(NULL, 0);
+	ret = chdir(*dir);
+	free(*dir);
+	*dir = getcwd(NULL, 0);
+	return (ret);
+}
+
 int	cd(char *path, t_data *data)
 {
 	char		*dir;
 	int			ret;
 	char		*pwd;
-	t_env_var	*var_env;
 
-	if (path)
-		dir = ft_strdup(path);
-	else
-	{
-		var_env = search_var(&(data->env_vars), "HOME");
-		dir = ft_strdup(var_env->value);
-	}
-	pwd = getcwd(NULL, 0);
-	ret = chdir(dir);
-	free(dir);
 	dir = NULL;
-	dir = getcwd(NULL, 0);
+	pwd = NULL;
+	ret = cd_pwd(path, &pwd, &dir, data);
 	if (!ret && (pwd || dir))
 		hundle_exicted_path(data, pwd);
 	else if (!pwd && !ret)
 		return (hundle_removed_path(path, &(data->env_vars), data));
 	else
 	{
-		free(pwd);
-		free(dir);
 		ft_putstr_fd(NO_F_D, STDERR);
-		return (1);
+		ret = 1;
 	}
 	free(pwd);
 	free(dir);

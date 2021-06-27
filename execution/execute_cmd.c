@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/26 18:20:54 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/27 15:36:16 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	execute_binary(t_data *data, t_command *cmd)
 	int		status;
 	char	**argv;
 	char	**envp;
-
 
 	g_pid = fork();
 	if (g_pid == 0)

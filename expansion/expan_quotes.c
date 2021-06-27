@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:08:35 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/26 17:52:42 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/27 15:38:47 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	expand_double_quotes(t_list **stack, char **token, t_data *data)
 			if (**token == '\"')
 			{
 				(*token)++;
-				break;
+				break ;
 			}
 		}
 		else
@@ -34,7 +34,6 @@ void	expand_double_quotes(t_list **stack, char **token, t_data *data)
 		(*token)++;
 	}
 }
-
 
 void	expand_quotes(t_list **stack, char **token, t_data *data)
 {
@@ -71,7 +70,7 @@ void	expand_unquoted_token(t_list **stack, char **token, t_data *data)
 	}
 }
 
-void		rmq(char *str)
+void	rmq(char *str)
 {
 	int		i;
 
@@ -85,11 +84,11 @@ void		rmq(char *str)
 	}
 }
 
-t_list		*rm_quotes(t_list *tokens)
+t_list	*rm_quotes(t_list *tokens)
 {
 	t_list	*list;
 	char	*str;
-	t_list *tmp;
+	t_list	*tmp;
 
 	list = NULL;
 	tmp = tokens;

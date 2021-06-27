@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 09:12:22 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/18 12:24:39 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/27 15:33:00 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,11 @@ void	sort(char **strings)
 
 void	LCG(char *str[], int len)
 {
-	int i;
+	int				i;
 	static int		seed;
-	static int		m = (1 << 31);
+	static int		m;
 
+	m = (1 << 31);
 	i = 0;
 	while (i < len)
 	{

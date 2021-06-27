@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 09:52:49 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/23 17:15:14 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/27 16:06:47 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int		expand_redirections(t_list *redirections, t_data *data);
 int		expand_cmd(t_list *cmds, t_data *data);
 int		expand_pipeline(t_pipeline *pipline, t_data *data);
 t_list	*rm_quotes(t_list *tokens);
-void		rmq(char *str);
+void	rmq(char *str);
+int		redirection_error(t_redirection *red, t_list *list, t_list *tokens);
+void	reexpand_list(t_list *list, t_list *new_list, t_list *next);
 
 #endif

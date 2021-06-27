@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expan_special.c                                    :+:      :+:    :+:   */
+/*   expan_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 17:10:21 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/23 17:05:37 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/27 16:26:28 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,12 @@ void	expand_env_var(t_list **tmp[2], t_list **vars)
 
 void	expand_exit_status(t_list **p_stack, t_data *data, char **token)
 {
+	char	*value;
+
 	(*token)++;
-	push_str_to_stack(p_stack, ft_itoa(data->exit_status));
+	value = ft_itoa(data->exit_status);
+	push_str_to_stack(p_stack, value);
+	free(value);
 }
 
 void	handle_expand_env_var(char **token, t_list **p_stack, t_data *data)

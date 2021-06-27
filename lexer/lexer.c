@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 07:33:33 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/26 19:37:25 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/27 16:29:40 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,10 @@ int	handle_metacharacter(t_list **stack, t_list **tokens, char **input_cmd)
 	if ((*stack) && !empty_stack(stack, tokens))
 		return (0);
 	push(stack, top);
-	if ((top == '>' && **input_cmd == '>'))
+	if ((top == '>' && **input_cmd == '>')
+		|| (top == '<' && **input_cmd == '<'))
 	{
 		append = 1;
-		push(stack, *(*input_cmd)++);
-	}
-	else if (top == '<' && **input_cmd == '<')
-	{
-		append = 2;
 		push(stack, *(*input_cmd)++);
 	}
 	else if (is_meta(**input_cmd))

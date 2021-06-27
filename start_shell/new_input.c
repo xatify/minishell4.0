@@ -6,19 +6,14 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:21:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/26 19:43:29 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/27 15:46:08 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	new_input(t_data *data)
+void	set_exit_status(t_data *data)
 {
-	int error;
-
-	error = 0;
-	data->input_cmd = NULL;
-	data->input_cmd = readline(PROMPT);
 	if (g_pid == -1)
 	{
 		data->exit_status = 1;
@@ -29,6 +24,16 @@ void	new_input(t_data *data)
 		free_data(data);
 		exit(0);
 	}
+}
+
+void	new_input(t_data *data)
+{
+	int	error;
+
+	error = 0;
+	data->input_cmd = NULL;
+	data->input_cmd = readline(PROMPT);
+	set_exit_status(data);
 	if (data->input_cmd[0])
 	{
 		data->parse_tree = parser(data->input_cmd, &error);

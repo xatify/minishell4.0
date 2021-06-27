@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 19:22:22 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/19 12:51:54 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/27 16:52:55 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@ void	piping_to_child(t_command *cmd, int *pipe_fd, t_list *cmds,
 {
 	int		file_fds[2];
 
-	file_fds[0] = -1;
-	file_fds[1] = -1;
+	ft_memset(file_fds, 255, 8);
 	if (index_in_tmp[0] == 0)
 		first_child(cmd, pipe_fd, file_fds);
 	else if (cmds->next)

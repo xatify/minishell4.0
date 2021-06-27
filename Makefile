@@ -6,14 +6,16 @@
 #    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/06/26 18:11:36 by keddib           ###   ########.fr        #
+#    Updated: 2021/06/27 17:19:40 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
 
+READ_LINE		= /goinfre/keddib/brew/opt/readline/lib -I \
+					/goinfre/keddib/brew/opt/readline/include
 
-GCC				= gcc -g -Wall -Wextra -Werror -lreadline -L /goinfre/abbouzid/abbouzid/homebrew/opt/readline/lib -I /goinfre/abbouzid/abbouzid/homebrew/opt/readline/include
+GCC				= gcc -Wall -Wextra -Werror -lreadline -L $(READ_LINE)
 
 STR				= strings
 
@@ -52,6 +54,7 @@ SRCS			= minishell.c						\
 				$(M_UTILS)/arguments_array.c		\
 				$(M_UTILS)/pipeline.c				\
 				$(M_UTILS)/redirections.c			\
+				$(M_UTILS)/redirections_2.c			\
 				$(M_UTILS)/signals.c				\
 				$(M_UTILS)/sort.c					\
 				$(M_UTILS)/tokens.c					\
@@ -66,6 +69,7 @@ SRCS			= minishell.c						\
 				$(EXPN)/expansions.c				\
 				$(EXPN)/expan_env.c					\
 				$(EXPN)/expan_quotes.c				\
+				$(EXPN)/expansion_err.c				\
 				$(EXCT)/execute_builtins.c			\
 				$(EXCT)/execute_pipeline.c			\
 				$(EXCT)/execute_pipeline2.c			\
@@ -89,18 +93,13 @@ SRCS			= minishell.c						\
 
 all:	$(NAME)
 
-get_next_line/gnl.a:
-	$(MAKE) -C get_next_line
-
-$(NAME) : $(SRCS) get_next_line/gnl.a
-	$(MAKE) -C get_next_line
-	$(GCC) -o $(NAME) $(SRCS) get_next_line/gnl.a
+$(NAME) : $(SRCS)
+	$(GCC) -o $(NAME) $(SRCS)
 
 clean:
-	rm -rf *.o get_next_line/gnl.a
+	rm -rf $(NAME)
 
 fclean: clean
-	rm -rf $(NAME)
 
 re: fclean all
 

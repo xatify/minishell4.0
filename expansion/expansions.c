@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 09:24:00 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/26 18:33:10 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/27 16:06:21 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,28 +49,13 @@ void	expand_list(t_list *list, t_data *data)
 		free(str);
 		new_list = rm_quotes(tokens);
 		next = list->next;
-		if (new_list)
-		{
-			ft_lstadd_back(&(new_list), next);
-			if (new_list)
-			{
-				free(list->content);
-				list->content = new_list->content;
-				list->next = new_list->next;
-				free(new_list);
-			}
-		}
-		else
-		{
-			free(list->content);
-			list->content = ft_strdup("");
-		}
+		reexpand_list(list, new_list, next);
 		list = next;
 		expand_list(list, data);
 	}
 }
 
-int		expand_redirections(t_list *redirections, t_data *data)
+int	expand_redirections(t_list *redirections, t_data *data)
 {
 	t_list			*tokens;
 	t_redirection	*redirection;
@@ -87,13 +72,7 @@ int		expand_redirections(t_list *redirections, t_data *data)
 		tokens = lexer(tmp, &error);
 		free(tmp);
 		if (ft_lstsize(tokens) > 1)
-		{
-			ft_putstr_fd(redirection->file, STDERR);
-			ft_putstr_fd(AMB_REDIRECT, STDERR);
-			ft_lstclear(&list, free);
-			ft_lstclear(&tokens, free_token);
-			return (0);
-		}
+			return (redirection_error(redirection, list, tokens));
 		free(redirection->file);
 		rmq(((t_token *)(tokens->content))->tkn);
 		redirection->file = ft_strdup(((t_token *)(tokens->content))->tkn);
@@ -104,7 +83,7 @@ int		expand_redirections(t_list *redirections, t_data *data)
 	return (1);
 }
 
-int 	expand_cmd(t_list *cmds, t_data *data)
+int	expand_cmd(t_list *cmds, t_data *data)
 {
 	t_command	*cmd;
 
@@ -120,7 +99,7 @@ int 	expand_cmd(t_list *cmds, t_data *data)
 	return (1);
 }
 
-int		expand_pipeline(t_pipeline *pipline, t_data *data)
+int	expand_pipeline(t_pipeline *pipline, t_data *data)
 {
 	return (expand_cmd(pipline->cmds, data));
 }
