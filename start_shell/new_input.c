@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:21:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/27 15:46:08 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/28 14:47:02 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,11 @@ void	new_input(t_data *data)
 		data->parse_tree = parser(data->input_cmd, &error);
 		if (!data->parse_tree || error)
 		{
-			ft_putstr_fd(PARSER_ERR, STDERR);
-			data->exit_status = 258;
+			if (error)
+			{
+				ft_putstr_fd(PARSER_ERR, STDERR);
+				data->exit_status = 258;
+			}
 		}
 		else
 			execute(data);

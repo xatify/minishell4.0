@@ -6,7 +6,7 @@
 #    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/06/27 17:19:40 by keddib           ###   ########.fr        #
+#    Updated: 2021/06/28 14:35:23 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME			= minishell
 READ_LINE		= /goinfre/keddib/brew/opt/readline/lib -I \
 					/goinfre/keddib/brew/opt/readline/include
 
-GCC				= gcc -Wall -Wextra -Werror -lreadline -L $(READ_LINE)
+GCC				= gcc -g -Wall -Wextra -Werror -lreadline -L $(READ_LINE)
 
 STR				= strings
 

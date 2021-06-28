@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:16:16 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/23 17:17:56 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/27 19:01:32 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** macros
 */
 
-# define PROMPT "minishell-4.0$ "
+# define PROMPT "minishell-7.0$ "
 
 # define TRUE			1
 # define FALSE			0
@@ -43,6 +43,5 @@
 # define AMB_REDIRECT	": ambiguous redirect\n"
 
 volatile sig_atomic_t	g_pid;
-//extern int rl_catch_signals;
 
 #endif

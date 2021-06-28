@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:45:21 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/27 15:36:49 by keddib           ###   ########.fr       */
+/*   Updated: 2021/06/27 18:37:04 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	check_param(char **args, int *i, int *new_line)
 					j++;
 				else
 				{
-					*new_line = 1;
 					j = -1;
 					break ;
 				}
