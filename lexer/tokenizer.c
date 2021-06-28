@@ -12,9 +12,9 @@
 
 #include "../includes/minishell.h"
 
-t_list	*tokenizer(int error, t_list **tokens, t_list **stack)
+t_list	*tokenizer(int *error, t_list **tokens, t_list **stack)
 {
-	if (error)
+	if (*error)
 	{
 		ft_lstclear(tokens, free_token);
 		ft_lstclear(stack, free);
@@ -28,18 +28,22 @@ t_list	*tokenizer(int error, t_list **tokens, t_list **stack)
 	}
 	if (identify_all_tokens(*tokens))
 		return (*tokens);
-	ft_lstclear(tokens, free);
+	ft_lstclear(tokens, free_token);
 	if ((*stack))
 		ft_lstclear(stack, free);
+	*error = 1;
 	return (NULL);
 }
 
-int	handle_meta(t_list **stack, t_list **tokens, char **input_cmd)
+int	handle_meta(t_list **stack, t_list **tokens, char **input_cmd, int *error)
 {
 	if (*stack && ((t_stack *)((*stack)->content))->meta)
 	{
 		if (!handle_metacharacter(stack, tokens, input_cmd))
+		{
+			*error = 1;
 			return (1);
+		}
 	}
 	else if (top_stack(stack) == '\0')
 		if (handle_end_token(stack, tokens))
@@ -92,9 +96,9 @@ t_list	*lexer(char *input_cmd, int *error)
 
 	tokens = NULL;
 	stack = NULL;
+	*error = 0;
 	while (TRUE)
 	{
-		*error = 0;
 		push(&stack, *input_cmd++);
 		if (top_stack(&stack) == '\'' || top_stack(&stack) == '\"')
 			if (!handle_quotes(&stack, &input_cmd, error, top_stack(&stack)))
@@ -105,8 +109,8 @@ t_list	*lexer(char *input_cmd, int *error)
 				break ;
 			continue ;
 		}
-		if (handle_meta(&stack, &tokens, &input_cmd))
+		if (handle_meta(&stack, &tokens, &input_cmd, error))
 			break ;
 	}
-	return (tokenizer(*error, &tokens, &stack));
+	return (tokenizer(error, &tokens, &stack));
 }

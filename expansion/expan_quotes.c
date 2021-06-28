@@ -73,12 +73,19 @@ void	expand_unquoted_token(t_list **stack, char **token, t_data *data)
 void	rmq(char *str)
 {
 	int		i;
+	char	quote;
 
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
+		{
+			quote = str[i];
 			ft_strcpy(&(str[i]), &(str[i + 1]));
+			while (str[i] && str[i] != quote)
+				i++;
+			ft_strcpy(&(str[i]), &(str[i + 1]));
+		}
 		else
 			i++;
 	}

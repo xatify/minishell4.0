@@ -79,7 +79,11 @@ void	execute_simple_cmd(t_data *data, t_pipeline *pipeline)
 		{
 			cmd->built_in = is_built_in(cmd->name_and_args);
 			if (cmd->built_in != '\0')
+			{
+				if (cmd->built_in == 'x')
+					ft_putstr_fd("exit\n", 2);
 				data->exit_status = execute_built_in(data, cmd);
+			}
 			else
 				data->exit_status = execute_binary(data, cmd);
 		}

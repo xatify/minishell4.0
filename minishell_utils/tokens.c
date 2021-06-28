@@ -51,6 +51,7 @@ int	token_id(char *token)
 int	identify_all_tokens(t_list *tokens)
 {
 	t_token		*token;
+	int			next_id;
 
 	while (tokens)
 	{
@@ -58,16 +59,21 @@ int	identify_all_tokens(t_list *tokens)
 		token->id = token_id(token->tkn);
 		if (token->id != WORD)
 		{
-			if (token->id == SEMICOLON && !(tokens->next))
-				return (1);
+			if (token->id == SEMICOLON  || token->id == PIPE)
+			{
+				if (!(tokens->next))
+					return (1);
+				next_id = token_id(((t_token *)((tokens->next)->content))->tkn);
+				if (next_id <= 3)
+				{
+					tokens = tokens->next;
+					continue ;
+				}
+				else if (next_id == SEMICOLON || next_id == PIPE)
+					return (1);
+			}
 			if (!(tokens->next))
 				return (0);
-			if ((token->id == SEMICOLON || token->id == PIPE)
-				&& token_id(((t_token *)((tokens->next)->content))->tkn) <= 3)
-			{
-				tokens = tokens->next;
-				continue ;
-			}
 			if (token_id(((t_token *)((tokens->next)->content))->tkn) != WORD)
 				return (0);
 		}

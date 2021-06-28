@@ -12,10 +12,10 @@
 
 NAME			= minishell
 
-READ_LINE		= /goinfre/keddib/brew/opt/readline/lib -I \
-					/goinfre/keddib/brew/opt/readline/include
+LDFLAGS			= -L/goinfre/abbouzid/homebrew/opt/readline/lib
+CPPFLAGS        = -I/goinfre/abbouzid/homebrew/opt/readline/include
 
-GCC				= gcc -g -Wall -Wextra -Werror -lreadline -L $(READ_LINE)
+GCC				= gcc -g -Wall -Wextra -Werror -lreadline $(LDFLAGS) $(CPPFLAGS)
 
 STR				= strings
 
