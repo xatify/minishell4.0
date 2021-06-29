@@ -6,16 +6,16 @@
 #    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/06/28 14:35:23 by keddib           ###   ########.fr        #
+#    Updated: 2021/06/29 17:56:41 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= minishell
 
-LDFLAGS			= -L/goinfre/abbouzid/homebrew/opt/readline/lib
-CPPFLAGS        = -I/goinfre/abbouzid/homebrew/opt/readline/include
+LDFLAGS			= -L/goinfre/keddib/brew/opt/readline/lib
+CPPFLAGS        = -I/goinfre/keddib/brew/opt/readline/include
 
-GCC				= gcc -g -Wall -Wextra -Werror -lreadline $(LDFLAGS) $(CPPFLAGS)
+GCC				= gcc -Wall -Wextra -Werror -lreadline $(LDFLAGS) $(CPPFLAGS)
 
 STR				= strings
 

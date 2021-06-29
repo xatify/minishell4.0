@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:25:50 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/23 17:15:14 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/29 19:43:09 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	exit_(t_data *data, char **argv)
 
 	status = 0;
 	ex = 0;
-	if (argv[1] && argv[2])
+	if ((argv[1] && argv[2]) && !is_arg_alpha(argv[1]))
 	{
 		ft_putstr_fd(MANY_ARGS, STDOUT);
 		return (1);
