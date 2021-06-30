@@ -24,10 +24,10 @@ int	main(int argc, char **argv, char **envp)
 	while (TRUE)
 	{
 		if (g_pid == -130 || g_pid == -131)
-		{
 			data.exit_status = -g_pid;
-			g_pid = 0;
-		}
+		if (g_pid == -1)
+			data.exit_status = 1;
+		g_pid = 0;
 		new_input(&data);
 		ft_lstclear(&(data.parse_tree), free_pipeline);
 	}

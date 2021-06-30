@@ -1,8 +1,2 @@
 * herdoc signal
 
-* exit with two (not numeric)arguments : FIXED
-	- exit txt txt;
-
-* SIGINT fails when c-c after an excuted command
-
-* C-\ Not working in a prompt after you wrote some stuff

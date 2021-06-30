@@ -15,10 +15,8 @@
 void	set_exit_status(t_data *data)
 {
 	if (g_pid == -1)
-	{
 		data->exit_status = 1;
-		g_pid = 0;
-	}
+	g_pid = 0;
 	if (!data->input_cmd)
 	{
 		free_data(data);

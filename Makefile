@@ -12,8 +12,8 @@
 
 NAME			= minishell
 
-LDFLAGS			= -L/goinfre/keddib/brew/opt/readline/lib
-CPPFLAGS        = -I/goinfre/keddib/brew/opt/readline/include
+LDFLAGS			= -L/goinfre/abbouzid/homebrew/opt/readline/lib
+CPPFLAGS        = -I/goinfre/abbouzid/homebrew/opt/readline/include
 
 GCC				= gcc -Wall -Wextra -Werror -lreadline $(LDFLAGS) $(CPPFLAGS)
 
