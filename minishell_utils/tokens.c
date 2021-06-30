@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abbouzid <abbouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:43:36 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/23 17:25:12 by abbouzid         ###   ########.fr       */
+/*   Updated: 2021/06/30 17:39:37 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	identify_all_tokens(t_list *tokens)
 					continue ;
 				}
 				else if (next_id == SEMICOLON || next_id == PIPE)
-					return (1);
+					return (0);
 			}
 			if (!(tokens->next))
 				return (0);
