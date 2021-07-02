@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 09:12:22 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/27 15:33:00 by keddib           ###   ########.fr       */
+/*   Updated: 2021/07/02 19:50:05 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ void	sort(char **strings)
 	}
 }
 
-void	LCG(char *str[], int len)
+void	LCG(char **str, int len)
 {
 	int				i;
 	static int		seed;
 	static int		m;
+	char			s[10];
 
 	m = (1 << 31);
 	i = 0;
@@ -57,10 +58,32 @@ void	LCG(char *str[], int len)
 	{
 		seed = (1103515245 * seed + 12345) % m;
 		if (seed < 0)
-			(*str)[i] = (char )((-seed % 24) + 'a');
+			s[i] = (char )((-seed % 24) + 'a');
 		else
-			(*str)[i] = (char)((seed % 24) + 'a');
+			s[i] = (char)((seed % 24) + 'a');
 		i++;
 	}
-	(*str)[len] = '\0';
+	s[len] = '\0';
+	*str = ft_strjoin("/tmp/", s);
+}
+
+int	lkhra(t_list *tokens, t_token *token)
+{
+	int		next_id;
+
+	if (token->id == SEMICOLON || token->id == PIPE)
+	{
+		if (!(tokens->next))
+			return (token->id == SEMICOLON);
+		next_id = token_id(((t_token *)((tokens->next)->content))->tkn);
+		if (next_id <= 3)
+			return (2);
+		else if (next_id == SEMICOLON || next_id == PIPE)
+			return (0);
+	}
+	if (!(tokens->next))
+		return (0);
+	if (token_id(((t_token *)((tokens->next)->content))->tkn) != WORD)
+		return (0);
+	return (-1);
 }

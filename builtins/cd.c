@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:29:16 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/27 16:23:13 by keddib           ###   ########.fr       */
+/*   Updated: 2021/07/02 18:56:07 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,21 @@ int	hundle_removed_path(char *path, t_list **vars, t_data *data)
 	return (0);
 }
 
-void	hundle_exicted_path(t_data *data, char *pwd)
+void	hundle_exicted_path(t_data *data, char **pwd)
 {
 	t_env_var	*var_env;
 
-	if (pwd)
-		change_env_var(&(data->env_vars), "OLDPWD", pwd);
+	if (*pwd)
+		change_env_var(&(data->env_vars), "OLDPWD", *pwd);
 	else
 	{
 		var_env = search_var(&(data->env_vars), "PWD");
 		if (var_env)
 			change_env_var(&(data->env_vars), "OLDPWD", var_env->value);
 	}
-	free(pwd);
-	pwd = getcwd(NULL, 0);
-	change_env_var(&(data->env_vars), "PWD", pwd);
+	free(*pwd);
+	*pwd = getcwd(NULL, 0);
+	change_env_var(&(data->env_vars), "PWD", *pwd);
 }
 
 int	cd_pwd(char *path, char **pwd, char **dir, t_data *data)
@@ -66,11 +66,13 @@ int	cd_pwd(char *path, char **pwd, char **dir, t_data *data)
 	if (path)
 	{
 		free(*dir);
+		*dir = NULL;
 		*dir = ft_strdup(path);
 	}
 	*pwd = getcwd(NULL, 0);
 	ret = chdir(*dir);
 	free(*dir);
+	*dir = NULL;
 	*dir = getcwd(NULL, 0);
 	return (ret);
 }
@@ -85,7 +87,7 @@ int	cd(char *path, t_data *data)
 	pwd = NULL;
 	ret = cd_pwd(path, &pwd, &dir, data);
 	if (!ret && (pwd || dir))
-		hundle_exicted_path(data, pwd);
+		hundle_exicted_path(data, &pwd);
 	else if (!pwd && !ret)
 		return (hundle_removed_path(path, &(data->env_vars), data));
 	else

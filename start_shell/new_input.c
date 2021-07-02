@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 15:21:43 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/28 14:47:02 by keddib           ###   ########.fr       */
+/*   Updated: 2021/07/02 18:31:49 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	set_exit_status(t_data *data)
 	if (!data->input_cmd)
 	{
 		free_data(data);
+		ft_putstr_fd("exit\n", 2);
 		exit(0);
 	}
 }

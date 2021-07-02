@@ -6,7 +6,7 @@
 #    By: keddib <keddib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 12:43:22 by abbouzid          #+#    #+#              #
-#    Updated: 2021/06/30 17:15:37 by keddib           ###   ########.fr        #
+#    Updated: 2021/07/02 19:56:00 by keddib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME			= minishell
 LDFLAGS			= -L/goinfre/keddib/brew/opt/readline/lib
 CPPFLAGS        = -I/goinfre/keddib/brew/opt/readline/include
 
-GCC				= gcc -g -Wall -Wextra -Werror -lreadline $(LDFLAGS) $(CPPFLAGS)
+GCC				= gcc -Wall -Wextra -Werror -lreadline $(LDFLAGS) $(CPPFLAGS)
 
 STR				= strings
 

@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 09:25:50 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/30 17:45:13 by keddib           ###   ########.fr       */
+/*   Updated: 2021/07/02 18:25:30 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	is_arg_alpha(char *s)
 			i++;
 			continue ;
 		}
-		if (i > 0 && s[i] == '-')
+		if (i > 0 && (s[i] == '-' || s[i] == '+'))
 			return (TRUE);
 		if (is_alpha(s[i]))
 			return (TRUE);
@@ -53,7 +53,7 @@ int	exit_(t_data *data, char **argv)
 	if ((argv[1] && argv[2]) && !is_arg_alpha(argv[1]))
 	{
 		ft_putstr_fd(MANY_ARGS, STDOUT);
-		return(1);
+		return (1);
 	}
 	if (argv[1])
 		exit_one_arg(argv[1], &ex, &status);

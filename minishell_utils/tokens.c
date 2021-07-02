@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 10:43:36 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/30 17:39:37 by keddib           ###   ########.fr       */
+/*   Updated: 2021/07/02 17:58:53 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	token_id(char *token)
 int	identify_all_tokens(t_list *tokens)
 {
 	t_token		*token;
-	int			next_id;
+	int			ret;
 
 	while (tokens)
 	{
@@ -59,23 +59,9 @@ int	identify_all_tokens(t_list *tokens)
 		token->id = token_id(token->tkn);
 		if (token->id != WORD)
 		{
-			if (token->id == SEMICOLON  || token->id == PIPE)
-			{
-				if (!(tokens->next))
-					return (1);
-				next_id = token_id(((t_token *)((tokens->next)->content))->tkn);
-				if (next_id <= 3)
-				{
-					tokens = tokens->next;
-					continue ;
-				}
-				else if (next_id == SEMICOLON || next_id == PIPE)
-					return (0);
-			}
-			if (!(tokens->next))
-				return (0);
-			if (token_id(((t_token *)((tokens->next)->content))->tkn) != WORD)
-				return (0);
+			ret = lkhra(tokens, token);
+			if (ret == 0 || ret == 1)
+				return (ret);
 		}
 		tokens = tokens->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 09:19:07 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/29 20:39:21 by keddib           ###   ########.fr       */
+/*   Updated: 2021/07/02 19:53:58 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,25 @@ void	set_herdoc(char *file, t_redirection *redirection, t_command *command)
 {
 	int		fd;
 	char	*s;
-	char	str[10];
+	char	*str;
 
-	s = &str[0];
 	LCG(&s, 9);
-	fd = open(str, O_CREAT | O_APPEND | O_WRONLY, 0666);
+	fd = open(s, O_CREAT | O_APPEND | O_WRONLY, 0666);
 	if (fd >= 0)
 	{
-		ft_lstadd_back(&(command->tmp_files), ft_lstnew(ft_strdup(str)));
-		s = readline("> ");
-		while (s && ft_strcmp(s, file))
+		ft_lstadd_back(&(command->tmp_files), ft_lstnew(ft_strdup(s)));
+		str = readline("> ");
+		while (str && ft_strcmp(str, file))
 		{
-			ft_putstr_fd(s, fd);
+			ft_putstr_fd(str, fd);
 			ft_putchar_fd('\n', fd);
-			free(s);
-			s = readline("> ");
+			free(str);
+			str = readline("> ");
 		}
-		free(s);
+		free(str);
 		close(fd);
-		redirection->file = ft_strdup(str);
+		redirection->file = ft_strdup(s);
+		free(s);
 		redirection->type = INPUT;
 	}
 }

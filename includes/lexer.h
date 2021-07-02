@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 16:12:08 by keddib            #+#    #+#             */
-/*   Updated: 2021/06/25 14:35:54 by keddib           ###   ########.fr       */
+/*   Updated: 2021/07/02 17:42:18 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int			handle_metacharacter(t_list **stack, t_list **tokens,
 				char **input_cmd);
 int			handle_quotes(t_list **stack, char **input_cmd, int *error, char q);
 t_list		*lexer(char *input_cmd, int *err);
-int			handle_meta(t_list **stack, t_list **tokens, char **input_cmd, int *error);
+int			handle_meta(t_list **stack, t_list **tokens, char **input_cmd,
+				int *error);
+int			lkhra(t_list *tokens, t_token *token);
 
 #endif

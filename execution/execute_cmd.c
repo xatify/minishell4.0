@@ -6,7 +6,7 @@
 /*   By: keddib <keddib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 09:44:48 by abbouzid          #+#    #+#             */
-/*   Updated: 2021/06/27 15:36:16 by keddib           ###   ########.fr       */
+/*   Updated: 2021/07/02 15:30:38 by keddib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,14 @@ int	execute_binary(t_data *data, t_command *cmd)
 	return (status);
 }
 
+void	close_fds(int *fds)
+{
+	if (fds[0] != -1)
+		close(fds[0]);
+	if (fds[1] != -1)
+		close(fds[1]);
+}
+
 void	execute_simple_cmd(t_data *data, t_pipeline *pipeline)
 {
 	t_command	*cmd;
@@ -90,10 +98,7 @@ void	execute_simple_cmd(t_data *data, t_pipeline *pipeline)
 		else
 		{
 			data->exit_status = !redirect_std(cmd, fds);
-			if (fds[0] != -1)
-				close(fds[0]);
-			if (fds[1] != -1)
-				close(fds[1]);
+			close_fds(fds);
 		}
 	}
 }
